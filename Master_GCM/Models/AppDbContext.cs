@@ -8,6 +8,7 @@ public class AppDbContext : DbContext
     public DbSet<UserModel> Users {get; set;}
     public DbSet<EmployeeModel> Employee {get; set;}
     public DbSet<TrnSoftwareModel> TrnSoftwareM {get; set;}
+    public DbSet<TrnHardwareModel> TrnHardwareM {get; set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -16,5 +17,6 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<UserModel>().HasKey(e => e.NIPP);
         modelBuilder.Entity<EmployeeModel>().HasKey(e => e.NIPP);
         modelBuilder.Entity<TrnSoftwareModel>().HasKey(e => e.IdSoftware);
+        modelBuilder.Entity<TrnHardwareModel>().HasKey(e => e.IdHardware);
     }
 }

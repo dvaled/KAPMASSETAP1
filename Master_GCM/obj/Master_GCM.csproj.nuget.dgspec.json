@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\laragon\\www\\API\\Master_GCM\\Master_GCM.csproj": {}
+    "C:\\Users\\khalf\\Code\\KAPMASSETAP1\\Master_GCM\\Master_GCM.csproj": {}
   },
   "projects": {
-    "C:\\laragon\\www\\API\\Master_GCM\\Master_GCM.csproj": {
+    "C:\\Users\\khalf\\Code\\KAPMASSETAP1\\Master_GCM\\Master_GCM.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\laragon\\www\\API\\Master_GCM\\Master_GCM.csproj",
+        "projectUniqueName": "C:\\Users\\khalf\\Code\\KAPMASSETAP1\\Master_GCM\\Master_GCM.csproj",
         "projectName": "Master_GCM",
-        "projectPath": "C:\\laragon\\www\\API\\Master_GCM\\Master_GCM.csproj",
-        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-        "outputPath": "C:\\laragon\\www\\API\\Master_GCM\\obj\\",
+        "projectPath": "C:\\Users\\khalf\\Code\\KAPMASSETAP1\\Master_GCM\\Master_GCM.csproj",
+        "packagesPath": "C:\\Users\\khalf\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\khalf\\Code\\KAPMASSETAP1\\Master_GCM\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\khalf\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"

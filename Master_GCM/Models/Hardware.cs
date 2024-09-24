@@ -1,4 +1,6 @@
-public class hardware{
+public class TrnHardwareModel{
+    public int IdHardware { get; set; }
+    public int IdAsset { get; set; }
     public required string ProcessorBrand{ get; set; }
     public required string ProcessorModel { get; set; }
     public required string ProcessorSeries{get; set;}
