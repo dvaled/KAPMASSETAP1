@@ -9,7 +9,7 @@ public class User
     public required string Directorate { get; set; }
     public required string Active { get; set; }
     public required string Password { get; set; }
-    public required string Added_by
+    public required string Added_by { get; set; }
     public DateOnly Date_added { get; set; }
     public required string Updated_by { get; set; }
     public DateOnly Date_updated { get; set; }
