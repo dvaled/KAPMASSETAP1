@@ -20,7 +20,7 @@ public class MasterController : ControllerBase
     }
 
     [HttpGet("{active}")]
-    public async Task<ActionResult<List<Master>>> GetMaster(string active)
+    public async Task<ActionResult<List<MasterModel>>> GetMaster(string active)
     {
         var masters = await _context.Masters
                                     .Where(e =>  e.Active == active) // Adjust condition based on your model
