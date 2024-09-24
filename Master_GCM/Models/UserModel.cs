@@ -8,4 +8,5 @@ public class UserModel{
     public required string Department{get; set;}    
     public required string Directorate{get; set;}
     public required string Password{get; set;}
+    public required string Active{get; set;}
 }

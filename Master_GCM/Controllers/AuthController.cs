@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-[Route("api/[auth]")]
+[ApiController]
+[Route("api/[controller]")]
 
 public class AuthController(AppDbContext context) : ControllerBase{
 
