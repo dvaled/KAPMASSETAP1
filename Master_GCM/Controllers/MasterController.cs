@@ -13,15 +13,14 @@ public class MasterController : ControllerBase
         _context = context;
     }
 
+//Get value from db
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Master>>> GetMaster()
-    {
+    public async Task<ActionResult<IEnumerable<Master>>> GetMaster(){
     return await _context.Masters.ToListAsync();
     }
 
     [HttpGet("active/{active:bool}")] // Ensure the route is defined to accept bool
-    public async Task<ActionResult<List<Master>>> GetMasterByStatus([FromQuery]bool active) 
-    {
+    public async Task<ActionResult<List<Master>>> GetMasterByStatus([FromQuery]bool active){
         var masters = await _context.Masters
             .Where(e => e.Active == active)
             .ToListAsync();
@@ -34,16 +33,19 @@ public class MasterController : ControllerBase
         return masters;
     }
 
+//Post master value to db
     [HttpPost]
-    public async Task<ActionResult<Master>> PostMaster(Master master)
-    {
+    public async Task<ActionResult<Master>> PostMaster(Master master){
+
+        //Check if value is exist
         if (await _context.Masters.AnyAsync(e => e.MasterID == master.MasterID))
         {
             return Conflict("This MasterID already exists");
         }
 
-        else if (await _context.Masters.AnyAsync(e => e.Condition == master.Condition))
-        {
+        else if (await _context.Masters.AnyAsync(e => e.Condition == master.Condition)){
+
+            //Check value condition
             if (await _context.Masters.AnyAsync(e => e.NoSr == master.NoSr))
             {
                 return Conflict("This Item ID already exists in this condition");
@@ -54,30 +56,25 @@ public class MasterController : ControllerBase
 
         return CreatedAtAction("GetMaster", new { id = master.MasterID }, master);
     }
+
+//Update value master to db    
     [HttpPut("{masterID:int}")]
-    public async Task<IActionResult> PutMaster(int masterID, Master master)
-    {
-        if (masterID != master.MasterID)
-        {
+    public async Task<IActionResult> PutMaster(int masterID, Master master){
+        if (masterID != master.MasterID){
             return BadRequest();
         }
 
+        //Track the selected data
         _context.Entry(master).State = EntityState.Modified;
 
-        try
-        {
+        try{
             await _context.SaveChangesAsync();
         }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!MasterExists(masterID))
-            {
+        catch (DbUpdateConcurrencyException){
+            if (!MasterExists(masterID)){
                 return NotFound();
             }
-            else
-            {
-                throw;
-            }
+            else{throw;}
         }
 
         return NoContent();
