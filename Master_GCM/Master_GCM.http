@@ -1,0 +1,6 @@
+@Master_GCM_HostAddress = http://localhost:5252
+
+GET {{Master_GCM_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
