@@ -7,6 +7,7 @@ public class AppDbContext : DbContext
     public DbSet<LogModel> Logs { get; set; }
     public DbSet<UserModel> Users {get; set;}
     public DbSet<EmployeeModel> Employee {get; set;}
+    public DbSet<TrnSoftwareModel> TrnSoftwareM {get; set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -14,6 +15,6 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<LogModel>().HasKey(e => e.LogID);
         modelBuilder.Entity<UserModel>().HasKey(e => e.NIPP);
         modelBuilder.Entity<EmployeeModel>().HasKey(e => e.NIPP);
-
+        modelBuilder.Entity<TrnSoftwareModel>().HasKey(e => e.IdSoftware);
     }
 }
