@@ -4,6 +4,5 @@ public class LogModel{
     public int RoleID { get; set; }
     public required string ActionPerformed { get; set; }
     public required string UserAdded { get; set; }
-    public DateTime DateAdded { get; set; }
-    
+    public DateOnly DateAdded { get; set; }  
 }
