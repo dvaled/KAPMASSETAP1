@@ -44,12 +44,11 @@ public class MasterController : ControllerBase
             return Conflict("This MasterID already exists");
         }
 
-        else if (await _context.Masters.AnyAsync(e => e.Condition == master.Condition)){
+        else if (await _context.Masters.AnyAsync(e => e.Condition == master.Condition && e.NoSr == master.NoSr)){
+        return Conflict("This NoSr already exists");
+        }
 
-            //Check value condition
-            if (await _context.Masters.AnyAsync(e => e.NoSr == master.NoSr)){
-                return Conflict("This Item ID already exists in this condition");
-            }
+        else if (await _context.Masters.AnyAsync(e => e.Description == master.Description)){
         }
         _context.Masters.Add(master);
         await _context.SaveChangesAsync();
