@@ -10,9 +10,11 @@ public class AppDbContext : DbContext
     public DbSet<TrnSoftwareModel> TrnSoftwareM {get; set;}
     public DbSet<TrnHardwareModel> TrnHardwareM {get; set;}
     public DbSet<MaintenanceModel> MaintenanceModels{get; set;}
+    public DbSet<AssetHistoryModel> AssetHistory {get; set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<TrnHardwareModel>().HasKey(e => e.IdAsset); // Primary key for TrnHardwareModel
         modelBuilder.Entity<MasterModel>().HasKey(e => e.MasterID);
         modelBuilder.Entity<LogModel>().HasKey(e => e.LogID);
         modelBuilder.Entity<UserModel>().HasKey(e => e.NIPP);
@@ -23,6 +25,7 @@ public class AppDbContext : DbContext
             .WithMany()
             .HasForeignKey(h => h.NIPP); // Foreign key relationship
         modelBuilder.Entity<MaintenanceModel>().HasKey(e => e.MaintenanceID);
+        modelBuilder.Entity<AssetHistoryModel>().HasKey(e => e.IdAssetHistory); // Primary key for AssetHistoryModel
         
     }
 }

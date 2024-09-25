@@ -22,7 +22,7 @@ public class TrnHardwareController : ControllerBase
             .Include(e => e.Employee) // Include Employee details
             .Select(h => new
             {
-                h.IdHardware,
+                // drop id hardware
                 h.IdAsset,
                 h.NIPP,
                 EmployeeName = h.Employee.Name,
@@ -46,7 +46,8 @@ public class TrnHardwareController : ControllerBase
         _context.TrnHardwareM.Add(trnHardware);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetTrnHardware", new { id = trnHardware.IdHardware }, trnHardware);
+        //change IdHardware to IdAsset
+        return CreatedAtAction("GetTrnHardware", new { id = trnHardware.IdAsset }, trnHardware);
     }
 
     // Get all hardware

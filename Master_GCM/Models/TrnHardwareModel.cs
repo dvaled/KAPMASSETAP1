@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 public class TrnHardwareModel{
-    public int IdHardware { get; set; }
     public int IdAsset { get; set; }
     public int NIPP {get; set;}
     public required string ProcessorBrand{ get; set; }
