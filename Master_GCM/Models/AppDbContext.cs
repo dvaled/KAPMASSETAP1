@@ -9,7 +9,7 @@ public class AppDbContext : DbContext
     public DbSet<EmployeeModel> Employee {get; set;}
     public DbSet<TrnSoftwareModel> TrnSoftwareM {get; set;}
     public DbSet<TrnHardwareModel> TrnHardwareM {get; set;}
-    public DbSet<AssetHistoryModel> AssetHistory {get; set;}
+    public DbSet<MaintenanceModel> MaintenanceModels{get; set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -18,7 +18,11 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<UserModel>().HasKey(e => e.NIPP);
         modelBuilder.Entity<EmployeeModel>().HasKey(e => e.NIPP);
         modelBuilder.Entity<TrnSoftwareModel>().HasKey(e => e.IdSoftware);
-        modelBuilder.Entity<TrnHardwareModel>().HasKey(e => e.IdHardware);
-        modelBuilder.Entity<AssetHistoryModel>().HasKey(e => e.IdAssetHistory);
+        modelBuilder.Entity<TrnHardwareModel>()
+            .HasOne(h => h.Employee)
+            .WithMany()
+            .HasForeignKey(h => h.NIPP); // Foreign key relationship
+        modelBuilder.Entity<MaintenanceModel>().HasKey(e => e.MaintenanceID);
+        
     }
 }

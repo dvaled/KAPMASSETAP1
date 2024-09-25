@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 public class TrnHardwareModel{
     public int IdHardware { get; set; }
     public int IdAsset { get; set; }
@@ -30,5 +32,6 @@ public class TrnHardwareModel{
     public required bool Bluetooth {get; set;}
 
     // Navigation property
+    [ForeignKey("NIPP")]
     public required EmployeeModel Employee { get; set; } 
 }
