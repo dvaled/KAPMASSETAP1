@@ -39,8 +39,7 @@ public class MasterController : ControllerBase
     public async Task<ActionResult<MasterModel>> PostMaster(MasterModel master){
 
         //Check if value is exist
-        if (await _context.Masters.AnyAsync(e => e.MasterID == master.MasterID))
-        {
+        if (await _context.Masters.AnyAsync(e => e.MasterID == master.MasterID)){
             return Conflict("This MasterID already exists");
         }
 
@@ -48,8 +47,6 @@ public class MasterController : ControllerBase
         return Conflict("This NoSr already exists");
         }
 
-        else if (await _context.Masters.AnyAsync(e => e.Description == master.Description)){
-        }
         _context.Masters.Add(master);
         await _context.SaveChangesAsync();
 
