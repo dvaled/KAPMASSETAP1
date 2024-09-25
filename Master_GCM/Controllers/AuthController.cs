@@ -15,7 +15,7 @@ public class AuthController(AppDbContext context) : ControllerBase{
             return BadRequest("User with this NIPP already exists");
         }
         _context.Users.Add(user);
-        await _context.SaveChangesAsync(); // Save the changes
+        await _context.SaveChangeAsync; // Save the changes
         return Ok("User Registered Successfully");
     }
     
