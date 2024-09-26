@@ -28,4 +28,4 @@ public class TrnSoftwareController : ControllerBase{
 
         return CreatedAtAction("GetTrnSoftware", new { id = trnSoftware.IdSoftware }, trnSoftware);
     }
-}
+}       

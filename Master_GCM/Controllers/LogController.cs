@@ -13,6 +13,12 @@ public class LogController : ControllerBase{
 //Get value from db
     [HttpGet]
     public async Task<ActionResult<IEnumerable<LogModel>>> GetLog(){
-    return await _context.Logs.ToListAsync();
+        return await _context.Logs.ToListAsync();
+    }
+
+    public async Task<ActionResult<LogModel>> PostLog(LogModel log){
+        _context.Logs.Add(log);
+        await _context.SaveChangesAsync();
+        return CreatedAtAction("GetTrnSoftware", new { id = log.LogID }, log);
     }
 }
