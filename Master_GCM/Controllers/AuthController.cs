@@ -1,5 +1,10 @@
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -7,27 +12,46 @@ using Microsoft.EntityFrameworkCore;
 public class AuthController(AppDbContext context) : ControllerBase{
 
         private readonly AppDbContext _context = context;
-
-    [HttpPost("register")]
-    public async Task<ActionResult<UserModel>> RegisterUser(UserModel user){
-        // Validate the user
-        if (_context.Users.Any(u => u.NIPP == user.NIPP)){
-            return BadRequest("User with this NIPP already exists");
-        }
-        _context.Users.Add(user);
-        await _context.SaveChangeAsync; // Save the changes
-        return Ok("User Registered Successfully");
-    }
     
     [HttpPost("login")]
-    public async Task<ActionResult<UserModel>> LoginUser(string nipp, string password){
+    public async Task<ActionResult<string>> LoginUser(string nipp, string password){
+        // Find the user by NIPP and password in the database
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.NIPP == nipp && u.Password == password);
+        if (user == null){
+            return Unauthorized("Invalid NIPP or Password");
+        }
 
-    // Find the user by NIPP and password in the database
-    var user = await _context.Users.FirstOrDefaultAsync(u => u.NIPP == nipp && u.Password == password);
-    if (user == null){
-        return Unauthorized("Invalid NIPP or Name");    
+        // Generate and return the JWT token
+        var token = GenerateToken(user);
+        return Ok(new { message = $"Welcome, {user.Name}", token });
     }
-    
-    return Ok($"Welcome, {user.Name}");
+
+     private string GenerateToken(UserModel usr)
+    {
+        // Generate a JWT token with the user's details
+        string secret = "Kepinganteng123";
+        var handler = new JwtSecurityTokenHandler();
+        var key = Encoding.ASCII.GetBytes(secret);
+
+        var descriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(new[]
+            {
+                new Claim("nipp", usr.NIPP)
+            }),
+            Expires = DateTime.UtcNow.AddHours(1), // Set token expiration (optional)
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        };
+
+        var token = handler.CreateToken(descriptor);
+        return handler.WriteToken(token);
     }
+
+    // [HttpPost]
+    // [ValidateAntiForgeryToken]
+    // public async Task<IActionResult> Logout()
+    // {
+    //     await _signInManager.SignOutAsync();
+    //     return RedirectToAction("Index", "Home");
+    // }
 }

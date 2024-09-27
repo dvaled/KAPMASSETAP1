@@ -7,8 +7,7 @@ using Microsoft.EntityFrameworkCore;
 public class MasterController : ControllerBase
 {
     private readonly AppDbContext _context;
-    public MasterController(AppDbContext context)
-    {
+    public MasterController(AppDbContext context){
         _context = context;
     }
 
@@ -19,14 +18,11 @@ public class MasterController : ControllerBase
     }
 
     [HttpGet("{active}")]
-    public async Task<ActionResult<List<MasterModel>>> GetMaster(string active)
-    {
+    public async Task<ActionResult<List<MasterModel>>> GetMaster(string active){
         var masters = await _context.Masters
                                     .Where(e =>  e.Active == active) // Adjust condition based on your model
                                     .ToListAsync(); // Retrieve a list
-
-        if (masters == null || !masters.Any())
-        {
+        if (masters == null || !masters.Any()){
             return NotFound();
         }
 
@@ -75,8 +71,7 @@ public class MasterController : ControllerBase
         return NoContent();
     }
 
-    private bool MasterExists(int masterID)
-    {
+    private bool MasterExists(int masterID){
         return _context.Masters.Any(e => e.MasterID == masterID);
     }
 }
