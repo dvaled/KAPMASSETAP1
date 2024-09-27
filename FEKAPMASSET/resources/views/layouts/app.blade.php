@@ -8,13 +8,22 @@
 </head>
 <body>
     <!-- Navbar or other common components -->
-    <nav>
+    <div class="w-72 fixed bg-gray-800 h-full shadow hidden sm:flex">
         @include('layouts.navbar')
-    </nav>
-
-    <div class="container">
-        @yield('content')
     </div>
+
+    <!-- Main Content Wrapper -->
+    <div class="ml-72 min-h-screen flex flex-col justify-between">
+        <div>
+            <!-- Navbar or other common components -->
+            <nav>
+                
+            </nav>
+
+            <div class="container p-6">
+                @yield('content')
+            </div>
+        </div>
 
     <footer>
         <!-- Include footer component -->
