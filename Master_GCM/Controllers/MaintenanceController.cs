@@ -20,8 +20,7 @@ public class MaintenanceController : ControllerBase{
     public async Task<ActionResult<List<MaintenanceModel>>> PostMaintenance(MaintenanceModel model){
 
          //Check if value is exist
-        if (await _context.MaintenanceModels.AnyAsync(e => e.MaintenanceID == model.MaintenanceID))
-        {
+        if (await _context.MaintenanceModels.AnyAsync(e => e.MaintenanceID == model.MaintenanceID)){
             return Conflict("This Device is already in maintenance");
         }
         _context.MaintenanceModels.Add(model);

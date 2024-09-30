@@ -15,11 +15,6 @@
     <!-- Main Content Wrapper -->
     <div class="ml-72 min-h-screen flex flex-col justify-between">
         <div>
-            <!-- Navbar or other common components -->
-            <nav>
-                
-            </nav>
-
             <div class="container p-6">
                 @yield('content')
             </div>

@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "5iZ6q+c8fsc=",
   "success": true,
   "projectFilePath": "C:\\laragon\\www\\API\\Master_GCM\\Master_GCM.csproj",
+=======
+  "dgSpecHash": "jMeMRuVC/vY=",
+  "success": true,
+  "projectFilePath": "D:\\laragon\\www\\KAPMASSETAP1\\Master_GCM\\Master_GCM.csproj",
+>>>>>>> 4fef65c84174d87a897269451170e54775721157
   "expectedPackageFiles": [
     "C:\\Users\\LENOVO\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.8\\microsoft.aspnetcore.openapi.8.0.8.nupkg.sha512",
     "C:\\Users\\LENOVO\\.nuget\\packages\\microsoft.bcl.timeprovider\\8.0.1\\microsoft.bcl.timeprovider.8.0.1.nupkg.sha512",

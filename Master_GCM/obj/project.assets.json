@@ -1286,11 +1286,19 @@
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\laragon\\www\\API\\Master_GCM\\Master_GCM.csproj",
       "projectName": "Master_GCM",
       "projectPath": "C:\\laragon\\www\\API\\Master_GCM\\Master_GCM.csproj",
       "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
       "outputPath": "C:\\laragon\\www\\API\\Master_GCM\\obj\\",
+=======
+      "projectUniqueName": "D:\\laragon\\www\\KAPMASSETAP1\\Master_GCM\\Master_GCM.csproj",
+      "projectName": "Master_GCM",
+      "projectPath": "D:\\laragon\\www\\KAPMASSETAP1\\Master_GCM\\Master_GCM.csproj",
+      "packagesPath": "C:\\Users\\khalf\\.nuget\\packages\\",
+      "outputPath": "D:\\laragon\\www\\KAPMASSETAP1\\Master_GCM\\obj\\",
+>>>>>>> 4fef65c84174d87a897269451170e54775721157
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config"

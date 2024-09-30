@@ -10,6 +10,7 @@ public class LogController : ControllerBase{
     public LogController(AppDbContext context){
         _context = context;
     }
+    
 //Get value from db
     [HttpGet]
     public async Task<ActionResult<IEnumerable<LogModel>>> GetLog(){
