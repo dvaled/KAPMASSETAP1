@@ -29,7 +29,7 @@ public class AuthController(AppDbContext context) : ControllerBase{
      private string GenerateToken(UserModel usr)
     {
         // Generate a JWT token with the user's details
-        string secret = "Kepinganteng123";
+        string secret = "KAIPropertiManajer123";
         var handler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(secret);
 
@@ -46,12 +46,4 @@ public class AuthController(AppDbContext context) : ControllerBase{
         var token = handler.CreateToken(descriptor);
         return handler.WriteToken(token);
     }
-
-    // [HttpPost]
-    // [ValidateAntiForgeryToken]
-    // public async Task<IActionResult> Logout()
-    // {
-    //     await _signInManager.SignOutAsync();
-    //     return RedirectToAction("Index", "Home");
-    // }
 }

@@ -21,6 +21,11 @@ class Software extends Model
     public function Hardware(){
         return $this->belongsTo(Hardware::class, 'IdAsset', 'IdAsset');
     }
+    public function ardware(){
+        return $this->hasMany(Hardware::class, 'IdAsset', 'IdAsset');
+    }
+
+
 
    
    
