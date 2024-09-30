@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Http;
 class HistoryUserController extends Controller
 {
     public function fetchHistoryUserData()
-    {
-        
+    {        
         $response = Http::get('');  
 
         // Check if the request was successful

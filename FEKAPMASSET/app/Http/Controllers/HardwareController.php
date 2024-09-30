@@ -9,7 +9,6 @@ class HardwareController extends Controller
 {
     public function fetchHardwareData()
     {
-        
         $response = Http::get('');
         
         // Check if the request was successful
