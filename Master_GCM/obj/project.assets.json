@@ -1286,11 +1286,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\khalf\\Code\\KAPMASSETAP1\\Master_GCM\\Master_GCM.csproj",
+      "projectUniqueName": "D:\\laragon\\www\\KAPMASSETAP1\\Master_GCM\\Master_GCM.csproj",
       "projectName": "Master_GCM",
-      "projectPath": "C:\\Users\\khalf\\Code\\KAPMASSETAP1\\Master_GCM\\Master_GCM.csproj",
+      "projectPath": "D:\\laragon\\www\\KAPMASSETAP1\\Master_GCM\\Master_GCM.csproj",
       "packagesPath": "C:\\Users\\khalf\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\khalf\\Code\\KAPMASSETAP1\\Master_GCM\\obj\\",
+      "outputPath": "D:\\laragon\\www\\KAPMASSETAP1\\Master_GCM\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\khalf\\AppData\\Roaming\\NuGet\\NuGet.Config"
