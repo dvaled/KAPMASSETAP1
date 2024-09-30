@@ -26,17 +26,14 @@ public class AuthController(AppDbContext context) : ControllerBase{
         return Ok(new { message = $"Welcome, {user.Name}", token });
     }
 
-     private string GenerateToken(UserModel usr)
-    {
+     private string GenerateToken(UserModel usr){
         // Generate a JWT token with the user's details
         string secret = "KAIPropertiManajer123";
         var handler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(secret);
 
-        var descriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(new[]
-            {
+        var descriptor = new SecurityTokenDescriptor{
+            Subject = new ClaimsIdentity(new[]{
                 new Claim("nipp", usr.NIPP)
             }),
             Expires = DateTime.UtcNow.AddHours(1), // Set token expiration (optional)

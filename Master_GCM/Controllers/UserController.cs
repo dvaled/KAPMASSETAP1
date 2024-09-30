@@ -7,8 +7,7 @@ using Microsoft.EntityFrameworkCore;
 public class UserController : ControllerBase
 {
     private readonly AppDbContext _context;
-    public UserController(AppDbContext context)
-    {
+    public UserController(AppDbContext context){
         _context = context;
     }
 
@@ -18,20 +17,17 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("{active}")]
-    public async Task<ActionResult<List<UserModel>>> GetUserStatus(string active)
-    {
+    public async Task<ActionResult<List<UserModel>>> GetUserStatus(string active){
         var user = await _context.Users.Where(e => e.Active == active).ToListAsync();
 
-        if (user == null)
-        {
+        if (user == null){
             return NotFound();
         }
         return user;
     }
 
     [HttpPut("{nipp}")]
-    public async Task<ActionResult<UserModel>> PutUser(string nipp, UserModel user)
-    {
+    public async Task<ActionResult<UserModel>> PutUser(string nipp, UserModel user){
         if (nipp != user.NIPP)
         {
             return BadRequest();
@@ -39,8 +35,7 @@ public class UserController : ControllerBase
 
         _context.Entry(user).State = EntityState.Modified;
 
-        try
-        {
+        try{
             await _context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
