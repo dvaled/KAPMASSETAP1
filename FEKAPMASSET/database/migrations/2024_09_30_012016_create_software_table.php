@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string("SoftwareCategory");
             $table->string("SoftwareName");
             $table->string("SoftwareLicense");
-
             $table->timestamps();
         });
     }
