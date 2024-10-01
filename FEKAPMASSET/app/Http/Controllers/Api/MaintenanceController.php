@@ -33,7 +33,7 @@ class MaintenanceController extends Controller
         $validatedData = $request->validate([
             'MaintenanceID' => 'required',
             'AssetID' => 'required',
-            'User_Added' => 'required|integer',
+            'User_Added' => 'required',
             'Notes' => 'required|string|max:255',
             'Date_Added' => 'required|date',
         ]);

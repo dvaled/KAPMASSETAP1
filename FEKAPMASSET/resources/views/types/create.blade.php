@@ -20,7 +20,7 @@
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
-    </div>
+    </div>  
 @endif
 
 <form action="{{ route('types.store') }}" method="POST">

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id("MasterID");
             $table->string('Condition');
             $table->integer('NoSr');
-            $table->integer('Description');
+            $table->string('Description');
             $table->string('ValueGcm');
             $table->string('Type_Gcm');
             $table->string('Active');

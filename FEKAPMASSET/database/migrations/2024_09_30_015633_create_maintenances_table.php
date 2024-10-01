@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('maintenances', function (Blueprint $table) {
             $table->id("MaintenanceID");
             $table->integer("AssetID");
-            $table->integer("UserAdded");
+            $table->string("UserAdded");
             $table->string("Notes");
             $table->timestamps();
         });

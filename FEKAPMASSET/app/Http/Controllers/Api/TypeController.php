@@ -6,16 +6,56 @@ use App\Http\Controllers\Controller;
 use App\Models\Type;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Tag(
+ *     name="Types",
+ *     description="Operations about types"
+ * )
+ */
 class TypeController extends Controller
 {
-    // Fetch all types
+        /**
+     * @OA\Get(
+     *     path="/api/types",
+     *     summary="Get list of types",
+     *     tags={"Types"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="A list of types",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Type"))
+     *     )
+     * )
+     */
+    //fetch all data
     public function index()
     {
         $types = Type::all();
         return response()->json($types, 200);
     }
 
-    // Fetch a single type by ID
+    /**
+     * @OA\Get(
+     *     path="/api/types/{MasterID}",
+     *     summary="Get a type by ID",
+     *     tags={"Types"},
+     *     @OA\Parameter(
+     *         name="MasterID",
+     *         in="path",
+     *         required=true,
+     *         description="The ID of the type",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Type details",
+     *         @OA\JsonContent(ref="#/components/schemas/Type")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Type not found"
+     *     )
+     * )
+     */
     public function show($id)
     {
         $type = Type::find($id);
@@ -27,7 +67,23 @@ class TypeController extends Controller
         return response()->json($type, 200);
     }
 
-    // Store a new type
+    /**
+     * @OA\Post(
+     *     path="/api/types",
+     *     summary="Create a new type",
+     *     tags={"Types"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Type")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Type created successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Type")
+     *     )
+     * )
+     */
+    //store new type
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -35,7 +91,7 @@ class TypeController extends Controller
             'NoSr' => 'required',
             'Description' => 'required',
             'ValueGcm' => 'required',
-            'TypeGcm' => 'required',
+            'Type_Gcm' => 'required',
             'Active' => 'required|boolean',
         ]);
 
@@ -43,7 +99,7 @@ class TypeController extends Controller
         return response()->json(['message' => 'Type created successfully', 'data' => $type], 201);
     }
 
-    // Update an existing type
+    
     public function update(Request $request, $id)
     {
         $type = Type::find($id);
@@ -57,7 +113,7 @@ class TypeController extends Controller
             'NoSr' => 'required',
             'Description' => 'required',
             'ValueGcm' => 'required',
-            'TypeGcm' => 'required',
+            'Type_  Gcm' => 'required',
             'Active' => 'required|boolean',
         ]);
 
