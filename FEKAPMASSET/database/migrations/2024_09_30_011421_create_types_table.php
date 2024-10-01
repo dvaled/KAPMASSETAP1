@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('types', function (Blueprint $table) {
             $table->id("MasterID");
             $table->string('Condition');
-            $table->int('NoSr');
-            $table->int('Description');
+            $table->integer('NoSr');
+            $table->integer('Description');
             $table->string('ValueGcm');
             $table->string('Type_Gcm');
             $table->string('Active');

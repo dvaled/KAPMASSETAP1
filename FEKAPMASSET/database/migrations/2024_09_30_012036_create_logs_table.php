@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id("LogID");
-            $table->int("AssetID");
-            $table->int("RoleID");
+            $table->integer("AssetID");
+            $table->integer("RoleID");
             $table->string('ActionPerformed');
             $table->string('UserAdded');
             $table->timestamp("DateAdded");

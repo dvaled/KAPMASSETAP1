@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('maintenances', function (Blueprint $table) {
             $table->id("MaintenanceID");
-            $table->int("AssetID");
-            $table->int("UserAdded");
+            $table->integer("AssetID");
+            $table->integer("UserAdded");
             $table->string("Notes");
-            $table->timestamps("DateAdded");
+            $table->timestamps();
         });
     }
 

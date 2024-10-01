@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('histories', function (Blueprint $table) {
             $table->id();
-            $table->int("NIPP");
+            $table->integer("NIPP");
             $table->String("Name");
             $table->String("Position");
             $table->String("Unit");
