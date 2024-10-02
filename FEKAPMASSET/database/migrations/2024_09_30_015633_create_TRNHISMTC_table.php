@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('software', function (Blueprint $table) {
-            $table->id("IdSoftware");
-            $table->string("SoftwareType");
-            $table->string("SoftwareCategory");
-            $table->string("SoftwareName");
-            $table->string("SoftwareLicense");
+        Schema::create('TRN_HIST_MTC', function (Blueprint $table) {
+            $table->id("MaintenanceID");
+            $table->integer("IDASSET");
+            $table->string("USERADDED");
+            $table->string("NOTES");
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('software');
+        Schema::dropIfExists('maintenances');
     }
 };

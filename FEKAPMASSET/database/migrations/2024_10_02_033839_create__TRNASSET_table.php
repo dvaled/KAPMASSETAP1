@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('maintenances', function (Blueprint $table) {
-            $table->id("MaintenanceID");
-            $table->integer("AssetID");
-            $table->string("UserAdded");
-            $table->string("Notes");
+        Schema::create('TRN_ASSET', function (Blueprint $table) {
+            $table->id("IDASSET");
+            $table->integer("NIPP");
+            $table->string("ASSETBRAND");
+            $table->string("ASSETMODEL");
+            $table->string("ASSETSERIES");
+            $table->string("ASSETSERIALNUMBER");
+            $table->string("ACTIVE");
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('maintenances');
+        Schema::dropIfExists('TRN_ASSET');
     }
 };

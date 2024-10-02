@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('types', function (Blueprint $table) {
-            $table->id("MasterID");
-            $table->string('Condition');
-            $table->integer('NoSr');
-            $table->string('Description');
-            $table->string('ValueGcm');
-            $table->string('Type_Gcm');
-            $table->string('Active');
+        Schema::create('MST_GCM', function (Blueprint $table) {
+            $table->id("MASTERID");
+            $table->string('CONDITION');
+            $table->integer('NOSR');
+            $table->string('DESCRIPTION');
+            $table->string('VALUEGCM');
+            $table->string('TYPEGCM');
+            $table->string('ACTIVE');
             $table->timestamps();
         });
     }
@@ -28,7 +28,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('types');
+        Schema::dropIfExists('MST_GCM');
     }
 };
 

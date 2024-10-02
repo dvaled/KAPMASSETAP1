@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employees', function (Blueprint $table) {
+        Schema::create('MST_EMPLOYEE', function (Blueprint $table) {
             $table->id('NIPP')-> unique();
-            $table->string('Name');
-            $table->string('Position');
-            $table->string('Unit');
-            $table->string('Department');
-            $table->string('Directorate');
-            $table->string('Password');
-            $table->string('Active');
+            $table->string('NAME');
+            $table->string('POSITION');
+            $table->string('UNIT');
+            $table->string('DEPARTMENT');
+            $table->string('DIRECTORATE');
+            $table->string('ACTIVE');
             
             $table->timestamps();
         });
@@ -30,7 +29,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('MST_EMPLOYEE');
     }
 };
 
