@@ -9,6 +9,8 @@ class Hardware extends Model
 {
     use HasFactory;
 
+    protected $table = 'TRN_DTL_SPEC';
+
     protected $fillable = [
         "ASSETID",
         "PROCESSORBRAND",

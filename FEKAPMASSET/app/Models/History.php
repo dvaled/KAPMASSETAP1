@@ -10,6 +10,9 @@ class History extends Model
 {
     use HasFactory;
 
+    protected $table = 'TRN_HIST_ASSET';
+
+
     protected $fillable = [
         "IDASSETHISTORY",
         "IDASSET",

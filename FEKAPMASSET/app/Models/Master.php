@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
 class Master extends Model
 {
     use HasFactory;
+
+    protected $table = 'MST_GCM';
     // Specify the primary key
     protected $primaryKey = 'MasterID';
 

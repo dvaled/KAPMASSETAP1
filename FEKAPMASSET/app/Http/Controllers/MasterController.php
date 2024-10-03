@@ -10,12 +10,12 @@ class MasterController extends Controller
     //display the list of "types"
     public function index(){
         $types = Master::all();
-        return view('types.index', compact('types'));
+        return view('master.index', compact('types'));
     }
 
     //create page
     public function create(){
-        return view('types.create');
+        return view('master.create');
     }
 
     public function store(Request $request){
@@ -30,7 +30,7 @@ class MasterController extends Controller
         ]);
 
         Master::create($request -> all());
-        return redirect()->route('types.index')->with('success', 'Type created successfully');
+        return redirect()->route('master.index')->with('success', 'Master created successfully');
     } 
 
     public function update(Request $request){
@@ -45,11 +45,15 @@ class MasterController extends Controller
         ]);
         $type = Master::find($request->id);
         $type->update($request->all());
-        return redirect()->route('types.index')->with('success', 'Type updated successfully');        
+        return redirect()->route('master.index')->with('success', 'Type updated successfully');        
     }
 
     public function delete(Master $type){
         $type -> delete();
-        return redirect()->route('types.index')->with('success', 'Type deleted successfully');
+        return redirect()->route('master.index')->with('success', 'Type deleted successfully');
+    }   
+
+    public function show(Master $master){
+        return view('master.show', compact('master'));
     }
 }

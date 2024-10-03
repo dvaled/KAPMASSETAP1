@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 
 // Master routes
 Route::get('/master', [MasterController::class, 'index'])->name('master.index');
-Route::post('/master', [MasterController::class, 'store'])->name('master.store');
 Route::get('/master/{id}', [MasterController::class, 'show'])->name('master.show');
+Route::post('/master', [MasterController::class, 'store'])->name('master.create');
 Route::put('/master/{id}', [MasterController::class, 'update'])->name('master.update');
 Route::delete('/master/{id}', [MasterController::class, 'destroy'])->name('master.destroy');
 
@@ -35,7 +35,7 @@ Route::delete('/maintenance/{id}', [MaintenanceController::class, 'destroy'])->n
 // History routes
 Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
 Route::get('/history/{id}', [HistoryController::class, 'show'])->name('history.show');
-Route::post('/history', [HistoryController::class, 'store'])->name('history.store');
+Route::post('/history', [HistoryController::class, 'store'])->name('history.create');
 Route::put('/history/{id}', [HistoryController::class, 'update'])->name('history.update');
 Route::delete('/history/{id}', [HistoryController::class, 'destroy'])->name('history.destroy');
 

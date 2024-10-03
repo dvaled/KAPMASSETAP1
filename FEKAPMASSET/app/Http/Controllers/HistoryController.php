@@ -8,17 +8,17 @@ use Illuminate\Http\Request;
 class HistoryController extends Controller
 {
     public function index(){
-        $History = History::all();
-        return view('History.index', compact('History'));
+        $history = History::all();
+        return view('history.index', compact('history'));
     }
 
       // Show a single type
-    public function show(History $History){
-        return view('History.show', compact('History'));
+    public function show(History $history){
+        return view('history.show', compact('history'));
     }
 
     public function create(){
-        return view('History.create');
+        return view('history.create');
     }
 
     public function store (Request $request){
@@ -36,7 +36,7 @@ class HistoryController extends Controller
             "DATEUPDATED" => "Required"
         ]);
         History::create($request->all());
-        return redirect()->route('History.index')->with('success', 'History created successfully');
+        return redirect()->route('history.index')->with('success', 'History created successfully');
     }
 
     public function update(Request $request){
@@ -53,13 +53,13 @@ class HistoryController extends Controller
             "DATEADDED" => "Required",
             "DATEUPDATED" => "Required"
         ]);
-        $History = History::find($request -> id);
-        $History->update($request->all());
-        return redirect()->route('History.index')->with('success', 'History updated successfully');
+        $history = History::find($request -> id);
+        $history    ->update($request->all());
+        return redirect()->route('history.index')->with('success', 'History updated successfully');
     }
 
-    public function delete(History $History){
-        $History->delete();
-        return redirect()->route('History.index')->with('success', 'History deleted successfully');
+    public function delete(History $history){
+        $history->delete();
+        return redirect()->route('history.index')->with('success', 'History deleted successfully');
     }
 }

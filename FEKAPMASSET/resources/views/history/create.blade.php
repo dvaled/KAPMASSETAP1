@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-{{-- <div class="row">
+<div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>Create New Master</h2>
+            <h2>Create New history</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('master.index') }}"> Back</a>
+            <a class="btn btn-primary" href="{{ route('history.index') }}"> Back</a>
         </div>
     </div>
 </div>
@@ -23,14 +23,14 @@
     </div>  
 @endif
 
-<form action="{{ route('master.store') }}" method="POST">
+<form action="{{ route('history.store') }}" method="POST">
     @csrf
 
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>MasterID:</strong>
-                <input type="text" name="MasterID" class="form-control" placeholder="MasterID">
+                <strong>historyID:</strong>
+                <input type="text" name="historyID" class="form-control" placeholder="historyID">
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -44,5 +44,5 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </div>
-</form> --}}
+</form>
 @endsection

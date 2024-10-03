@@ -9,6 +9,9 @@ class Maintenance extends Model
 {
     use HasFactory;
 
+    protected $table = 'TRN_HIST_MTC';
+
+
     protected $fillable = [
         "MAINTENANCEID",
         "IDASSET",

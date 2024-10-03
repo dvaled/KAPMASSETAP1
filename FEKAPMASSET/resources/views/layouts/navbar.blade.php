@@ -34,7 +34,7 @@
         <div class="flex flex-no-wrap">
             <!-- Sidebar starts -->
             <!-- Remove class [ hidden ] and replace [ sm:flex ] with [ flex ] -->
-            <div style="min-height: 100vh" class="w-72 fixed sm:relative bg-gray-800 shadow bg:h-full md:h-full flex-col justify-between hidden sm:flex overflow-y-auto">
+            <div style="min-height: 100vh" class="w-72 fixed sm:relative bg-blue-700 shadow bg:h-full md:h-full flex-col justify-between hidden sm:flex overflow-y-auto">
                 <div class="px-8">
                     <div class="h-16 w-full flex items-center">
                         {{-- Place KAI SVG here --}}
@@ -46,18 +46,18 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-grid" width="18" height="18" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z"></path>
                                     <rect x="4" y="4" width="6" height="6" rx="1"></rect>
-                                    <rect x="14" y="4" width="6" height="6" rx="1"></rect>
+                                    <rect x="14" y="4" width="6" height="6" rx="1"></r  ect>
                                     <rect x="4" y="14" width="6" height="6" rx="1"></rect>
                                     <rect x="14" y="14" width="6" height="6" rx="1"></rect>
                                 </svg>
                                 <span class="text-sm ml-2">Dashboard</span>
                             </a>
-                            <div class="py-1 px-3 bg-gray-600 rounded text-gray-300 flex items-center justify-center text-xs">5</div>
+                            <div class="py-1 px-3 bg-slate-100 rounded text-black flex items-center justify-center text-xs">5</div>
                         </li>
                     </ul>
                 </div>
-                <div class="px-8 border-t border-gray-700">
-                    <ul class="w-full flex items-center justify-between bg-gray-800">
+                <div class="px-8 border-t border-blue-700">
+                    <ul class="w-full flex items-center justify-between bg-blue-700">
                         <li class="cursor-pointer text-white pt-5 pb-3">
                             <button aria-label="show notifications" class="focus:outline-none focus:ring-2 rounded focus:ring-gray-300">
                                 <svg  xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

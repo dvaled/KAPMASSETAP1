@@ -9,6 +9,8 @@ class Software extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = "TRN_DTL_SOFTWARE";
+
     protected $fillable = [
         "IDSOFTWARE",
         "IDASSET",
@@ -28,6 +30,5 @@ class Software extends Model
 
 
 
-   
    
 }

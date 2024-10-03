@@ -1,20 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\TypeController;
 use App\Http\Controllers\API\EmployeeController;
 use App\Http\Controllers\API\HardwareController;
 use App\Http\Controllers\API\HistoryController;
 use App\Http\Controllers\API\LogController;
 use App\Http\Controllers\API\MaintenanceController;
+use App\Http\Controllers\API\MasterController;
 use App\Http\Controllers\API\SoftwareController;
 
 Route::middleware('api')->group(function () {
-    Route::get('types', [TypeController::class, 'index']); // Get all types
-    Route::get('types/{id}', [TypeController::class, 'show']); // Get a specific type
-    Route::post('types', [TypeController::class, 'store']); // Create a new type
-    Route::put('types/{id}', [TypeController::class, 'update']); // Update a type
-    Route::delete('types/{id}', [TypeController::class, 'destroy']); // Delete a type
+    Route::get('types', [MasterController::class, 'index']); // Get all types
+    Route::get('types/{id}', [MasterController::class, 'show']); // Get a specific type
+    Route::post('types', [MasterController::class, 'store']); // Create a new type
+    Route::put('types/{id}', [MasterController::class, 'update']); // Update a type
+    Route::delete('types/{id}', [MasterController::class, 'destroy']); // Delete a type
 });
 
 Route::middleware('api')->group(function () {

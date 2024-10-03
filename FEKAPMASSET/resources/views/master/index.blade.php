@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row">
+{{-- <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>Types List</h2>
+            <h2>Master List</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-success" href="{{ route('types.create') }}">Create New Type</a>
+            <a class="btn btn-success" href="{{ route('master.create') }}">Create New Master</a>
         </div>
     </div>
 </div>
@@ -39,9 +39,9 @@
         <td>{{ $type->TypeGcm }}</td>
         <td>{{ $type->Active }}</td>
         <td>
-            <form action="{{ route('types.destroy', $type->id) }}" method="POST">
-                <a class="btn btn-info" href="{{ route('types.show', $type->id) }}">Show</a>
-                <a class="btn btn-primary" href="{{ route('types.edit', $type->id) }}">Edit</a>
+            <form action="{{ route('master.destroy', $type->id) }}" method="POST">
+                <a class="btn btn-info" href="{{ route('master.show', $type->id) }}">Show</a>
+                <a class="btn btn-primary" href="{{ route('master.edit', $type->id) }}">Edit</a>
 
                 @csrf
                 @method('DELETE')
@@ -53,5 +53,5 @@
     @endforeach
 </table>
 
-{!! $types->links() !!}
+{!! $types->links() !!} --}}
 @endsection

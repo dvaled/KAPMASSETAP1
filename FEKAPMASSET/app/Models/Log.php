@@ -9,6 +9,9 @@ class Log extends Model
 {
     use HasFactory;
 
+    protected $table = 'TRN_LOG';
+
+
     protected $fillable = [
         "LOGID",
         "ASSETID",

@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
  *     description="Operations about types"
  * )
  */
-class TypeController extends Controller
+class MasterController extends Controller
 {
         /**
      * @OA\Get(

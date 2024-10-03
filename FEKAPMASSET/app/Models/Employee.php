@@ -9,6 +9,8 @@ class Employee extends Model
 {
     use HasFactory;
 
+    protected $primarykey = "MST_EMPLOYEE";
+
     protected $fillable = [
         "NIPP",
         "NAME",
