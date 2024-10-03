@@ -10,9 +10,9 @@ public class TrnSoftwareController : ControllerBase{
         _context = context;
     }
 
-    [HttpGet("{IdAsset}")]
-    public async Task<ActionResult<List<TrnSoftwareModel>>> GetTrnSoftware(int IdAsset){
-        var trnSoftware = await _context.TrnSoftwareM.Where(e => e.IdAsset == IdAsset).ToListAsync();
+    [HttpGet("{IDASSET}")]
+    public async Task<ActionResult<List<TRNSOFTWAREMODEL>>> GetTrnSoftware(int IDASSET){
+        var trnSoftware = await _context.TRN_DTL_SOFTWARE.Where(e => e.IDASSET == IDASSET).ToListAsync();
 
         if (trnSoftware == null || !trnSoftware.Any()){
             return NotFound();
@@ -22,10 +22,10 @@ public class TrnSoftwareController : ControllerBase{
     }
 
     [HttpPost]
-    public async Task<ActionResult<TrnSoftwareModel>> PostTrnSoftware(TrnSoftwareModel trnSoftware){
-        _context.TrnSoftwareM.Add(trnSoftware);
+    public async Task<ActionResult<TRNSOFTWAREMODEL>> PostTrnSoftware(TRNSOFTWAREMODEL trnSoftware){
+        _context.TRN_DTL_SOFTWARE.Add(trnSoftware);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetTrnSoftware", new { id = trnSoftware.IdSoftware }, trnSoftware);
+        return CreatedAtAction("GetTrnSoftware", new { id = trnSoftware.IDASSETSOFTWARE }, trnSoftware);
     }
 }       

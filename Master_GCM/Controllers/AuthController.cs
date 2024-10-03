@@ -16,17 +16,18 @@ public class AuthController(AppDbContext context) : ControllerBase{
     [HttpPost("login")]
     public async Task<ActionResult<string>> LoginUser(string nipp, string password){
         // Find the user by NIPP and password in the database
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.NIPP == nipp && u.Password == password);
+        var user = await _context.MST_USER.FirstOrDefaultAsync(u => u.NIPP == nipp && u.PASSWORD == password);
         if (user == null){
             return Unauthorized("Invalid NIPP or Password");
         }
 
         // Generate and return the JWT token
         var token = GenerateToken(user);
-        return Ok(new { message = $"Welcome, {user.Name}", token });
-    }
+        return Ok(new { message = $"Welcome, {user.NAME}", token });
+        }
 
-     private string GenerateToken(UserModel usr){
+    [HttpPost("register")]
+     private string GenerateToken(USERMODEL usr){
         // Generate a JWT token with the user's details
         string secret = "KAIPropertiManajer123";
         var handler = new JwtSecurityTokenHandler();

@@ -1,8 +1,12 @@
-public class LogModel{
-    public int LogID{ get; set; }
-    public int AssetID { get; set; }
-    public int RoleID { get; set; }
-    public required string ActionPerformed { get; set; }
-    public required string UserAdded { get; set; }
-    public DateOnly DateAdded { get; set; }  
+using System.ComponentModel.DataAnnotations.Schema;
+public class LOGMODEL{
+    public int LOGID { get; set; }
+    public int IDASSET { get; set; }
+    public int ROLEID { get; set; }
+    public required string ACTIONPERFORMED { get; set; }
+    public required string USERADDED { get; set; }
+    public DateOnly DATEADDED { get; set; }  
+
+    [ForeignKey("IDASSET")]
+    public required TRNASSETMODEL TRNASSET { get; set; }
 }

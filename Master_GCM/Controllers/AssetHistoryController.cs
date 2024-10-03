@@ -11,9 +11,9 @@ public class AssetHistoryController : ControllerBase{
         _context = context;
     }
 
-    [HttpGet("{IdAsset}")]
-    public async Task<ActionResult<List<AssetHistoryModel>>> GetAssetHistory(int IdAsset){
-        var idasset = await _context.AssetHistory.Where(e => e.IdAsset == IdAsset).ToListAsync();
+    [HttpGet("{IDASSET}")]
+    public async Task<ActionResult<List<TRNASSETHISTORYMODEL>>> GetAssetHistory(int IDASSET){
+        var idasset = await _context.TRN_HIST_ASSET.Where(x => x.IDASSET == IDASSET).ToListAsync();
 
         if (idasset == null || !idasset.Any()){
             return NotFound();
@@ -22,10 +22,10 @@ public class AssetHistoryController : ControllerBase{
     }
 
     [HttpPost]
-    public async Task<ActionResult<AssetHistoryModel>> PostAssetHistory(AssetHistoryModel assetHistory){
-        _context.AssetHistory.Add(assetHistory);
+    public async Task<ActionResult<TRNASSETHISTORYMODEL>> PostAssetHistory(TRNASSETHISTORYMODEL assetHistory){
+        _context.TRN_HIST_ASSET.Add(assetHistory);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetAssetHistory", new { id = assetHistory.IdAssetHistory }, assetHistory);
+        return CreatedAtAction("GetAssetHistory", new { id = assetHistory.IDASSETHISTORY }, assetHistory);
     }
 }
