@@ -1,10 +1,10 @@
-public class EmployeeModel{
+using System.ComponentModel.DataAnnotations.Schema;
+public class MSTEMPLOYEEMODEL{
     public int NIPP { get; set; }
-    public required string Name { get; set; }
-    public required string Position { get; set; }
-    public required string Unit { get; set; }
-    public required string Department { get; set; }
-    public required string Directorate { get; set; }
-    public required string Password { get; set; }
-    public required string Active { get; set; }
+    public required string NAME { get; set; }
+    public required string POSITION { get; set; }
+    public required string UNIT { get; set; }
+    public required string DEPARTMENT { get; set; }
+    public required string DIRECTORATE { get; set; }
+    public required string ACTIVE { get; set; }
 }

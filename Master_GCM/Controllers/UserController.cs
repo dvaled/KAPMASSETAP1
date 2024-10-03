@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 
 [ApiController]
 [Route("api/[controller]")]
-
 public class UserController : ControllerBase
 {
     private readonly AppDbContext _context;
@@ -12,13 +11,13 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserModel>>> GetUser(){
-    return await _context.Users.ToListAsync();
+    public async Task<ActionResult<List<USERMODEL>>> GetUser(){
+        return await _context.MST_USER.ToListAsync();
     }
 
     [HttpGet("{active}")]
-    public async Task<ActionResult<List<UserModel>>> GetUserStatus(string active){
-        var user = await _context.Users.Where(e => e.Active == active).ToListAsync();
+    public async Task<ActionResult<List<USERMODEL>>> GetUserStatus(string active){
+        var user = await _context.MST_USER.Where(e => e.ACTIVE == active).ToListAsync();
 
         if (user == null){
             return NotFound();
@@ -26,8 +25,8 @@ public class UserController : ControllerBase
         return user;
     }
 
-    [HttpPut("{nipp}")]
-    public async Task<ActionResult<UserModel>> PutUser(string nipp, UserModel user){
+    [HttpPut("{NIPP}")]
+    public async Task<ActionResult<USERMODEL>> PutUser(string nipp, USERMODEL user){
         if (nipp != user.NIPP)
         {
             return BadRequest();
@@ -55,7 +54,6 @@ public class UserController : ControllerBase
 
     private bool UserExists(string nipp)
     {
-        return _context.Users.Any(e => e.NIPP == nipp);
+        return _context.MST_USER.Any(e => e.NIPP == nipp);
     }
-    
 }

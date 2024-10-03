@@ -13,7 +13,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Master_GCM")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a6b8e2d11612f7d01d90a5d1ffbb691cc97e1124")]
+=======
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7be19ac868245f8e1d9785969decaf70b578e18b")]
+>>>>>>> e36ac4869b195d05f3c46c7b27aa1569682f8085
 [assembly: System.Reflection.AssemblyProductAttribute("Master_GCM")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Master_GCM")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -13,14 +13,14 @@ public class MasterController : ControllerBase
 
 //Get value from db
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<MasterModel>>> GetMaster(){
-    return await _context.Masters.ToListAsync();
+    public async Task<ActionResult<IEnumerable<MASTERMODEL>>> GetMaster(){
+    return await _context.MST_GCM.ToListAsync();
     }
 
-    [HttpGet("{active}")]
-    public async Task<ActionResult<List<MasterModel>>> GetMaster(string active){
-        var masters = await _context.Masters
-                                    .Where(e =>  e.Active == active) // Adjust condition based on your model
+    [HttpGet("{ACTIVE}")]
+    public async Task<ActionResult<List<MASTERMODEL>>> GetMaster(string active){
+        var masters = await _context.MST_GCM
+                                    .Where(e =>  e.ACTIVE == active) // Adjust condition based on your model
                                     .ToListAsync(); // Retrieve a list
         if (masters == null || !masters.Any()){
             return NotFound();
@@ -31,27 +31,27 @@ public class MasterController : ControllerBase
 
 //Post master value to db
     [HttpPost]
-    public async Task<ActionResult<MasterModel>> PostMaster(MasterModel master){
+    public async Task<ActionResult<MASTERMODEL>> PostMaster(MASTERMODEL master){
 
         //Check if value is exist
-        if (await _context.Masters.AnyAsync(e => e.MasterID == master.MasterID)){
+        if (await _context.MST_GCM.AnyAsync(e => e.MASTERID == master.MASTERID)){
             return Conflict("This MasterID already exists");
         }
 
-        else if (await _context.Masters.AnyAsync(e => e.Condition == master.Condition && e.NoSr == master.NoSr)){
+        else if (await _context.MST_GCM.AnyAsync(e => e.CONDITION == master.CONDITION && e.NOSR == master.NOSR)){
         return Conflict("This NoSr already exists");
         }
 
-        _context.Masters.Add(master);
+        _context.MST_GCM.Add(master);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetMaster", new { id = master.MasterID }, master);
+        return CreatedAtAction("GetMaster", new { id = master.MASTERID }, master);
     }
 
 //Update value master to db    
-    [HttpPut("{masterID:int}")]
-    public async Task<IActionResult> PutMaster(int masterID, MasterModel master){
-        if (masterID != master.MasterID){
+    [HttpPut("{MASTERID:int}")]
+    public async Task<IActionResult> PutMaster(int MASTERID, MASTERMODEL master){
+        if (MASTERID != master.MASTERID){
             return BadRequest();
         }
 
@@ -62,7 +62,7 @@ public class MasterController : ControllerBase
             await _context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException){
-            if (!MasterExists(masterID)){
+            if (!MasterExists(MASTERID)){
                 return NotFound();
             }
             else{throw;}
@@ -72,6 +72,6 @@ public class MasterController : ControllerBase
     }
 
     private bool MasterExists(int masterID){
-        return _context.Masters.Any(e => e.MasterID == masterID);
+        return _context.MST_GCM.Any(e => e.MASTERID == masterID);
     }
 }

@@ -10,15 +10,13 @@ public class LogController : ControllerBase{
     }
     
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<LogModel>>> GetLog(){
-        return await _context.Logs.ToListAsync();
+    public async Task<ActionResult<IEnumerable<LOGMODEL>>> GetLog(){
+        return await _context.TRN_LOG.ToListAsync();
     }
-
-    [HttpPost] 
-    public async Task<ActionResult<LogModel>> PostLog(LogModel log){
-        _context.Logs.Add(log);
+    [HttpPost]
+    public async Task<ActionResult<LOGMODEL>> PostLog(LOGMODEL log){
+        _context.TRN_LOG.Add(log);
         await _context.SaveChangesAsync();
-        
-        return CreatedAtAction(nameof(PostLog), new { id = log.LogID }, log);
+        return CreatedAtAction("PostL   og", new { id = log.LOGID }, log);
     }
 }

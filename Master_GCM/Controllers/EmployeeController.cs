@@ -11,7 +11,7 @@ public class EmployeeController : ControllerBase{
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<EmployeeModel>>> GetEmployee(){
-    return await _context.Employee.ToListAsync();
+    public async Task<ActionResult<IEnumerable<MSTEMPLOYEEMODEL>>> GetEmployee(){
+    return await _context.MST_EMPLOYEE.ToListAsync();
     }
 }
