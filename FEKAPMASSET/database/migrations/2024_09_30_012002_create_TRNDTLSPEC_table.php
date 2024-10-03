@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string("PROCESSORMODEL");
             $table->string("PROCESSORSERIES");
             $table->string("MEMORYTYPE");
-            $table->string("MEMORYBTAND");
+            $table->string("MEMORYBRAND");
             $table->string("MEMORYMODEL");
             $table->string("MEMORYSERIES");
             $table->string("MEMORYCAPACITY");

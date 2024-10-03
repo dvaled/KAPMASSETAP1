@@ -23,12 +23,11 @@ class MaintenanceController extends Controller
 
     public function store (Request $request){
         $request -> validate([
-            "Idmaintenance" => 'required',
-            "MaintenanceID"=> 'required',
-            "AssetID"=> 'required',
-            "User_Added"=> 'required',
-            "Notes"=> 'required',
-            "Date_Added"=> 'required'
+            "MAINTENANCEID"=> 'required',
+            "IDASSET"=> 'required',
+            "USERADDED"=> 'required',
+            "NOTES"=> 'required',
+            "DATEADDED"=> 'required'
         ]);
         maintenance::create($request->all());
         return redirect()->route('maintenance.index')->with('success', 'maintenance created successfully');
@@ -36,12 +35,11 @@ class MaintenanceController extends Controller
 
     public function update(Request $request){
         $request -> validate([
-            "Idmaintenance" => 'required',
-            "MaintenanceID"=> 'required',
-            "AssetID"=> 'required',
-            "User_Added"=> 'required',
-            "Notes"=> 'required',
-            "Date_Added"=> 'required' 
+            "MAINTENANCEID"=> 'required',
+            "IDASSET"=> 'required',
+            "USERADDED"=> 'required',
+            "NOTES"=> 'required',
+            "DATEADDED"=> 'required' 
         ]);
         $maintenance = maintenance::find($request -> id);
         $maintenance->update($request->all());

@@ -10,37 +10,40 @@ class Hardware extends Model
     use HasFactory;
 
     protected $fillable = [
-        "IdAsset",
-        "NIPP",
-        "ProcessorBrand",
-        "ProcessorModel",
-        "ProcessorSeries",
-        "MemoryType",
-        "MemoryBrand",
-        "MemoryModel",
-        "MemorySeries",
-        "MemoryCapacity",
-        "StorageType",
-        "StorageBrand",
-        "StorageModel",
-        "StorageSeries",
-        "StorageCapacity",
-        "GraphicsType",
-        "GraphicsBrand",
-        "GraphicsModel",
-        "GraphicsSeries",
-        "GraphicsCapacity",
-        "ScreenResolution",
-        "Touchscreen",
-        "BacklightKeyboard",
-        "Convertible",
-        "WebCamera",
-        "Speaker",
-        "Microphone",
-        "Wifi",
-        "Bluetooth"
-
+        "ASSETID",
+        "PROCESSORBRAND",
+        "PROCESSORMODEL",
+        "PROCESSORSERIES",
+        "MEMORYTYPE",
+        "MEMORYBRAND",
+        "MEMORYMODEL",
+        "MEMORYSERIES",
+        "MEMORYCAPACITY",
+        "STORAGETYPE",
+        "STORAGEBRAND",
+        "STORAGEMODEL",
+        "STORAGESERIES",
+        "STORAGECAPACITY",
+        "GRAPHICSTYPE",
+        "GRAPHICSBRAND",
+        "GRAPHICSMODEL",
+        "GRAPHICSERIES",
+        "GRAPHICSCAPACITY",
+        "SCREENRESOLUTION",
+        "TOUCHSCREEN",
+        "BACKLIGHTKEYBOARD",
+        "CONVERTIBLE",
+        "WEBCAMERA",
+        "SPEAKER",
+        "MICROPHONE",
+        "WIFI",
+        "BLUETOOTH",
+        "USER_ADDED",
+        "USER_UPDATED"
     ];
 
+    // public function Asset(){
+    //     return $this->belongsTo(Asset::class, 'IDASSET', 'IDASSET');
+    // }
     
 }

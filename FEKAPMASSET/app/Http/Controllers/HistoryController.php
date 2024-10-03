@@ -23,17 +23,17 @@ class HistoryController extends Controller
 
     public function store (Request $request){
         $request -> validate([
-            "IdAssetHistory" => "Required",
-            "IdAsset" => "Required" ,
+            "IDASSETHISTORY" => "Required",
+            "IDASSET" => "Required" ,
             "NIPP" => "Required",
-            "Name" => "Required",
-            "Position" => "Required",
-            "Unit" => "Required",
-            "Department" => "Required",
-            "Directorate" => "Required",
-            "PICAdded" => "Required",
-            "DateAdded" => "Required",
-            "DateUpdated" => "Required"
+            "NAME" => "Required",
+            "POSITION" => "Required",
+            "UNIT" => "Required",
+            "DEPARTMENT" => "Required",
+            "DIRECTORATE" => "Required",
+            "PICADDED" => "Required",
+            "DATEADDED" => "Required",
+            "DATEUPDATED" => "Required"
         ]);
         History::create($request->all());
         return redirect()->route('History.index')->with('success', 'History created successfully');
@@ -41,17 +41,17 @@ class HistoryController extends Controller
 
     public function update(Request $request){
         $request -> validate([
-           "IdAssetHistory" => "Required",
-            "IdAsset" => "Required" ,
+           "IDASSETHISTORY" => "Required",
+            "IDASSET" => "Required" ,
             "NIPP" => "Required",
-            "Name" => "Required",
-            "Position" => "Required",
-            "Unit" => "Required",
-            "Department" => "Required",
-            "Directorate" => "Required",
-            "PICAdded" => "Required",
-            "DateAdded" => "Required",
-            "DateUpdated" => "Required"
+            "NAME" => "Required",
+            "POSITION" => "Required",
+            "UNIT" => "Required",
+            "DEPARTMENT" => "Required",
+            "DIRECTORATE" => "Required",
+            "PICADDED" => "Required",
+            "DATEADDED" => "Required",
+            "DATEUPDATED" => "Required"
         ]);
         $History = History::find($request -> id);
         $History->update($request->all());

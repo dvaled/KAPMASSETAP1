@@ -20,20 +20,20 @@ use Illuminate\Database\Eloquent\Model;
  *     @OA\Property(property="Active", type="boolean")
  * )
  */
-class Type extends Model
+class Master extends Model
 {
     use HasFactory;
     // Specify the primary key
     protected $primaryKey = 'MasterID';
 
     protected $fillable = [
-        "MasterID",
-        "Condition",
-        "NoSr",
-        "Description",
-        "ValueGcm",
-        "Type_Gcm",
-        "Active"
+        "MASTERID",
+        "CONDITION",
+        "NOSR",
+        "DESCRIPTION",
+        "VALUEGCM",
+        "TYPEGCM",
+        "ACTIVE"
     ];
 }
 

@@ -9,10 +9,9 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
+    public function up(): void{
         Schema::create('TRN_HIST_MTC', function (Blueprint $table) {
-            $table->id("MaintenanceID");
+            $table->id("MAINTENANCEID");
             $table->integer("IDASSET");
             $table->string("USERADDED");
             $table->string("NOTES");
@@ -21,7 +20,7 @@ return new class extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Reverse the migrationss.
      */
     public function down(): void
     {

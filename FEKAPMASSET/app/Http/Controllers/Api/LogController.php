@@ -31,14 +31,13 @@ class LogController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'LogID' => 'required',
-            'AssetID' => 'required',
-            'RoleID' => 'required',
-            'ActionPerformed' => 'required',
-            'UserAdded' => 'required|integer',
-            'DateAdded' => 'required|date',
+            "LOGID" => 'required',
+            "ASSETID" => 'required',
+            "ROLEID" => 'required',
+            "ACTIONPERFORMED"=> 'required',
+            "USERADDED" => 'required',
+            "DATEADDED" => 'required'
         ]);
-
         $log = Log::create($validatedData);
         return response()->json(['message' => 'Log record created successfully', 'data' => $log], 201);
     }

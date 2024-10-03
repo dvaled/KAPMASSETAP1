@@ -31,12 +31,16 @@ class SoftwareController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'IdSoftware' => 'required',
-            'IdAsset' => 'required',
-            'SoftwareType' => 'required|string|max:255',
-            'SoftwareCategory' => 'required|string|max:255',
-            'SoftwareName' => 'required|string|max:255',
-            'SoftrwareLicense' => 'required|string|max:255',
+            "IDSOFTWARE" => 'required',
+            "IDASSET"=> 'required',
+            "SOFTWARETYPE"=> 'required',
+            "SOFTWARECATEGORY"=> 'required',
+            "SOFTWARENAME"=> 'required',
+            "SOFTWARELICENSE" => 'required',
+            "INSTALLEDDATE" => 'required',
+            "PICADDED" => 'required',
+            "PICUPDATED" => 'required',
+            "ACTIVE"=> 'required'
         ]);
 
         $software = Software::create($validatedData);

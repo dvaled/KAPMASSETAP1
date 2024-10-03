@@ -31,11 +31,11 @@ class MaintenanceController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'MaintenanceID' => 'required',
-            'AssetID' => 'required',
-            'User_Added' => 'required',
-            'Notes' => 'required|string|max:255',
-            'Date_Added' => 'required|date',
+            "MAINTENANCEID"=> 'required',
+            "IDASSET"=> 'required',
+            "USERADDED"=> 'required',
+            "NOTES"=> 'required',
+            "DATEADDED"=> 'required'
         ]);
 
         $maintenance = Maintenance::create($validatedData);

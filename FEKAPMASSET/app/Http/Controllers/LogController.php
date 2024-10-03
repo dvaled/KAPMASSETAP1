@@ -23,12 +23,12 @@ class LogController extends Controller
 
     public function store (Request $request){
         $request -> validate([
-            "LogID" => 'required',
-            "AssetID" => 'required',
-            "RoleID" => 'required',
-            "ActionPerformed"=> 'required',
-            "UserAdded" => 'required',
-            "DateAdded" => 'required'
+            "LOGID" => 'required',
+            "ASSETID" => 'required',
+            "ROLEID" => 'required',
+            "ACTIONPERFORMED"=> 'required',
+            "USERADDED" => 'required',
+            "DATEADDED" => 'required'
         ]);
         Log::create($request->all());
         return redirect()->route('Log.index')->with('success', 'Log created successfully');
@@ -36,12 +36,12 @@ class LogController extends Controller
 
     public function update(Request $request){
         $request -> validate([
-            "LogID" => 'required',
-            "AssetID" => 'required',
-            "RoleID" => 'required',
-            "ActionPerformed"=> 'required',
-            "UserAdded" => 'required',
-            "DateAdded" => 'required'
+            "LOGID" => 'required',
+            "ASSETID" => 'required',
+            "ROLEID" => 'required',
+            "ACTIONPERFORMED"=> 'required',
+            "USERADDED" => 'required',
+            "DATEADDED" => 'required'
         ]);
         $Log = Log::find($request -> id);
         $Log->update($request->all());

@@ -57,13 +57,12 @@ class EmployeeController extends Controller
     {
         $validatedData = $request->validate([
             'NIPP' => 'required|unique:employees,NIPP',
-            'Name' => 'required',
-            'Postiion' => 'required',
-            'Unit' => 'required',
-            'Department' => 'required',
-            'Directorate' => 'required',
-            'Password' => 'required',
-            'Active' => 'required|boolean',
+            'NAME' => 'required',
+            'POSITION' => 'required',
+            'UNIT' => 'required',
+            'DEPARTMENT' => 'required',
+            'DIRECTORATE' => 'required',
+            'ACTIVE' => 'required|boolean',
         ]);
 
         $employee = Employee::create($validatedData);

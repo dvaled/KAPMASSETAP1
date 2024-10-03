@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Type;
+use App\Models\Master;
 use Illuminate\Http\Request;
 
-class TypeController extends Controller
+class MasterController extends Controller
 {
     //display the list of "types"
     public function index(){
-        $types = Type::all();
+        $types = Master::all();
         return view('types.index', compact('types'));
     }
 
@@ -20,35 +20,35 @@ class TypeController extends Controller
 
     public function store(Request $request){
         $request -> validate([
-            "MasterID" => 'required',
-            "Condition"=> 'required',
-            "NoSr" => 'required',
-            "Description" => 'required',
-            "ValueGcm" => 'required',
-            "Type_Gcm" => 'required',
-            "Active" => 'required'
+            "MASTERID" => 'required',
+            "CONDITION"=> 'required',
+            "NOSR" => 'required',
+            "DESCRIPTION" => 'required',
+            "VALUEGCM" => 'required',
+            "TYPEGCM" => 'required',
+            "ACTIVE" => 'required'
         ]);
 
-        Type::create($request -> all());
+        Master::create($request -> all());
         return redirect()->route('types.index')->with('success', 'Type created successfully');
     } 
 
     public function update(Request $request){
         $request -> validate([
-            "MasterID" => 'required',
-            "Condition"=> 'required',
-            "NoSr" => 'required',
-            "Description" => 'required',
-            "ValueGcm" => 'required',
-            "Type_Gcm" => 'required',
-            "Active" => 'required'
+            "MASTERID" => 'required',
+            "CONDITION"=> 'required',
+            "NOSR" => 'required',
+            "DESCRIPTION" => 'required',
+            "VALUEGCM" => 'required',
+            "TYPEGCM" => 'required',
+            "ACTIVE" => 'required'
         ]);
-        $type = Type::find($request->id);
+        $type = Master::find($request->id);
         $type->update($request->all());
         return redirect()->route('types.index')->with('success', 'Type updated successfully');        
     }
 
-    public function delete(Type $type){
+    public function delete(Master $type){
         $type -> delete();
         return redirect()->route('types.index')->with('success', 'Type deleted successfully');
     }

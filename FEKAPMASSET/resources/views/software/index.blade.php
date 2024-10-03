@@ -42,10 +42,8 @@
             <form action="{{ route('softwares.destroy', $software->id) }}" method="POST">
                 <a class="btn btn-info" href="{{ route('softwares.show', $software->id) }}">Show</a>
                 <a class="btn btn-primary" href="{{ route('softwares.edit', $software->id) }}">Edit</a>
-
                 @csrf
                 @method('DELETE')
-
                 <button software="submit" class="btn btn-danger">Delete</button>
             </form>
         </td>

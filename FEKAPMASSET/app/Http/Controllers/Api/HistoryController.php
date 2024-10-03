@@ -31,17 +31,17 @@ class HistoryController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'IdAssetHistory' => 'required',
-            'IdAsset' => 'required',
-            'NIPP' => 'required',
-            'Name' => 'required',
-            'Position' => 'required',
-            'Unit' => 'required',
-            'Department' => 'required',
-            'Directorate' => 'required',
-            'PICAdded' => 'required|integer',
-            'DateAdded' => 'required|date',
-            'DateUpdated' => 'required|date',
+            "IDASSETHISTORY" => "Required",
+            "IDASSET" => "Required" ,
+            "NIPP" => "Required",
+            "NAME" => "Required",
+            "POSITION" => "Required",
+            "UNIT" => "Required",
+            "DEPARTMENT" => "Required",
+            "DIRECTORATE" => "Required",
+            "PICADDED" => "Required",
+            "DATEADDED" => "Required",
+            "DATEUPDATED" => "Required"
         ]);
 
         $historyRecord = History::create($validatedData);

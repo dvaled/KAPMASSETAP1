@@ -23,12 +23,19 @@ class SoftwareController extends Controller
 
     public function store (Request $request){
         $request -> validate([
-        "IdSoftware" => 'required',
-        "IdAsset"=> 'required',
-        "SoftwareType"=> 'required',
-        "SoftwareCategory"=> 'required',
-        "SoftwareName"=> 'required',
-        "SoftrwareLicense=> 'required'"
+            "IDSOFTWARE" => 'required',
+            "IDASSET"=> 'required',
+            "SOFTWARETYPE"=> 'required',
+            "SOFTWARECATEGORY"=> 'required',
+            "SOFTWARENAME"=> 'required',
+            "SOFTWARELICENSE" => 'required',
+            "INSTALLEDDATE" => 'required',
+            "PICADDED" => 'required',
+            "PICUPDATED" => 'required',
+            "ACTIVE"=> 'required'
+
+            
+
         ]);
         Software::create($request->all());
         return redirect()->route('software.index')->with('success', 'Software created successfully');
@@ -36,12 +43,18 @@ class SoftwareController extends Controller
 
     public function update(Request $request){
         $request -> validate([
-            "IdSoftware" => 'required',
-            "IdAsset"=> 'required',
-            "SoftwareType"=> 'required',
-            "SoftwareCategory"=> 'required',
-            "SoftwareName"=> 'required',
-            "SoftrwareLicense=> 'required'" 
+            "IDSOFTWARE" => 'required',
+            "IDASSET"=> 'required',
+            "SOFTWARETYPE"=> 'required',
+            "SOFTWARECATEGORY"=> 'required',
+            "SOFTWARENAME"=> 'required',
+            "SOFTWARELICENSE" => 'required',
+            "INSTALLEDDATE" => 'required',
+            "PICADDED" => 'required',
+            "PICUPDATED" => 'required',
+            "ACTIVE"=> 'required'
+
+            
         ]);
         $software = Software::find($request -> id);
         $software->update($request->all());

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Master;
 use App\Models\Type;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,7 @@ class TypeController extends Controller
     //fetch all data
     public function index()
     {
-        $types = Type::all();
+        $types = Master::all();
         return response()->json($types, 200);
     }
 
@@ -58,7 +59,7 @@ class TypeController extends Controller
      */
     public function show($id)
     {
-        $type = Type::find($id);
+        $type = Master::find($id);
 
         if (!$type) {
             return response()->json(['message' => 'Type not found'], 404);
@@ -87,22 +88,23 @@ class TypeController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'Condition' => 'required',
-            'NoSr' => 'required',
-            'Description' => 'required',
-            'ValueGcm' => 'required',
-            'Type_Gcm' => 'required',
-            'Active' => 'required|boolean',
+            "MASTERID" => 'required',
+            "CONDITION"=> 'required',
+            "NOSR" => 'required',
+            "DESCRIPTION" => 'required',
+            "VALUEGCM" => 'required',
+            "TYPEGCM" => 'required',
+            "ACTIVE" => 'required'
         ]);
 
-        $type = Type::create($validatedData);
+        $type = Master::create($validatedData);
         return response()->json(['message' => 'Type created successfully', 'data' => $type], 201);
     }
 
     
     public function update(Request $request, $id)
     {
-        $type = Type::find($id);
+        $type = Master::find($id);
 
         if (!$type) {
             return response()->json(['message' => 'Type not found'], 404);
@@ -124,7 +126,7 @@ class TypeController extends Controller
     // Delete a type
     public function destroy($id)
     {
-        $type = Type::find($id);
+        $type = Master::find($id);
 
         if (!$type) {
             return response()->json(['message' => 'Type not found'], 404);
