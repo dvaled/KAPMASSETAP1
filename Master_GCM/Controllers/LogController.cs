@@ -14,10 +14,9 @@ public class LogController : ControllerBase{
         return await _context.TRN_LOG.ToListAsync();
     }
     [HttpPost]
-    [HttpPost] 
     public async Task<ActionResult<LOGMODEL>> PostLog(LOGMODEL log){
         _context.TRN_LOG.Add(log);
         await _context.SaveChangesAsync();
-        return CreatedAtAction("PostL   og", new { id = log.LogID }, log);
+        return CreatedAtAction("PostL   og", new { id = log.LOGID }, log);
     }
 }
