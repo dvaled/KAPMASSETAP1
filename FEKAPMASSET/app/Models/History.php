@@ -11,17 +11,17 @@ class History extends Model
     use HasFactory;
 
     protected $fillable = [
-        "IdAssetHistory",
-        "IdAsset",
+        "IDASSETHISTORY",
+        "IDASSET",
         "NIPP",
-        "Name",
-        "Position",
-        "Unit",
-        "Department",
-        "Directorate",
-        "PICAdded",
-        "DateAdded",
-        "DateUpdated"
+        "NAME",
+        "POSITION",
+        "UNIT",
+        "DEPARTMENT",
+        "DIRECTORATE",
+        "PICADDED",
+        "DATEADDED",
+        "DATEUPDATED"
     ];
 
     //foreign key relationship
@@ -30,6 +30,6 @@ class History extends Model
     }
 
     public function User(){
-        return $this->belongsTo(User::class, 'PICAdded', 'id');
+        return $this->belongsTo(User::class, 'PICADDED', 'NAME');
     }
 }

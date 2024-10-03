@@ -5,24 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class maintenance extends Model
+class Maintenance extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        "MaintenanceID",
-        "AssetID",
-        "User_Added",
-        "Notes",
-        "Date_Added"
+        "MAINTENANCEID",
+        "IDASSET",
+        "USERADDED",
+        "NOTES",
+        "DATEADDED"
     ];
 
     public function MasterID(){
-        return $this->belongsTo(Type::class, "AssetID", "MasterID");
+        return $this->belongsTo(Master::class, "IDASSET", "MASTERID");
     }
 
     public function User(){
-        return $this->belongsTo(User::class, "User_Added", "NIPP");
+        return $this->belongsTo(User::class, "USERADDED", "NIPP");
     } 
 
     

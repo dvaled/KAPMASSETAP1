@@ -10,16 +10,16 @@ class Log extends Model
     use HasFactory;
 
     protected $fillable = [
-        "LogID",
-        "AssetID",
-        "RoleID",
-        "ActionPerformed",
-        "UserAdded",
-        "DateAdded"
+        "LOGID",
+        "ASSETID",
+        "ROLEID",
+        "ACTIONPERFORMED",
+        "USERADDED",
+        "DATEADDED"
     ];
     
     public function User(){
-        return $this->belongsTo(User::class, 'UserAdded', 'NIPP');
+        return $this->belongsTo(User::class, 'USERADDED', 'NIPP');
     }
     
 }

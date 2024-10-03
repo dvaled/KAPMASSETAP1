@@ -10,19 +10,20 @@ class Software extends Model
     use HasFactory;
 
     protected $fillable = [
-        "IdSoftware",
-        "IdAsset",
-        "SoftwareType",
-        "SoftwareCategory",
-        "SoftwareName",
-        "SoftrwareLicense"
+        "IDSOFTWARE",
+        "IDASSET",
+        "SOFTWARETYPE",
+        "SOFTWARECATEGORY",
+        "SOFTWARENAME",
+        "SOFTWARELICENSE",
+        "INSTALLED_DATE",
+        "PICADDED",
+        "PICUPDATED",
+        "ACTIVE"
     ];
 
     public function Hardware(){
-        return $this->belongsTo(Hardware::class, 'IdAsset', 'IdAsset');
-    }
-    public function ardware(){
-        return $this->hasMany(Hardware::class, 'IdAsset', 'IdAsset');
+        return $this->belongsTo(Hardware::class, 'IDASSET', 'IDASSET');
     }
 
 

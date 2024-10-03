@@ -11,13 +11,12 @@ class Employee extends Model
 
     protected $fillable = [
         "NIPP",
-        "Name",
-        "Postiion",
-        "Unit",
-        "Department",
-        "Directorate",
-        "Password",
-        "Active"
+        "NAME",
+        "POSITION",
+        "UNIT",
+        "DEPARTMENT",
+        "DIRECTORATE",
+        "ACTIVE"
     ];
 
 }

@@ -2,22 +2,67 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Software;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
 class SoftwareController extends Controller
 {
-    public function fetchSoftwareData()
-    {
-        
-        $response = Http::get("");
-        
-        // Check if the request was successful
-        if ($response->successful()) {
-            $softwareData = $response->json();  // Get the JSON response
-            return view('software', compact('softwareData'));  // Pass data to Blade view
-        }
+    public function index(){
+        $software = Software::all();
+        return view('software.index', compact('software'));
+    }
 
-        return back()->withErrors('Failed to fetch maintenance data.');
+      // Show a single type
+    public function show(Software $software){
+        return view('software.show', compact('software'));
+    }
+
+    public function create(){
+        return view('software.create');
+    }
+
+    public function store (Request $request){
+        $request -> validate([
+            "IDSOFTWARE" => 'required',
+            "IDASSET"=> 'required',
+            "SOFTWARETYPE"=> 'required',
+            "SOFTWARECATEGORY"=> 'required',
+            "SOFTWARENAME"=> 'required',
+            "SOFTWARELICENSE" => 'required',
+            "INSTALLEDDATE" => 'required',
+            "PICADDED" => 'required',
+            "PICUPDATED" => 'required',
+            "ACTIVE"=> 'required'
+
+            
+
+        ]);
+        Software::create($request->all());
+        return redirect()->route('software.index')->with('success', 'Software created successfully');
+    }
+
+    public function update(Request $request){
+        $request -> validate([
+            "IDSOFTWARE" => 'required',
+            "IDASSET"=> 'required',
+            "SOFTWARETYPE"=> 'required',
+            "SOFTWARECATEGORY"=> 'required',
+            "SOFTWARENAME"=> 'required',
+            "SOFTWARELICENSE" => 'required',
+            "INSTALLEDDATE" => 'required',
+            "PICADDED" => 'required',
+            "PICUPDATED" => 'required',
+            "ACTIVE"=> 'required'
+
+            
+        ]);
+        $software = Software::find($request -> id);
+        $software->update($request->all());
+        return redirect()->route('software.index')->with('success', 'Software updated successfully');
+    }
+
+    public function delete(Software $software){
+        $software->delete();
+        return redirect()->route('software.index')->with('success', 'Software deleted successfully');
     }
 }

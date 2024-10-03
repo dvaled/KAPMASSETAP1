@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('software', function (Blueprint $table) {
-            $table->id("IdSoftware");
-            $table->string("SoftwareType");
-            $table->string("SoftwareCategory");
-            $table->string("SoftwareName");
-            $table->string("SoftwareLicense");
-            $table->timestamps();
+        Schema::create('TRN_DTL_PIC', function (Blueprint $table) {
+            $table->id("IDASSET");
+            $table->integer("IDASSETPIC");
+            $table->string("ASSETPIC");
         });
     }
 
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('software');
+        Schema::dropIfExists('TRN_DTL_PIC');
     }
 };

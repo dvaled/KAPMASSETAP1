@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('histories', function (Blueprint $table) {
-            $table->id();
-            $table->int("NIPP");
-            $table->String("Name");
-            $table->String("Position");
-            $table->String("Unit");
-            $table->String("Department");
-            $table->String("Directorate");
-            $table->String("PICAdded");
-            $table->timestamp("DateAded");
-            $table->timestamp("DateUpdated");
+        Schema::create('TRN_HIST_ASSET', function (Blueprint $table) {
+            $table->id("IDASSETHISTORY");
+            $table->integer("IDASSET");
+            $table->integer("NIPP");
+            $table->String("NAME");
+            $table->String("POSITION");
+            $table->String("UNIT");
+            $table->String("DEPARTMENT");
+            $table->String("DIRECTORATE");
+            $table->String("PICADDED");
+            $table->timestamp("DATEADDED");
+            $table->timestamp("DATEUPDATED");
         });
     }
 
@@ -30,7 +31,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('histories');
+        Schema::dropIfExists('TRN_HIST_ASSET');
     }
 };
 

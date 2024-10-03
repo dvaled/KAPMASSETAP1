@@ -19,7 +19,7 @@
                 @yield('content')
             </div>
         </div>
-
+        
     <footer>
         <!-- Include footer component -->
         @include('layouts.footer')
