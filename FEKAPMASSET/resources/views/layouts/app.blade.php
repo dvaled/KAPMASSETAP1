@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Laravel App</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link rel="stylesheet" href="soft-ui-dashboard-tailwind.css" />
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
     <!-- Fonts -->
@@ -24,9 +23,7 @@
 </head>
 <body class="bg-gray-100">
     <!-- Sidebar (Fixed) -->
-    <div class="w-72 fixed top-0 left-0 h-full bg-gray-800 shadow">
         @include('layouts.navbar')
-    </div>
 
     <div class="ml-72 min-h-screen flex flex-col justify-between p-6">
         <div class="flex-grow">

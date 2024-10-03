@@ -10,11 +10,11 @@ use App\Http\Controllers\API\MasterController;
 use App\Http\Controllers\API\SoftwareController;
 
 Route::middleware('api')->group(function () {
-    Route::get('types', [MasterController::class, 'index']); // Get all types
-    Route::get('types/{id}', [MasterController::class, 'show']); // Get a specific type
-    Route::post('types', [MasterController::class, 'store']); // Create a new type
-    Route::put('types/{id}', [MasterController::class, 'update']); // Update a type
-    Route::delete('types/{id}', [MasterController::class, 'destroy']); // Delete a type
+    Route::get('master', [MasterController::class, 'index']); // Get all types
+    Route::get('master/{id}', [MasterController::class, 'show']); // Get a specific type
+    Route::post('master', [MasterController::class, 'store']); // Create a new type
+    Route::put('master/{id}', [MasterController::class, 'update']); // Update a type
+    Route::delete('master/{id}', [MasterController::class, 'destroy']); // Delete a type
 });
 
 Route::middleware('api')->group(function () {

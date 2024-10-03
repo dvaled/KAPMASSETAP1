@@ -57,7 +57,7 @@
                     </ul>
                 </div>
                 <div class="px-8 border-t border-blue-700">
-                    <ul class="w-full flex items-center justify-between bg-blue-700">
+                    <ul class="w-full flex items-center justify-between bg-blue-00">
                         <li class="cursor-pointer text-white pt-5 pb-3">
                             <button aria-label="show notifications" class="focus:outline-none focus:ring-2 rounded focus:ring-gray-300">
                                 <svg  xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

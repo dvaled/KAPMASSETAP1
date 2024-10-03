@@ -1,14 +1,13 @@
 <?php
 
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\HistoryController;
-use App\Http\Controllers\LogController;
-use App\Http\Controllers\MaintenanceController;
-use App\Http\Controllers\SoftwareController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HardwareController;
-use App\Http\Controllers\MasterController;
-use App\Http\Controllers\TypeController;
+use App\Http\Controllers\API\EmployeeController;
+use App\Http\Controllers\API\HistoryController;
+use App\Http\Controllers\API\LogController;
+use App\Http\Controllers\API\MaintenanceController;
+use App\Http\Controllers\API\SoftwareController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\HardwareController;
+use App\Http\Controllers\API\MasterController;
 use Illuminate\Support\Facades\Route;
 
 // Master routes

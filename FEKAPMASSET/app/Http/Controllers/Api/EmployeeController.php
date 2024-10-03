@@ -3,6 +3,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use L5Swagger\Http\Controllers\SwaggerController;
 
@@ -12,8 +13,25 @@ class EmployeeController extends Controller
     // Fetch all employees
     public function index()
     {
-        $employees = Employee::all();
-        return response()->json($employees, 200);
+        $client = new Client();
+    try {
+        $response = $client->request('GET', 'http://localhost:5252/api/Employee');
+        $body = $response->getBody();
+        $content = $body->getContents();
+        $data = json_decode($content, true);
+
+        if (!is_array($data)) {
+            $data = []; 
+        }
+
+        return view('employee.index', ['employees' => $data]);
+
+    } catch (\Exception $e) {
+        return view('employee.index', ['employees' => []])-> with($e);
+    }
+        
+        // $employees = Employee::all();
+        // return response()->json($employees, 200);
     }
 
     // Fetch a single employee by ID

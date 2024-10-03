@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Maintenance;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class MaintenanceController extends Controller
@@ -11,8 +12,24 @@ class MaintenanceController extends Controller
     // Get all maintenance records
     public function index()
     {
-        $maintenances = Maintenance::with(['MasterID', 'User'])->get();
-        return response()->json($maintenances, 200);
+        $client = new Client();
+        try {
+            $response = $client->request('GET', 'http://localhost:5252/api/Maintenance');
+            $body = $response->getBody();
+            $content = $body->getContents();
+            $data = json_decode($content, true);
+
+            if (!is_array($data)) {
+                $data = []; 
+            }
+
+            return view('master.index', ['masters' => $data]);
+
+        } catch (\Exception $e) {
+            return view('master.index', ['masters' => []])-> with($e);
+        }
+        // $maintenances = Maintenance::with(['MasterID', 'User'])->get();
+        // return response()->json($maintenances, 200);
     }
 
     // Get a specific maintenance record by ID
