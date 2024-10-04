@@ -1,14 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-{{-- <div class="row">
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
-            <h2>Master List</h2>
-        </div>
-        <div class="pull-right">
-            <a class="btn btn-success" href="{{ route('master.create') }}">Create New Master</a>
-        </div>
+
+
+<div class="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border">
+    <div class="p-6 pb-0 mb-0 bg-white rounded-t-2xl">
+      <h6>Authors table</h6>
     </div>
 </div> --}}
 

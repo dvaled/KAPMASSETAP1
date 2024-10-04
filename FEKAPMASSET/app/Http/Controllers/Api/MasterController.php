@@ -4,30 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Master;
-use App\Models\Type;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
-/**
- * @OA\Tag(
- *     name="Types",
- *     description="Operations about types"
- * )
- */
 class MasterController extends Controller
 {
-        /**
-     * @OA\Get(
-     *     path="/api/types",
-     *     summary="Get list of types",
-     *     tags={"Types"},
-     *     @OA\Response(
-     *         response=200,
-     *         description="A list of types",
-     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Type"))
-     *     )
-     * )
-     */
     //fetch all data
 
     public function getMaster()
@@ -42,61 +23,39 @@ class MasterController extends Controller
 
     public function index()
     {
-        $types = Master::all();
-        return response()->json($types, 200);
+        $client = new Client();
+        try {
+            $response = $client->request('GET', 'http://localhost:5252/api/Master');
+            $body = $response->getBody();
+            $content = $body->getContents();
+            $data = json_decode($content, true);
+
+            if (!is_array($data)) {
+                $data = []; 
+            }
+
+            return view('master.index', ['masters' => $data]);
+
+        } catch (\Exception $e) {
+            return view('master.index', ['masters' => []])-> with($e);
+        }
+        // $master = Master::all();
+        // return response()->json($master, 200);
     }
 
-    /**
-     * @OA\Get(
-     *     path="/api/types/{MasterID}",
-     *     summary="Get a type by ID",
-     *     tags={"Types"},
-     *     @OA\Parameter(
-     *         name="MasterID",
-     *         in="path",
-     *         required=true,
-     *         description="The ID of the type",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Type details",
-     *         @OA\JsonContent(ref="#/components/schemas/Type")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Type not found"
-     *     )
-     * )
-     */
+
     public function show($id)
     {
-        $type = Master::find($id);
+        $master = Master::find($id);
 
-        if (!$type) {
-            return response()->json(['message' => 'Type not found'], 404);
+        if (!$master) {
+            return response()->json(['message' => 'master not found'], 404);
         }
 
-        return response()->json($type, 200);
+        return response()->json($master, 200);
     }
 
-    /**
-     * @OA\Post(
-     *     path="/api/types",
-     *     summary="Create a new type",
-     *     tags={"Types"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Type")
-     *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="Type created successfully",
-     *         @OA\JsonContent(ref="#/components/schemas/Type")
-     *     )
-     * )
-     */
-    //store new type
+    //store new master
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -109,43 +68,43 @@ class MasterController extends Controller
             "ACTIVE" => 'required'
         ]);
 
-        $type = Master::create($validatedData);
-        return response()->json(['message' => 'Type created successfully', 'data' => $type], 201);
+        $master = Master::create($validatedData);
+        return response()->json(['message' => 'master created successfully', 'data' => $master], 201);
     }
 
-    
     public function update(Request $request, $id)
     {
-        $type = Master::find($id);
+        $master = Master::find($id);
 
-        if (!$type) {
+        if (!$master) {
             return response()->json(['message' => 'Type not found'], 404);
         }
 
         $validatedData = $request->validate([
-            'Condition' => 'required',
-            'NoSr' => 'required',
-            'Description' => 'required',
-            'ValueGcm' => 'required',
-            'Type_  Gcm' => 'required',
-            'Active' => 'required|boolean',
+            "MASTERID" => 'required',
+            "CONDITION"=> 'required',
+            "NOSR" => 'required',
+            "DESCRIPTION" => 'required',
+            "VALUEGCM" => 'required',
+            "TYPEGCM" => 'required',
+            "ACTIVE" => 'required'
         ]);
 
-        $type->update($validatedData);
-        return response()->json(['message' => 'Type updated successfully', 'data' => $type], 200);
+        $master->update($validatedData);
+        return response()->json(['message' => 'Type updated successfully', 'data' => $master, 200]);
     }
 
     // Delete a type
     public function destroy($id)
     {
-        $type = Master::find($id);
-
-        if (!$type) {
-            return response()->json(['message' => 'Type not found'], 404);
+        $master = Master::find($id);
+         
+        if (!$master) {
+            return response()->json(['message' => 'master not found'], 404);
         }
 
-        $type->delete();
-        return response()->json(['message' => 'Type deleted successfully'], 200);
+        $master->delete();
+        return response()->json(['message' => 'master deleted successfully'], 200);
     }
 }
 

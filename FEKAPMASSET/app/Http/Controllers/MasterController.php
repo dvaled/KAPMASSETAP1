@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class MasterController extends Controller
 {
-    //display the list of "types"
+    //display the list of "master"
     public function index(){
-        $types = Master::all();
-        return view('master.index', compact('types'));
+        $masters = Master::all();
+        return view('master.index', compact('masters'));
     }
 
     //create page
@@ -31,7 +31,7 @@ class MasterController extends Controller
 
         Master::create($request -> all());
         return redirect()->route('master.index')->with('success', 'Master created successfully');
-    } 
+    }
 
     public function update(Request $request){
         $request -> validate([
@@ -53,7 +53,7 @@ class MasterController extends Controller
         return redirect()->route('master.index')->with('success', 'Type deleted successfully');
     }   
 
-    public function show(Master $master){
-        return view('master.show', compact('master'));
+    public function show(Master $masters){
+        return view('master.show', compact('masters'));
     }
 }

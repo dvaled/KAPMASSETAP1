@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\History;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class HistoryController extends Controller
@@ -11,8 +12,22 @@ class HistoryController extends Controller
     // Get all history records
     public function index()
     {
-        $historyRecords = History::with(['Employee', 'User'])->get();
-        return response()->json($historyRecords, 200);
+        $client = new Client();
+        try {
+            $response = $client->request('GET', 'http://localhost:5252/api/AssetHistory');
+            $body = $response->getBody();
+            $content = $body->getContents();
+            $data = json_decode($content, true);
+
+            if (!is_array($data)) {
+                $data = []; 
+            }
+
+            return view('master.index', ['masters' => $data]);
+
+        } catch (\Exception $e) {
+            return view('master.index', ['masters' => []])-> with($e);
+        }
     }
 
     // Get a specific history record by ID

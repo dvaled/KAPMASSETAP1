@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Hardware;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class HardwareController extends Controller
@@ -11,8 +12,24 @@ class HardwareController extends Controller
     // Get all hardware
     public function index()
     {
-        $hardware = Hardware::all();
-        return response()->json($hardware, 200);
+        $client = new Client();
+    try {
+        $response = $client->request('GET', 'http://localhost:5252/api/Master');
+        $body = $response->getBody();
+        $content = $body->getContents();
+        $data = json_decode($content, true);
+
+        if (!is_array($data)) {
+            $data = []; 
+        }
+
+        return view('master.index', ['masters' => $data]);
+
+    } catch (\Exception $e) {
+        return view('master.index', ['masters' => []])-> with($e);
+    }
+        // $hardware = Hardware::all();
+        // return response()->json($hardware, 200);
     }
 
     // Get a specific hardware by ID

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Software;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class SoftwareController extends Controller
@@ -11,8 +12,24 @@ class SoftwareController extends Controller
     // Get all software records
     public function index()
     {
-        $softwares = Software::with('Hardware')->get();
-        return response()->json($softwares, 200);
+        $client = new Client();
+        try {
+            $response = $client->request('GET', 'http://localhost:5252/api/TrnSoftware');
+            $body = $response->getBody();
+            $content = $body->getContents();
+            $data = json_decode($content, true);
+
+            if (!is_array($data)) {
+                $data = []; 
+            }
+
+            return view('software.index', ['software' => $data]);
+
+        } catch (\Exception $e) {
+            return view('software.index', ['software' => []])-> with($e);
+        }
+        // $softwares = Software::with('Hardware')->get();
+        // return response()->json($softwares, 200);
     }
 
     // Get a specific software record by ID
