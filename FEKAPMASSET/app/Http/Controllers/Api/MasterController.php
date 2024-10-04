@@ -11,8 +11,7 @@ class MasterController extends Controller
 {
     //fetch all data
 
-    public function getMaster()
-    {
+    public function getMaster(){
         $client = new Client();
         $response = $client->request('GET', 'http://localhost:5252/api/Master');
         $body = $response->getBody();
@@ -21,8 +20,7 @@ class MasterController extends Controller
         return view('master.index', ['masterData' => $data]);
     }
 
-    public function index()
-    {
+    public function index(){
         $client = new Client();
         try {
             $response = $client->request('GET', 'http://localhost:5252/api/Master');
@@ -44,8 +42,7 @@ class MasterController extends Controller
     }
 
 
-    public function show($id)
-    {
+    public function show($id){
         $master = Master::find($id);
 
         if (!$master) {
@@ -56,8 +53,7 @@ class MasterController extends Controller
     }
 
     //store new master
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $validatedData = $request->validate([
             "MASTERID" => 'required',
             "CONDITION"=> 'required',
@@ -72,8 +68,7 @@ class MasterController extends Controller
         return response()->json(['message' => 'master created successfully', 'data' => $master], 201);
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         $master = Master::find($id);
 
         if (!$master) {
@@ -95,8 +90,7 @@ class MasterController extends Controller
     }
 
     // Delete a type
-    public function destroy($id)
-    {
+    public function destroy($id){
         $master = Master::find($id);
          
         if (!$master) {
