@@ -55,7 +55,12 @@
                                         <rect x="4" y="14" width="6" height="6" rx="1"></rect>
                                         <rect x="14" y="14" width="6" height="6" rx="1"></rect>
                                     </svg>
-                                    <span class="text-sm ml-2">Dashboard</span>
+                                    <ul>
+                                        <li>
+                                            <a href="http://www.w3.org/2000/svgt" class="text-sm ml-2">Dashboard</a>
+                                        </li>
+                                    </ul>
+                                    
                                 </a>
                                 <div id="dashboardsExamples" class="h-auto overflow-hidden transition-all duration-200 ease-soft-in-out">
                                     <!-- primary collapsable list -->
@@ -214,6 +219,44 @@
                     </div>
                 </div>
             </div>
+            <aside mini="false" class="fixed inset-y-0 left-0 flex-wrap items-center justify-between block w-full p-0 my-4 overflow-y-auto transition-all duration-200 -translate-x-full bg-white border-0 shadow-none xl:ml-4 dark:bg-gray-950 ease-soft-in-out z-990 max-w-64 rounded-2xl xl:translate-x-0 xl:bg-transparent" id="sidenav-main">
+                <div class="h-20">
+                  <i class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 dark:text-white xl:hidden" aria-hidden="true" sidenav-close-btn></i>
+              
+                  <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700 dark:text-white" href="{{ site.live_preview }}" target="_blank">
+                    <img src="{{ path-general }}/assets/img/logo-ct-dark.png" class="inline-block h-full max-w-full transition-all duration-200 ease-soft-in-out max-h-8 dark:hidden" alt="main_logo" />
+                    <img src="{{ path-general }}/assets/img/logo-ct.png" class="hidden h-full max-w-full transition-all duration-200 ease-soft-in-out max-h-8 dark:inline-block" alt="main_logo" />
+                    <span class="ml-1 font-semibold transition-all duration-200 ease-soft-in-out">Soft UI Dashboard PRO</span>
+                  </a>
+                </div>
+                <hr class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent">
+              
+                <div class="items-center block w-full h-auto grow basis-full" id="sidenav-collapse-main">
+                  <ul class="flex flex-col pl-0 mb-0 list-none">
+                    {% include components/sidenav/routes.html %}
+                  </ul>
+                </div>
+                <div class="pt-4 mx-4 mt-4">
+                  <!-- load phantom colors for card after: -->
+                  <p class="invisible hidden text-red-600 text-orange after:bg-gradient-to-tl after:from-gray-900 after:to-slate-800 after:bg-gradient-to-tl after:from-blue-600 after:to-cyan-400 after:bg-gradient-to-tl after:from-red-500 after:to-yellow-400 after:bg-gradient-to-tl after:from-green-600 after:to-lime-400 after:bg-gradient-to-tl after:from-red-600 after:to-rose-400 after:bg-gradient-to-tl after:from-slate-600 after:to-slate-300 text-lime-500 text-cyan-500"></p>
+                  <div sidenav-card class="after:opacity-65 after:bg-gradient-to-tl after:from-slate-600 after:to-slate-300 relative flex min-w-0 flex-col items-center break-words rounded-2xl border-0 border-solid border-blue-900 bg-white bg-clip-border shadow-none after:absolute after:top-0 after:bottom-0 after:left-0 after:z-10 after:block after:h-full after:w-full after:rounded-2xl after:content-['']">
+                    <div class="absolute w-full h-full bg-center bg-cover mb-7 rounded-2xl" style="background-image: url('{{ path-general }}/assets/img/curved-images/white-curved.jpg')"></div>
+                    <div class="relative z-20 flex-auto w-full p-4 text-left text-white">
+                      <div class="flex items-center justify-center w-8 h-8 mb-4 text-center bg-white bg-center rounded-lg icon shadow-soft-2xl">
+                        <i sidenav-card-icon class="top-0 z-10 text-transparent ni leading-none ni-diamond text-lg bg-gradient-to-tl from-slate-600 to-slate-300 bg-clip-text opacity-80" aria-hidden="true"></i>
+                      </div>
+                      <div class="transition-all duration-200 ease-nav-brand">
+                        <h6 class="mb-0 text-white">Need help?</h6>
+                        <p class="mt-0 mb-4 font-semibold leading-tight text-xs">Please check our docs</p>
+                        <a href="https://www.creative-tim.com/learning-lab/tailwind/html/quick-start/soft-ui-dashboard/" target="_blank" class="inline-block w-full px-8 py-2 mb-0 font-bold text-center text-black uppercase transition-all ease-in bg-white border-0 border-white rounded-lg shadow-soft-md bg-150 leading-pro text-xs hover:shadow-soft-2xl hover:scale-102">Documentation</a>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- pro btn  -->
+                  <!-- <a class="inline-block w-full px-6 py-3 my-4 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-purple-700 to-pink-500 hover:shadow-soft-2xl hover:scale-102" href="https://www.creative-tim.com/product/soft-ui-dashboard-pro?ref=sidebarfree">Upgrade to pro</a> -->
+                </div>
+              </aside>
+              
         </dh-component>  
     </div>
         <script>

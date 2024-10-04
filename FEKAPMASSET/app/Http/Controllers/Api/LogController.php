@@ -18,15 +18,17 @@ class LogController extends Controller
             $body = $response->getBody();
             $content = $body->getContents();
             $data = json_decode($content, true);
+            dd($data);
 
             if (!is_array($data)) {
                 $data = []; 
             }
 
-            return view('master.index', ['masters' => $data]);
+
+            return view('log.index', compact('data'));
 
         } catch (\Exception $e) {
-            return view('master.index', ['masters' => []])-> with($e);
+            return view('log.index', ['logData' => []])-> with($e);
         }
     }
 
