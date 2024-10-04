@@ -22,20 +22,25 @@
     <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css" rel="stylesheet" />        
 </head>
 <body class="bg-gray-100">
-    <!-- Sidebar (Fixed) -->
-        @include('layouts.navbar')
-
-    <div class="ml-72 min-h-screen flex flex-col justify-between p-6">
-        <div class="flex-grow">
-            <div class="container p-6">
+    <div class="min-h-screen grid grid-cols-12">
+        <!-- Sidebar (1st Column) -->
+        <aside class="col-span-2 bg-gray-800 text-white h-full">
+            @include('layouts.sections.sidebar')
+        </aside>
+    
+        <!-- Content and Footer (2nd Column) -->
+        <div class="col-span-10 flex flex-col">
+            <!-- Main Content -->
+            <div class="flex-grow p-6">
                 @yield('content')
+                @include('layouts.sections.footer')
             </div>
         </div>
-        <!-- Footer -->
-        <footer class="bg-gray-200 p-4">
-            @include('layouts.footer')
-        </footer>
     </div>
+    
+    
+    
+    
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
