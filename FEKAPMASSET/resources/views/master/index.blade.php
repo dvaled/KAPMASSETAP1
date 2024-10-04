@@ -39,9 +39,6 @@
                 <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                     <span class="font-semibold leading-tight text-xs text-black">{{ $masters['active'] }}</span> <!-- Display Active status -->
                 </td>
-                {{-- <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                    <a href="{{ route('master.edit', $master->id) }}" class="font-semibold leading-tight text-xs text-black"> Edit </a> <!-- Edit link -->
-                </td> --}}
             </tr>
             @endforeach
         </tbody>
@@ -50,18 +47,6 @@
     </div>
   </div>
 </div>
-</body>
-
-<!--   Core JS Files   -->
-<script src="../assets/js/core/popper.min.js"></script>
-<script src="../assets/js/core/bootstrap.min.js"></script>
-
-<!-- Plugin for the charts, full documentation here: https://www.chartjs.org/ -->
-<script src="../assets/js/plugins/chartjs.min.js"></script>
-<script src="../assets/js/plugins/Chart.extension.js"></script>
-
-<!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="../assets/js/soft-ui-dashboard.min.js"></script>
 </body>
 @endsection
 

@@ -52,3 +52,23 @@
     <script src="../assets/js/soft-ui-dashboard.min.js"></script>
 </body>
 </html>
+        {{-- <div class="ml-72 min-h-screen flex flex-col justify-between p-6">
+            <div class="flex-grow">
+                <div class="container p-6">
+                </div>
+            </div>
+            <!-- Footer -->
+            <footer class="bg-gray-200 p-4">
+            </footer>
+        </div> --}}
+    {{-- <div class="min-h-screen sm:flex-col md:flex-row lg:flex-row xl:flex-row">
+        <div class="w-1/3 flex-none p-2">
+            <div class="text-gray-700 text-center bg-gray-400 p-2">1</div>
+            @include('layouts.section.sidebar')
+        </div>
+        <div class="w-2/3 flex-none p-2">
+            <div class="text-gray-700 text-center bg-gray-400 p-2">2</div>
+            @yield('content')
+        </div>
+        
+    </div> --}}
