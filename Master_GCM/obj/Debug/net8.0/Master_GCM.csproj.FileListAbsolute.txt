@@ -113,7 +113,6 @@ C:\laragon\www\API\Master_GCM\obj\Debug\net8.0\Master_GCM.genruntimeconfig.cache
 C:\laragon\www\API\Master_GCM\obj\Debug\net8.0\ref\Master_GCM.dll
 <<<<<<< HEAD
 =======
-C:\laragon\www\API\Master_GCM\obj\Debug\net8.0\Master_GCM.sourcelink.json
 D:\laragon\www\KAPMASSETAP1\Master_GCM\bin\Debug\net8.0\appsettings.Development.json
 D:\laragon\www\KAPMASSETAP1\Master_GCM\bin\Debug\net8.0\appsettings.json
 D:\laragon\www\KAPMASSETAP1\Master_GCM\bin\Debug\net8.0\Master_GCM.exe
