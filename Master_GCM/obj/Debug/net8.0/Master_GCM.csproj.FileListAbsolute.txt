@@ -113,8 +113,6 @@ C:\laragon\www\API\Master_GCM\obj\Debug\net8.0\Master_GCM.genruntimeconfig.cache
 C:\laragon\www\API\Master_GCM\obj\Debug\net8.0\ref\Master_GCM.dll
 <<<<<<< HEAD
 =======
-<<<<<<< HEAD
-=======
 >>>>>>> e36ac4869b195d05f3c46c7b27aa1569682f8085
 >>>>>>> ec9ba1ee1041d6b302380cf4989992daba99b55e
 D:\laragon\www\KAPMASSETAP1\Master_GCM\bin\Debug\net8.0\appsettings.Development.json

@@ -21,28 +21,6 @@ class MasterController extends Controller
         return view('master.index', ['masterData' => $data]);
     }
 
-    public function index()
-    {
-        $client = new Client();
-        try {
-            $response = $client->request('GET', 'http://localhost:5252/api/Master');
-            $body = $response->getBody();
-            $content = $body->getContents();
-            $data = json_decode($content, true);
-
-            if (!is_array($data)) {
-                $data = []; 
-            }
-
-            return view('master.index', ['masters' => $data]);
-
-        } catch (\Exception $e) {
-            return view('master.index', ['masters' => []])-> with($e);
-        }
-        // $master = Master::all();
-        // return response()->json($master, 200);
-    }
-
 
     public function show($id)
     {
