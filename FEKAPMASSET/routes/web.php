@@ -7,12 +7,12 @@ use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\SoftwareController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HardwareController;
-use App\Http\Controllers\MasterController;
+use App\Http\Controllers\Api\MasterController;
 use App\Http\Controllers\TypeController;
 use Illuminate\Support\Facades\Route;
 
 // Master routes
-Route::get('/master', [MasterController::class, 'index'])->name('master.index');
+Route::get('/master', [MasterController::class, 'getMaster'])->name('master.index');
 Route::get('/master/{id}', [MasterController::class, 'show'])->name('master.show');
 Route::post('/master', [MasterController::class, 'store'])->name('master.create');
 Route::put('/master/{id}', [MasterController::class, 'update'])->name('master.update');

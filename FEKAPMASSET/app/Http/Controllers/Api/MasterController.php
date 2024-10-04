@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Master;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 /**
  * @OA\Tag(
@@ -28,6 +29,17 @@ class MasterController extends Controller
      * )
      */
     //fetch all data
+
+    public function getMaster()
+    {
+        $client = new Client();
+        $response = $client->request('GET', 'http://localhost:5252/api/Master');
+        $body = $response->getBody();
+        $content = $body->getContents();
+        $data = json_decode($content, true);
+        return view('master.index', ['masterData' => $data]);
+    }
+
     public function index()
     {
         $types = Master::all();
