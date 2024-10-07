@@ -14,8 +14,8 @@
     </div>
   </div>
     <div class="flex-auto px-0 pt-0 pb-2">
-      <div class="p-0 overflow-x-auto">
-        <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
+      <div class="p-4 overflow-x-auto">
+        <table class="p-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
           <thead class="align-bottom">
             <tr>
               <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Master Id</th>
@@ -66,6 +66,47 @@
             @endforeach
         </tbody>
         </table>
+
+        <nav aria-label="Page navigation example">
+          <ul class="inline-flex -space-x-px text-sm">
+              <li>
+                  <a href="#" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-700 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-800">
+                      Previous
+                  </a>
+              </li>
+              <li>
+                  <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-800">
+                      1
+                  </a>
+              </li>
+              <li>
+                  <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-800">
+                      2
+                  </a>
+              </li>
+              <li>
+                  <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 text-white border border-gray-300 bg-blue-600 hover:bg-blue-700 hover:text-white">
+                      3
+                  </a>
+              </li>
+              <li>
+                  <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-800">
+                      4
+                  </a>
+              </li>
+              <li>
+                  <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-800">
+                      5
+                  </a>
+              </li>
+              <li>
+                  <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-800">
+                      Next
+                  </a>
+              </li>
+          </ul>
+      </nav>
+      
 
         <!-- Edit Modal -->
         <div id="editModal" class="modal hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">

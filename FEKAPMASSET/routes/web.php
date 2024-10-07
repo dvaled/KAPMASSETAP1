@@ -56,11 +56,11 @@ Route::post('/employee', [EmployeeController::class, 'store'])->name('employee.s
 Route::put('/employee/{id}', [EmployeeController::class, 'update'])->name('employee.update');
 Route::delete('/employee/{id}', [EmployeeController::class, 'destroy'])->name('employee.destroy');
 
-
-
 //Hardware routes
 Route::get('/hardware', [HardwareController::class, 'index'])->name('hardware.index');
 Route::get('/hardware/{id}', [HardwareController::class, 'show'])->name('hardware.show');
 Route::post('hardware', [HardwareController::class, 'store'])->name('hardware.store');
 Route::put('/hardware/{id}', [HardwareController::class, 'update'])->name('hardware.update');
 Route::delete('/hardware/{id}', [HardwareController::class, 'destroy'])->name('hardware.destroy');
+
+Route::view('/dashboard', 'dashboard');
