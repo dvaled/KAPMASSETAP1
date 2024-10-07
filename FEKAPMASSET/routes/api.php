@@ -45,8 +45,6 @@ Route::middleware('api')->group(function () {
     Route::get('logs', [LogController::class, 'index']); // Get all log records
     Route::get('logs/{id}', [LogController::class, 'show']); // Get a specific log record
     Route::post('logs', [LogController::class, 'store']); // Create a new log record
-    Route::put('logs/{id}', [LogController::class, 'update']); // Update log record details
-    Route::delete('logs/{id}', [LogController::class, 'destroy']); // Delete log record
 });
 
 
