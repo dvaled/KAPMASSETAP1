@@ -66,7 +66,7 @@
                     <!-- icon -->
       
                     <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                      <title>kapm</title>
+                      <title>kapm</title>     
                     </svg>
                   </div>
                   <!-- primary span -->
@@ -139,6 +139,7 @@
               </li>      
             </ul>
           </div>
+        </aside>
       </dh-component>
     </div>
       <script>
