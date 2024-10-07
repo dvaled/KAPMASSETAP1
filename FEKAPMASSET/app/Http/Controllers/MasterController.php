@@ -56,4 +56,8 @@ class MasterController extends Controller
     public function show(Master $masters){
         return view('master.show', compact('masters'));
     }
+
+    public function viewEdit($id){
+        return view('master.edit', compact('masters'));
+    }
 }

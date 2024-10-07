@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class MaintenanceController extends Controller
 {
     // Get all maintenance records
-    public function index()
+    public function getMaster()
     {
         $client = new Client();
         try {
@@ -28,14 +28,12 @@ class MaintenanceController extends Controller
         } catch (\Exception $e) {
             return view('master.index', ['masters' => []])-> with($e);
         }
-        // $maintenances = Maintenance::with(['MasterID', 'User'])->get();
-        // return response()->json($maintenances, 200);
     }
 
     // Get a specific maintenance record by ID
     public function show($id)
     {
-        $maintenance = Maintenance::with(['MasterID', 'User'])->find($id);
+        $maintenance = Maintenance::with(['MASTERID', 'User'])->find($id);
 
         if (!$maintenance) {
             return response()->json(['message' => 'Maintenance record not found'], 404);

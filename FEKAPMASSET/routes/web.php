@@ -1,21 +1,24 @@
 <?php
 
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\HistoryController;
-use App\Http\Controllers\LogController;
-use App\Http\Controllers\MaintenanceController;
-use App\Http\Controllers\SoftwareController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HardwareController;
-use App\Http\Controllers\Api\MasterController;
-use App\Http\Controllers\TypeController;
+use App\Http\Controllers\API\EmployeeController;
+use App\Http\Controllers\API\HistoryController;
+use App\Http\Controllers\API\LogController;
+use App\Http\Controllers\API\MaintenanceController;
+use App\Http\Controllers\API\SoftwareController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\HardwareController;
+use App\Http\Controllers\API\MasterController;
 use Illuminate\Support\Facades\Route;
 
+//Auth routess
+Route::get('/', [AuthController::class, 'loginForm']); // Display the login form
+Route::post('/login', [AuthController::class, 'login']); // Handle the login POST request
+
 // Master routes
-Route::get('/master', [MasterController::class, 'getMaster'])->name('master.index');
+Route::get('/master', [MasterController::class, 'index'])->name('master.index'); //display the master tables
 Route::get('/master/{id}', [MasterController::class, 'show'])->name('master.show');
+Route::put('masters/{id}', [MasterController::class, 'edit'])->name('masters.edit');
 Route::post('/master', [MasterController::class, 'store'])->name('master.create');
-Route::put('/master/{id}', [MasterController::class, 'update'])->name('master.update');
 Route::delete('/master/{id}', [MasterController::class, 'destroy'])->name('master.destroy');
 
 // Software routes
@@ -53,9 +56,7 @@ Route::post('/employee', [EmployeeController::class, 'store'])->name('employee.s
 Route::put('/employee/{id}', [EmployeeController::class, 'update'])->name('employee.update');
 Route::delete('/employee/{id}', [EmployeeController::class, 'destroy'])->name('employee.destroy');
 
-// Auth routes
-Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
-Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
+
 
 //Hardware routes
 Route::get('/hardware', [HardwareController::class, 'index'])->name('hardware.index');

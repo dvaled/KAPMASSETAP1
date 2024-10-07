@@ -26,7 +26,7 @@ class Master extends Model
 
     protected $table = 'MST_GCM';
     // Specify the primary key
-    protected $primaryKey = 'MasterID';
+    protected $primaryKey = 'MASTERID';
 
     protected $fillable = [
         "MASTERID",

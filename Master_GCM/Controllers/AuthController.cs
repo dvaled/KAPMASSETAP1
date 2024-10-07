@@ -21,27 +21,25 @@ public class AuthController(AppDbContext context) : ControllerBase{
             return Unauthorized("Invalid NIPP or Password");
         }
 
-        // Generate and return the JWT token
-        var token = GenerateToken(user);
-        return Ok(new { message = $"Welcome, {user.NAME}", token });
+        return Ok(new { message = $"Welcome, {user.NAME}"});
         }
 
-    [HttpPost("register")]
-     private string GenerateToken(USERMODEL usr){
-        // Generate a JWT token with the user's details
-        string secret = "KAIPropertiManajer123";
-        var handler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(secret);
+    //  private string GenerateToken(USERMODEL usr){
+    //     // Generate a JWT token with the user's details
+    //     string secret = "KAIPropertiManajer123";
+    //     var handler = new JwtSecurityTokenHandler();
+    //     var key = Encoding.ASCII.GetBytes(secret);
 
-        var descriptor = new SecurityTokenDescriptor{
-            Subject = new ClaimsIdentity(new[]{
-                new Claim("nipp", usr.NIPP)
-            }),
-            Expires = DateTime.UtcNow.AddHours(1), // Set token expiration (optional)
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        };
+    //     var descriptor = new SecurityTokenDescriptor{
+    //         Subject = new ClaimsIdentity(new[]{
+    //             new Claim("nipp", usr.NIPP)
+    //         }),
+    //         Expires = DateTime.UtcNow.AddHours(1), // Set token expiration (optional)
+    //         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+    //     };
 
-        var token = handler.CreateToken(descriptor);
-        return handler.WriteToken(token);
-    }
+    //     var token = handler.CreateToken(descriptor);
+    //     return handler.WriteToken(token);
+    // }
+    
 }
