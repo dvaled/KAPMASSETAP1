@@ -48,6 +48,9 @@ namespace Master_GCM.Migrations
 
                     b.HasKey("LOGID");
 
+                    b.HasIndex("IDASSET")
+                        .IsUnique();
+
                     b.ToTable("TRN_LOG");
                 });
 
@@ -174,7 +177,10 @@ namespace Master_GCM.Migrations
             modelBuilder.Entity("TRNASSETMODEL", b =>
                 {
                     b.Property<int>("IDASSET")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IDASSET"));
 
                     b.Property<string>("ACTIVE")
                         .IsRequired()
@@ -235,8 +241,6 @@ namespace Master_GCM.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("IDASSETPIC", "IDASSET");
-
-                    b.HasIndex("IDASSET");
 
                     b.ToTable("TRN_DTL_PICTURE");
                 });
@@ -448,6 +452,17 @@ namespace Master_GCM.Migrations
                     b.ToTable("MST_USER");
                 });
 
+            modelBuilder.Entity("LOGMODEL", b =>
+                {
+                    b.HasOne("TRNASSETMODEL", "TRNASSET")
+                        .WithOne()
+                        .HasForeignKey("LOGMODEL", "IDASSET")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TRNASSET");
+                });
+
             modelBuilder.Entity("TRNASSETHISTORYMODEL", b =>
                 {
                     b.HasOne("MSTEMPLOYEEMODEL", "EMPLOYEE")
@@ -461,28 +476,11 @@ namespace Master_GCM.Migrations
 
             modelBuilder.Entity("TRNASSETMODEL", b =>
                 {
-                    b.HasOne("LOGMODEL", null)
-                        .WithOne("TRNASSET")
-                        .HasForeignKey("TRNASSETMODEL", "IDASSET")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MSTEMPLOYEEMODEL", "EMPLOYEE")
                         .WithMany()
                         .HasForeignKey("NIPP");
 
                     b.Navigation("EMPLOYEE");
-                });
-
-            modelBuilder.Entity("TRNASSETPICTUREMODEL", b =>
-                {
-                    b.HasOne("TRNASSETMODEL", "TRNASSET")
-                        .WithMany()
-                        .HasForeignKey("IDASSET")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TRNASSET");
                 });
 
             modelBuilder.Entity("TRNSOFTWAREMODEL", b =>
@@ -494,12 +492,6 @@ namespace Master_GCM.Migrations
                         .IsRequired();
 
                     b.Navigation("TRNASSET");
-                });
-
-            modelBuilder.Entity("LOGMODEL", b =>
-                {
-                    b.Navigation("TRNASSET")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

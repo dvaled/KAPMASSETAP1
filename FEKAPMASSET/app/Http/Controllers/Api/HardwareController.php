@@ -14,7 +14,7 @@ class HardwareController extends Controller
     {
         $client = new Client();
     try {
-        $response = $client->request('GET', 'http://localhost:5252/api/Master');
+        $response = $client->request('GET', 'http://localhost:5252/api/TrnAssetSpec/{IDASSET}');
         $body = $response->getBody();
         $content = $body->getContents();
         $data = json_decode($content, true);
@@ -23,10 +23,10 @@ class HardwareController extends Controller
             $data = []; 
         }
 
-        return view('master.index', ['masters' => $data]);
+        return view('hardware.index', ['hardware' => $data]);
 
     } catch (\Exception $e) {
-        return view('master.index', ['masters' => []])-> with($e);
+        return view('hardware.index', ['hardware' => []])-> with($e);
     }
         // $hardware = Hardware::all();
         // return response()->json($hardware, 200);
@@ -35,13 +35,17 @@ class HardwareController extends Controller
     // Get a specific hardware by ID
     public function show($id)
     {
-        $hardware = Hardware::find($id);
+        $client = new Client();
+        $response = $client->request('GET', 'http://localhost:5252/api/TrnAssetSpec/{IDASSET}');
+        $body = $response->getBody();
+        $content = $body->getContents();
+        $data = json_decode($content, true);
+
+        return view('assetspec.show', ['assetspec' => $data]);
 
         if (!$hardware) {
             return response()->json(['message' => 'Hardware not found'], 404);
         }
-
-        return response()->json($hardware, 200);
     }
 
     // Store a new hardware

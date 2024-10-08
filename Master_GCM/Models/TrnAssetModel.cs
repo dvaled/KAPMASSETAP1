@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 public class TRNASSETMODEL{
-    public int IDASSET { get; set; }
+    public required string IDASSET { get; set; }
     public int? NIPP {get; set;}
     public required string ASSETBRAND {get; set;}
     public required string ASSETMODEL {get; set;}

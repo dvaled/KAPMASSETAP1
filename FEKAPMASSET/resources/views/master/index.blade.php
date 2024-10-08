@@ -13,7 +13,7 @@
       </button>
     </div>
   </div>
-    <div class="flex-auto px-0 pt-0 pb-2">
+    <div class="flex-auto px-0 pt-0 pb-2 space-x-5">
       <div class="p-4 overflow-x-auto">
         <table class="p-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
           <thead class="align-bottom">
