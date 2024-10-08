@@ -10,26 +10,20 @@ use Illuminate\Http\Request;
 class LogController extends Controller
 {
     // Get all log records
-    public function index()
-    {
+    public function index(){
         $client = new Client();
-        try {
-            $response = $client->request('GET', 'http://localhost:5252/api/Log');
-            $body = $response->getBody();
-            $content = $body->getContents();
-            $data = json_decode($content, true);
-            dd($data);
-
-            if (!is_array($data)) {
-                $data = []; 
-            }
-
-
-            return view('log.index', compact('data'));
-
-        } catch (\Exception $e) {
-            return view('log.index', ['logData' => []])-> with($e);
+        $response = $client->request('GET', 'http://localhost:5252/api/Log');
+        $body = $response->getBody();
+        $content = $body->getContents();
+        $data = json_decode($content, true);    
+        
+        // Check the contents of $data
+        if (empty($data)) {
+            dd('No data received from API');
         }
+
+        
+        return view('log.index', ['logData' => $data]);
     }
 
     // Get a specific log record by ID

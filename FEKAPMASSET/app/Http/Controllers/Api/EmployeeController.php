@@ -5,60 +5,21 @@ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use L5Swagger\Http\Controllers\SwaggerController;
 
 
 class EmployeeController extends Controller
 {
     // Fetch all employees
-    public function index()
-    {
+    public function index() {
         $client = new Client();
-    try {
         $response = $client->request('GET', 'http://localhost:5252/api/Employee');
         $body = $response->getBody();
         $content = $body->getContents();
         $data = json_decode($content, true);
 
-        if (!is_array($data)) {
-            $data = []; 
-        }
-
-        return view('employee.index', ['employees' => $data]);
-
-    } catch (\Exception $e) {
-        return view('employee.index', ['employees' => []])-> with($e);
-    }
-        
-        // $employees = Employee::all();
-        // return response()->json($employees, 200);
+        return view('employee.index', ['employeeData' => $data]); // Keep the view name consistent
     }
 
-    // Fetch a single employee by ID
-/**
- * @OA\Get(
- *     path="/api/types/{MasterID}",
- *     summary="Get a type by MasterID",
- *     tags={"Types"},
- *     @OA\Parameter(
- *         name="MasterID",
- *         in="path",
- *         description="MasterID of the type",
- *         required=true,
- *         @OA\Schema(type="integer")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Successful operation",
- *         @OA\JsonContent(
- *             @OA\Property(property="MasterID", type="integer", example=123),
- *             @OA\Property(property="name", type="string", example="Type A"),
- *             @OA\Property(property="description", type="string", example="Description of Type A")
- *         )
- *     ),
- *     @OA\Response(response=404, description="Type not found")
- * )
- */
     public function show($id)
     {
         $employee = Employee::find($id);

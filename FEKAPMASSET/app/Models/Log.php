@@ -10,6 +10,7 @@ class Log extends Model
     use HasFactory;
 
     protected $table = 'TRN_LOG';
+    protected $primaryKey = 'LOGID';
 
 
     protected $fillable = [

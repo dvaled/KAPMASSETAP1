@@ -39,6 +39,12 @@
                 <input type="text" name="Condition" class="form-control" placeholder="Condition">
             </div>
         </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Condition:</strong>
+                <input type="text" name="Condition" class="form-control" placeholder="Condition">
+            </div>
+        </div>
         <!-- Add other form fields here as per your database columns -->
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
             <button type="submit" class="btn btn-primary">Submit</button>

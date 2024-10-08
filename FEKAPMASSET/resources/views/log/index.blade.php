@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border">
     <div class="p-6 pb-0 mb-0 bg-white rounded-t-2xl">
       <h6>Log history</h6>
@@ -25,9 +24,9 @@
                     <p class="mb-0 font-semibold leading-tight text-xs">{{ $logs['logid'] }}</p> 
                 </td>
                 <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                    <p class="mb-0 font-semibold leading-tight text-xs">{{ $logs['assetid'] }}</p> 
+                    <p class="mb-0 font-semibold leading-tight text-xs">{{ $logs['idasset'] }}</p> 
                 </td>
-                <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                <td class="p-2 align-middle bg-transparent bor  der-b whitespace-nowrap shadow-transparent">
                     <span class="font-semibold leading-tight text-xs text-black">{{ $logs['roleid'] }}</span> 
                 </td>
                 <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">

@@ -31,6 +31,7 @@ class AuthController extends Controller
 
         // Return response or redirect
         return response()->json(['message' => 'User registered successfully!', 'user' => $user], 201);
+        
     }
 
     // Login existing user
@@ -41,21 +42,26 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-
-            // Generate an API token (for API authentication)
-            $token = $user->createToken('auth_token')->plainTextToken;
-
-            return response()->json([
-                'message' => 'Login successful',
-                'access_token' => $token,
-                'token_type' => 'Bearer',
+        return response()->json([
+            'message' => 'Login success',
+            'user' => Auth::login($credentials),
             ]);
-        }
 
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
+        // if (Auth::attempt($credentials)) {
+        //     $user = Auth::user();
+
+        //     // Generate an API token (for API authentication)
+        //     $token = $user->createToken('auth_token')->plainTextToken;
+
+        //     return response()->json([
+        //         'message' => 'Login successful',
+        //         'access_token' => $token,
+        //         'token_type' => 'Bearer',
+        //     ]);
+        // }
+
+        // throw ValidationException::withMessages([
+        //     'email' => ['The provided credentials are incorrect.'],
+        // ]);
     }
 }
