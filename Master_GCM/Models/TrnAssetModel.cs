@@ -8,7 +8,7 @@ public class TRNASSETMODEL{
     public required string ASSETSERIES {get; set;}
     public required string ASSETSERIALNUMBER {get; set;}
     public required string ACTIVE {get; set;}
-
+    
     [ForeignKey("NIPP")]
     public required MSTEMPLOYEEMODEL EMPLOYEE { get; set; } 
 }
