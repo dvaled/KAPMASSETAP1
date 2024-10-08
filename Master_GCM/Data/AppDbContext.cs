@@ -39,6 +39,6 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<LOGMODEL>()
             .HasOne(h => h.TRNASSET) // Navigation property
             .WithOne()
-            .HasForeignKey<TRNASSETMODEL>(h => h.IDASSET); // Foreign key relationship
+            .HasForeignKey<LOGMODEL>(h => h.IDASSET); // Foreign key relationship
     }
 }

@@ -65,7 +65,7 @@ public class TrnAssetDtlPictureController : ControllerBase
 
         return NoContent();
     }
-    public bool TrnPictureExists(int IDASSETPIC)
+    private bool TrnPictureExists(int IDASSETPIC)
     {
         return _context.TRN_DTL_PICTURE.Any(e => e.IDASSETPIC == IDASSETPIC);
     }

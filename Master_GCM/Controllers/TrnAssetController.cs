@@ -14,15 +14,15 @@ public class TrnAssetController : ControllerBase
 
     // Get hardware by IdAsset and include the employee information
     [HttpGet("{IDASSET}")]
-    public async Task<ActionResult<List<object>>> GetTrnHardware(int IDASSET)
+    public async Task<ActionResult<List<object>>> GetTrnHardware(string IDASSET)
     {
         // Fetch hardware along with the associated employee details
-        var trnassetemployee = await _context.TRN_ASSET.Where(x => x.IDASSET == IDASSET)
-            .Where(e => e.IDASSET == IDASSET)
+        var trnassetemployee = await _context.TRN_ASSET
+            .Where(x => x.IDASSET == IDASSET) // Compare using the string IDASSET
             .Include(e => e.EMPLOYEE) // Include Employee details
             .Select(h => new
             {
-                // drop id hardware
+                // Select specific fields
                 h.IDASSET,
                 h.NIPP,
                 EmployeeName = h.EMPLOYEE.NAME,
