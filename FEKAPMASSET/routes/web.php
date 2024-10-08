@@ -64,3 +64,6 @@ Route::put('/hardware/{id}', [HardwareController::class, 'update'])->name('hardw
 Route::delete('/hardware/{id}', [HardwareController::class, 'destroy'])->name('hardware.destroy');
 
 Route::view('/dashboard', 'dashboard');
+
+Route::view('/addMaster', 'master.create');
+Route::view('/addSoftware', 'software.create');

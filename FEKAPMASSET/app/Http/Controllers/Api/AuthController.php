@@ -14,7 +14,7 @@ class AuthController extends Controller
         return view('auth.login'); // Return the Blade view for the login form
     }
 
-    public function login(Request $request){
+    public function login(Request $request){                        
          // Validate the input
          $request->validate([
             'nipp' => 'required|string',
