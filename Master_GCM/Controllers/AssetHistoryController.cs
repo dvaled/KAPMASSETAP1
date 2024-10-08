@@ -12,7 +12,7 @@ public class AssetHistoryController : ControllerBase{
     }
 
     [HttpGet("{IDASSET}")]
-    public async Task<ActionResult<List<TRNASSETHISTORYMODEL>>> GetAssetHistory(int IDASSET){
+    public async Task<ActionResult<List<TRNASSETHISTORYMODEL>>> GetAssetHistory(string IDASSET){
         var idasset = await _context.TRN_HIST_ASSET.Where(x => x.IDASSET == IDASSET).ToListAsync();
 
         if (idasset == null || !idasset.Any()){

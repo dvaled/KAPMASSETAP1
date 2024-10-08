@@ -16,7 +16,7 @@ public class TrnAssetDtlPictureController : ControllerBase
 
     // Get hardware by IdAsset and include the employee information
     [HttpGet("{IDASSET}")]
-    public async Task<ActionResult<List<TRNASSETPICTUREMODEL>>> GetTrnHardware(int IDASSET)
+    public async Task<ActionResult<List<TRNASSETPICTUREMODEL>>> GetTrnHardware(string IDASSET)
     {
         var idasset = await _context.TRN_DTL_PICTURE.Where(x => x.IDASSET == IDASSET).ToListAsync();
 

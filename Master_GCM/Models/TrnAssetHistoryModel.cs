@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class TRNASSETHISTORYMODEL{
     public int IDASSETHISTORY { get; set; }
-    public int IDASSET { get; set; }
+    public required string IDASSET { get; set; }
     public int NIPP { get; set; }
     public required string NAME { get; set; }
     public required string POSITION { get; set; }

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 public class LOGMODEL{
     public int LOGID { get; set; }
-    public int IDASSET { get; set; }
+    public required string IDASSET { get; set; }
     public int ROLEID { get; set; }
     public required string ACTIONPERFORMED { get; set; }
     public required string USERADDED { get; set; }

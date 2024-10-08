@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class TRNASSETSPECMODEL{
     public int IDASSETSPEC { get; set; }
-    public int IDASSET { get; set; }
+    public required string IDASSET { get; set; }
     public string? PROCESSORBRAND { get; set; }
     public string? PROCESSORMODEL { get; set; }
     public string? PROCESSORSERIES { get; set; }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,29 +15,18 @@ public class TrnAssetController : ControllerBase
 
     // Get hardware by IdAsset and include the employee information
     [HttpGet("{IDASSET}")]
-    public async Task<ActionResult<List<object>>> GetTrnHardware(string IDASSET)
+    public async Task<ActionResult<TRNASSETMODEL>> GetTrnAssetById(string IDASSET)
     {
-        // Fetch hardware along with the associated employee details
-        var trnassetemployee = await _context.TRN_ASSET
-            .Where(x => x.IDASSET == IDASSET) // Compare using the string IDASSET
-            .Include(e => e.EMPLOYEE) // Include Employee details
-            .Select(h => new
-            {
-                // Select specific fields
-                h.IDASSET,
-                h.NIPP,
-                EmployeeName = h.EMPLOYEE.NAME,
-                EmployeePosition = h.EMPLOYEE.POSITION,
-                EmployeeUnit = h.EMPLOYEE.UNIT,
-            })
-            .ToListAsync();
+        var trndtlAsset = await _context.TRN_ASSET
+        .Where(x => x.IDASSET == IDASSET)
+        .ToListAsync();
 
-        if (trnassetemployee == null || !trnassetemployee.Any())
+        if (trndtlAsset == null || !trndtlAsset.Any())
         {
-            return NotFound();
+            return NotFound("Asset not found");
         }
 
-        return Ok(trnassetemployee);
+        return Ok(trndtlAsset);
     }
 
     [HttpPost]

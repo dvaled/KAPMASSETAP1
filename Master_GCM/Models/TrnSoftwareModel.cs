@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class TRNSOFTWAREMODEL{
     public int IDASSETSOFTWARE { get; set; }
-    public int IDASSET { get; set; }
+    public required string IDASSET { get; set; }
     public required string SOFTWARETYPE { get; set; }
     public required string SOFTWARECATEGORY { get; set; }
     public required string SOFTWARENAME { get; set; }

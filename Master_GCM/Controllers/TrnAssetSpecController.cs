@@ -11,7 +11,7 @@ public class TrnAssetSpecController : ControllerBase{
     }
 
     [HttpGet("{IDASSET}")]
-    public async Task<ActionResult<List<TRNASSETSPECMODEL>>> GetAssetSpec(int IDASSET){
+    public async Task<ActionResult<List<TRNASSETSPECMODEL>>> GetAssetSpec(string IDASSET){
         var idasset = await _context.TRN_DTL_SPEC.Where(x => x.IDASSET == IDASSET).ToListAsync();
 
         if (idasset == null || !idasset.Any()){
@@ -29,7 +29,7 @@ public class TrnAssetSpecController : ControllerBase{
     }
 
     [HttpPut("{IDASSET}")]
-    public async Task<IActionResult> PutAssetSpec(int IDASSET, TRNASSETSPECMODEL assetSpec){
+    public async Task<IActionResult> PutAssetSpec(string IDASSET, TRNASSETSPECMODEL assetSpec){
         if (IDASSET != assetSpec.IDASSET){
             return BadRequest();
         }
@@ -50,7 +50,7 @@ public class TrnAssetSpecController : ControllerBase{
 
         return NoContent();
     }
-    private bool AssetSpecExists(int IDASSET){
+    private bool AssetSpecExists(string IDASSET){
         return _context.TRN_DTL_SPEC.Any(e => e.IDASSET == IDASSET);
     }
 }

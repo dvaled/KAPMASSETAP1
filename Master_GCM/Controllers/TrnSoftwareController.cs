@@ -11,7 +11,7 @@ public class TrnSoftwareController : ControllerBase{
     }
 
     [HttpGet("{IDASSET}")]
-    public async Task<ActionResult<List<TRNSOFTWAREMODEL>>> GetTrnSoftware(int IDASSET){
+    public async Task<ActionResult<List<TRNSOFTWAREMODEL>>> GetTrnSoftware(string IDASSET){
         var trnSoftware = await _context.TRN_DTL_SOFTWARE.Where(e => e.IDASSET == IDASSET).ToListAsync();
 
         if (trnSoftware == null || !trnSoftware.Any()){
