@@ -1,4 +1,5 @@
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,18 +15,18 @@ public class TrnAssetDtlPictureController : ControllerBase
         _context = context;
     }
 
-    // Get hardware by IdAsset and include the employee information
-    [HttpGet("{IDASSET}")]
-    public async Task<ActionResult<List<TRNASSETPICTUREMODEL>>> GetTrnHardware(string IDASSET)
+    // Get hardware by ASSETCODE and include the employee information
+    [HttpGet("{ASSETCODE}")]
+    public async Task<ActionResult<List<TRNASSETPICTUREMODEL>>> GetTrnHardware(string assetcode)
     {
-        var idasset = await _context.TRN_DTL_PICTURE.Where(x => x.IDASSET == IDASSET).ToListAsync();
+        var trnassetcode = await _context.TRN_DTL_PICTURE.Where(e => e.ASSETCODE == assetcode).ToListAsync();
 
-        if (idasset == null || !idasset.Any())
+        if (trnassetcode == null || !trnassetcode.Any())
         {
             return NotFound();
         }
 
-        return idasset;
+        return Ok(trnassetcode);
     }
 
     [HttpPost]

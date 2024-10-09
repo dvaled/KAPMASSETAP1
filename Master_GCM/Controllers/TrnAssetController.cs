@@ -13,12 +13,12 @@ public class TrnAssetController : ControllerBase
         _context = context;
     }
 
-    // Get hardware by IdAsset and include the employee information
-    [HttpGet("{IDASSET}")]
-    public async Task<ActionResult<TRNASSETMODEL>> GetTrnAssetById(string IDASSET)
+    // Get hardware by ASSETCODE and include the employee information
+    [HttpGet("{ASSETCODE}")]
+    public async Task<ActionResult<TRNASSETMODEL>> GetTrnAssetById(string ASSETCODE)
     {
         var trndtlAsset = await _context.TRN_ASSET
-        .Where(x => x.IDASSET == IDASSET)
+        .Where(x => x.ASSETCODE == ASSETCODE)
         .ToListAsync();
 
         if (trndtlAsset == null || !trndtlAsset.Any())
@@ -35,9 +35,27 @@ public class TrnAssetController : ControllerBase
         _context.TRN_ASSET.Add(trnAsset);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetTrnHardware", new { id = trnAsset.IDASSET }, trnAsset);
+        return CreatedAtAction("GetTrnHardware", new { id = trnAsset.ASSETCODE }, trnAsset);
     }
     
+    // public async Task<ActionResult<TRNASSETMODEL>> PostTrnHardware(TRNASSETMODEL trnAsset)
+    // {
+    //     // First, add the asset without the ASSETCODE so that the IDASSET gets generated
+    //     _context.TRN_ASSET.Add(trnAsset);
+    //     await _context.SaveChangesAsync();
+
+    //     // Now, generate the ASSETCODE based on the required structure
+    //     string assetCategoryInitial = trnAsset.ASSETCATEGORY.Substring(0, 1).ToUpper(); // First letter of ASSETCATEGORY
+    //     string addedDateStr = trnAsset.ADDEDDATE.ToString("yyyyMMdd"); // Format ADDEDDATE as YYYYMMDD
+    //     trnAsset.ASSETCODE = $"{trnAsset.ASSETTYPE}-{assetCategoryInitial}-{addedDateStr}-{trnAsset.IDASSET}";
+
+    //     // Update the entity with the generated ASSETCODE
+    //     _context.Entry(trnAsset).State = EntityState.Modified;
+    //     await _context.SaveChangesAsync();
+
+    //     return CreatedAtAction("GetTrnHardware", new { id = trnAsset.IDASSET }, trnAsset);
+    // }
+        
     // Get all hardware
     [HttpGet("all")]
     public async Task<ActionResult<List<TRNASSETMODEL>>> GetAllHardware()

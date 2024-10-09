@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,15 +11,15 @@ public class TrnSoftwareController : ControllerBase{
         _context = context;
     }
 
-    [HttpGet("{IDASSET}")]
-    public async Task<ActionResult<List<TRNSOFTWAREMODEL>>> GetTrnSoftware(string IDASSET){
-        var trnSoftware = await _context.TRN_DTL_SOFTWARE.Where(e => e.IDASSET == IDASSET).ToListAsync();
+    [HttpGet("{ASSETCODE}")]
+    public async Task<ActionResult<List<TRNSOFTWAREMODEL>>> GetTrnSoftware(string ASSETCODE){
+        var trnSoftware = await _context.TRN_DTL_SOFTWARE.Where(e => e.ASSETCODE == ASSETCODE).ToListAsync();
 
         if (trnSoftware == null || !trnSoftware.Any()){
             return NotFound();
         }
 
-        return trnSoftware;
+        return Ok(trnSoftware);
     }
 
     [HttpPost]

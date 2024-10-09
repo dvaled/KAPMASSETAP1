@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,14 +11,14 @@ public class TrnAssetSpecController : ControllerBase{
         _context = context;
     }
 
-    [HttpGet("{IDASSET}")]
-    public async Task<ActionResult<List<TRNASSETSPECMODEL>>> GetAssetSpec(string IDASSET){
-        var idasset = await _context.TRN_DTL_SPEC.Where(x => x.IDASSET == IDASSET).ToListAsync();
+    [HttpGet("{ASSETCODE}")]
+    public async Task<ActionResult<List<TRNASSETSPECMODEL>>> GetAssetSpec(string ASSETCODE){
+        var trngetspec = await _context.TRN_DTL_SPEC.Where(x => x.ASSETCODE == ASSETCODE).ToListAsync();
 
-        if (idasset == null || !idasset.Any()){
+        if (trngetspec == null || !trngetspec.Any()){
             return NotFound();
         }
-        return idasset;
+        return Ok(trngetspec);
     }
 
     [HttpPost]
@@ -25,12 +26,12 @@ public class TrnAssetSpecController : ControllerBase{
         _context.TRN_DTL_SPEC.Add(assetSpec);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetAssetSpec", new { id = assetSpec.IDASSET }, assetSpec);
+        return CreatedAtAction("GetAssetSpec", new { id = assetSpec.IDASSETSPEC }, assetSpec);
     }
 
-    [HttpPut("{IDASSET}")]
-    public async Task<IActionResult> PutAssetSpec(string IDASSET, TRNASSETSPECMODEL assetSpec){
-        if (IDASSET != assetSpec.IDASSET){
+    [HttpPut("{IDASSETSPEC}")]
+    public async Task<IActionResult> PutAssetSpec(int IDASSETSPEC, TRNASSETSPECMODEL assetSpec){
+        if (IDASSETSPEC != assetSpec.IDASSETSPEC){
             return BadRequest();
         }
 
@@ -40,7 +41,7 @@ public class TrnAssetSpecController : ControllerBase{
             await _context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException){
-            if (!AssetSpecExists(IDASSET)){
+            if (!AssetSpecExists(IDASSETSPEC)){
                 return NotFound();
             }
             else{
@@ -50,7 +51,7 @@ public class TrnAssetSpecController : ControllerBase{
 
         return NoContent();
     }
-    private bool AssetSpecExists(string IDASSET){
-        return _context.TRN_DTL_SPEC.Any(e => e.IDASSET == IDASSET);
+    private bool AssetSpecExists(int IDASSETSPEC){
+        return _context.TRN_DTL_SPEC.Any(e => e.IDASSETSPEC == IDASSETSPEC);
     }
 }

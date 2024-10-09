@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Master_GCM.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241008041708_FixIDASSETDATATYPE")]
-    partial class FixIDASSETDATATYPE
+    [Migration("20241009035737_ChangeDBStructure")]
+    partial class ChangeDBStructure
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,12 +36,11 @@ namespace Master_GCM.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("ASSETCODE")
+                        .HasColumnType("text");
+
                     b.Property<DateOnly>("DATEADDED")
                         .HasColumnType("date");
-
-                    b.Property<string>("IDASSET")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<int>("ROLEID")
                         .HasColumnType("integer");
@@ -52,7 +51,7 @@ namespace Master_GCM.Migrations
 
                     b.HasKey("LOGID");
 
-                    b.HasIndex("IDASSET")
+                    b.HasIndex("ASSETCODE")
                         .IsUnique();
 
                     b.ToTable("TRN_LOG");
@@ -133,9 +132,13 @@ namespace Master_GCM.Migrations
             modelBuilder.Entity("TRNASSETHISTORYMODEL", b =>
                 {
                     b.Property<int>("IDASSETHISTORY")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    b.Property<string>("IDASSET")
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IDASSETHISTORY"));
+
+                    b.Property<string>("ASSETCODE")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateOnly>("DATEADDED")
@@ -171,7 +174,10 @@ namespace Master_GCM.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("IDASSETHISTORY", "IDASSET");
+                    b.HasKey("IDASSETHISTORY");
+
+                    b.HasIndex("ASSETCODE")
+                        .IsUnique();
 
                     b.HasIndex("NIPP");
 
@@ -180,14 +186,28 @@ namespace Master_GCM.Migrations
 
             modelBuilder.Entity("TRNASSETMODEL", b =>
                 {
-                    b.Property<string>("IDASSET")
-                        .HasColumnType("text");
+                    b.Property<int>("IDASSET")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IDASSET"));
 
                     b.Property<string>("ACTIVE")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<DateOnly>("ADDEDDATE")
+                        .HasColumnType("date");
+
                     b.Property<string>("ASSETBRAND")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ASSETCATEGORY")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ASSETCODE")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -200,6 +220,10 @@ namespace Master_GCM.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("ASSETSERIES")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ASSETTYPE")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -216,12 +240,16 @@ namespace Master_GCM.Migrations
             modelBuilder.Entity("TRNASSETPICTUREMODEL", b =>
                 {
                     b.Property<int>("IDASSETPIC")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    b.Property<string>("IDASSET")
-                        .HasColumnType("text");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IDASSETPIC"));
 
                     b.Property<string>("ACTIVE")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ASSETCODE")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -241,7 +269,10 @@ namespace Master_GCM.Migrations
                     b.Property<string>("PICUPDATED")
                         .HasColumnType("text");
 
-                    b.HasKey("IDASSETPIC", "IDASSET");
+                    b.HasKey("IDASSETPIC");
+
+                    b.HasIndex("ASSETCODE")
+                        .IsUnique();
 
                     b.ToTable("TRN_DTL_PICTURE");
                 });
@@ -249,9 +280,13 @@ namespace Master_GCM.Migrations
             modelBuilder.Entity("TRNASSETSPECMODEL", b =>
                 {
                     b.Property<int>("IDASSETSPEC")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    b.Property<string>("IDASSET")
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IDASSETSPEC"));
+
+                    b.Property<string>("ASSETCODE")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool?>("BACKLIGHTKEYBOARD")
@@ -332,7 +367,10 @@ namespace Master_GCM.Migrations
                     b.Property<bool?>("WIFI")
                         .HasColumnType("boolean");
 
-                    b.HasKey("IDASSETSPEC", "IDASSET");
+                    b.HasKey("IDASSETSPEC");
+
+                    b.HasIndex("ASSETCODE")
+                        .IsUnique();
 
                     b.ToTable("TRN_DTL_SPEC");
                 });
@@ -340,9 +378,12 @@ namespace Master_GCM.Migrations
             modelBuilder.Entity("TRNMAINTENANCEMODEL", b =>
                 {
                     b.Property<int>("MAINTENANCEID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    b.Property<string>("IDASSET")
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MAINTENANCEID"));
+
+                    b.Property<string>("ASSETCODE")
                         .HasColumnType("text");
 
                     b.Property<DateOnly>("DATEADDED")
@@ -355,7 +396,10 @@ namespace Master_GCM.Migrations
                     b.Property<int>("PICADDED")
                         .HasColumnType("integer");
 
-                    b.HasKey("MAINTENANCEID", "IDASSET");
+                    b.HasKey("MAINTENANCEID");
+
+                    b.HasIndex("ASSETCODE")
+                        .IsUnique();
 
                     b.ToTable("TRN_HIST_MAINTENANCE");
                 });
@@ -363,12 +407,16 @@ namespace Master_GCM.Migrations
             modelBuilder.Entity("TRNSOFTWAREMODEL", b =>
                 {
                     b.Property<int>("IDASSETSOFTWARE")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    b.Property<string>("IDASSET")
-                        .HasColumnType("text");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IDASSETSOFTWARE"));
 
                     b.Property<string>("ACTIVE")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ASSETCODE")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -400,9 +448,10 @@ namespace Master_GCM.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("IDASSETSOFTWARE", "IDASSET");
+                    b.HasKey("IDASSETSOFTWARE");
 
-                    b.HasIndex("IDASSET");
+                    b.HasIndex("ASSETCODE")
+                        .IsUnique();
 
                     b.ToTable("TRN_DTL_SOFTWARE");
                 });
@@ -457,15 +506,21 @@ namespace Master_GCM.Migrations
                 {
                     b.HasOne("TRNASSETMODEL", "TRNASSET")
                         .WithOne()
-                        .HasForeignKey("LOGMODEL", "IDASSET")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LOGMODEL", "ASSETCODE")
+                        .HasPrincipalKey("TRNASSETMODEL", "ASSETCODE");
 
                     b.Navigation("TRNASSET");
                 });
 
             modelBuilder.Entity("TRNASSETHISTORYMODEL", b =>
                 {
+                    b.HasOne("TRNASSETMODEL", "TRNASSET")
+                        .WithOne()
+                        .HasForeignKey("TRNASSETHISTORYMODEL", "ASSETCODE")
+                        .HasPrincipalKey("TRNASSETMODEL", "ASSETCODE")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MSTEMPLOYEEMODEL", "EMPLOYEE")
                         .WithMany()
                         .HasForeignKey("NIPP")
@@ -473,6 +528,8 @@ namespace Master_GCM.Migrations
                         .IsRequired();
 
                     b.Navigation("EMPLOYEE");
+
+                    b.Navigation("TRNASSET");
                 });
 
             modelBuilder.Entity("TRNASSETMODEL", b =>
@@ -484,11 +541,46 @@ namespace Master_GCM.Migrations
                     b.Navigation("EMPLOYEE");
                 });
 
+            modelBuilder.Entity("TRNASSETPICTUREMODEL", b =>
+                {
+                    b.HasOne("TRNASSETMODEL", "TRNASSET")
+                        .WithOne()
+                        .HasForeignKey("TRNASSETPICTUREMODEL", "ASSETCODE")
+                        .HasPrincipalKey("TRNASSETMODEL", "ASSETCODE")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TRNASSET");
+                });
+
+            modelBuilder.Entity("TRNASSETSPECMODEL", b =>
+                {
+                    b.HasOne("TRNASSETMODEL", "TRNASSET")
+                        .WithOne()
+                        .HasForeignKey("TRNASSETSPECMODEL", "ASSETCODE")
+                        .HasPrincipalKey("TRNASSETMODEL", "ASSETCODE")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TRNASSET");
+                });
+
+            modelBuilder.Entity("TRNMAINTENANCEMODEL", b =>
+                {
+                    b.HasOne("TRNASSETMODEL", "TRNASSET")
+                        .WithOne()
+                        .HasForeignKey("TRNMAINTENANCEMODEL", "ASSETCODE")
+                        .HasPrincipalKey("TRNASSETMODEL", "ASSETCODE");
+
+                    b.Navigation("TRNASSET");
+                });
+
             modelBuilder.Entity("TRNSOFTWAREMODEL", b =>
                 {
                     b.HasOne("TRNASSETMODEL", "TRNASSET")
-                        .WithMany()
-                        .HasForeignKey("IDASSET")
+                        .WithOne()
+                        .HasForeignKey("TRNSOFTWAREMODEL", "ASSETCODE")
+                        .HasPrincipalKey("TRNASSETMODEL", "ASSETCODE")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

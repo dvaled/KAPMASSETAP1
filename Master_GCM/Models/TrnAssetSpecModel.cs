@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class TRNASSETSPECMODEL{
     public int IDASSETSPEC { get; set; }
-    public required string IDASSET { get; set; }
+    public required string ASSETCODE { get; set; }
     public string? PROCESSORBRAND { get; set; }
     public string? PROCESSORMODEL { get; set; }
     public string? PROCESSORSERIES { get; set; }
@@ -30,6 +30,8 @@ public class TRNASSETSPECMODEL{
     public bool? WIFI { get; set; }
     public bool? BLUETOOTH { get; set; }
 
+    [ForeignKey("ASSETCODE")]
+    public required TRNASSETMODEL TRNASSET { get; set; }
 }
 
 
