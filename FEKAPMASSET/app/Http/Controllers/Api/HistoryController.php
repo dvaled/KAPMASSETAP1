@@ -23,10 +23,10 @@ class HistoryController extends Controller
                 $data = []; 
             }
 
-            return view('master.index', ['masters' => $data]);
+            return view('history.index', ['masters' => $data]);
 
         } catch (\Exception $e) {
-            return view('master.index', ['masters' => []])-> with($e);
+            return view('history.index', ['masters' => []])-> with($e);
         }
     }
 
