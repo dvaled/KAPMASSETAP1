@@ -97,38 +97,51 @@
 
                   <!-- Input fields for master data -->
                   <div class="mb-4">
-                      <label for="masterid" class="block text-sm font-semibold">Master ID</label>
+                      <label for="masterid" class="block text-sm font-semibold">ID Software</label>
                       <input type="text" id="masterid" name="masterid" class="w-full p-2 border rounded" readonly>
                   </div>
                   
                   <div class="mb-4">
-                      <label for="condition" class="block text-sm font-semibold">Condition</label>
+                      <label for="condition" class="block text-sm font-semibold">ID Asset</label>
                       <input type="text" id="conditionModal" name="condition" class="w-full p-2 border rounded" required>
                   </div>
 
                   <div class="mb-4">
-                      <label for="nosrModal" class="block text-sm font-semibold">Serial Number</label>
+                      <label for="nosrModal" class="block text-sm font-semibold">Software Type</label>
                       <input type="text" id="nosrModal" name="nosrModal" class="w-full p-2 border rounded" required>
                   </div>
                   <div class="mb-4">
-                    <label for="description" class="block text-sm font-semibold"> Description </label>
+                    <label for="description" class="block text-sm font-semibold"> Software Category </label>
                     <input type="text" id="descriptionModal" name="description" class="w-full p-2 border rounded" required>
                 </div>
                 <div class="mb-4">
-                    <label for="valuegcm" class="block text-sm font-semibold"> ValueGCM </label>
+                    <label for="valuegcm" class="block text-sm font-semibold"> Software Name </label>
                     <input type="text" id="valuegcmModal" name="valuegcm" class="w-full p-2 border rounded" required>
                 </div>
                 <div class="mb-4">
-                    <label for="typegcm" class="block text-sm font-semibold"> TypeGCM </label>
+                    <label for="typegcm" class="block text-sm font-semibold"> Software License </label>
                     <input type="text" id="typegcmModal" name="typegcm" class="w-full p-2 border rounded" required>
                 </div>
                 <div class="mb-4">
                     <label for="active" class="block text-sm font-semibold"> Active </label>
                     <input type="text" id="activeModal" name="active" class="w-full p-2 border rounded" required>
                 </div>
-
-                  <!-- Add more fields as necessary -->
-
+                <div class="mb-4">
+                    <label for="active" class="block text-sm font-semibold"> PIC Added </label>
+                    <input type="text" id="activeModal" name="active" class="w-full p-2 border rounded" required>
+                </div>
+                <div class="mb-4">
+                    <label for="active" class="block text-sm font-semibold"> Date Added </label>
+                    <input type="text" id="activeModal" name="active" class="w-full p-2 border rounded" required>
+                </div>
+                <div class="mb-4">
+                    <label for="active" class="block text-sm font-semibold"> Date Updated </label>
+                    <input type="text" id="activeModal" name="active" class="w-full p-2 border rounded" required>
+                </div>
+                <div class="mb-4">
+                    <label for="active" class="block text-sm font-semibold"> PIC Updated </label>
+                    <input type="text" id="activeModal" name="active" class="w-full p-2 border rounded" required>
+                </div>
                   <div class="flex justify-end">
                       <button type="button" onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
                       <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>

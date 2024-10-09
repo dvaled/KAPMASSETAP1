@@ -16,6 +16,7 @@ class HardwareController extends Controller
         $client = new Client();
     try {
         $response = $client->request('GET', 'http://localhost:5252/api/TrnAssetSpec/{IDASSET}');
+        $response = $client->request('GET', 'http://localhost:5252/api/TrnAssetSpec/{IDASSET}');
         $body = $response->getBody();
         $content = $body->getContents();
         $data = json_decode($content, true);

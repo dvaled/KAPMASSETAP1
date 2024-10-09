@@ -30,6 +30,26 @@ class MasterController extends Controller
         return view('master.edit', compact('master'));
     }
 
+    public function store(Request $request){
+        $validated = $request -> validate([
+            'mastername' => 'required|string|max:255',
+            'conditions' => 'required|string|max:255',
+            'nosr' => 'required|string|max:255',
+            'description' => 'required|string',
+            'valuegcm' => 'required|numeric',
+            'typegcm' => 'required|string|max:255',
+            'active' => 'boolean',
+        ]);
+
+        $client = new Client();
+
+        try {
+            $response = $client -> getBody();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
     // Destroy method to delete a record
     public function destroy($id) {
         // Fetch the master record using the $id
