@@ -15,7 +15,7 @@ public class TRNASSETMODEL{
     public required string ASSETSERIALNUMBER {get; set;}
     public DateOnly ADDEDDATE {get; set;}
     public required string ACTIVE {get; set;}
-
+    
     [ForeignKey("NIPP")]
     public required MSTEMPLOYEEMODEL EMPLOYEE { get; set; } 
 }
