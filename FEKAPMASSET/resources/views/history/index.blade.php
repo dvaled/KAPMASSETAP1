@@ -37,7 +37,7 @@
                 </td>
                 <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                     <span class="font-semibold leading-tight text-xs text-black">{{ $masters['description'] }}</span> <!-- Display Description -->
-                </td>
+                </td>   
                 <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                     <span class="font-semibold leading-tight text-xs text-black">{{ $masters['valuegcm']}}</span> <!-- Display Value -->
                 </td>
