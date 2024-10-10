@@ -13,16 +13,16 @@ namespace Master_GCM.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_TRN_DTL_SOFTWARE_TRN_ASSET_IDASSET",
-                table: "TRN_DTL_SOFTWARE");
+                name: "FK_TRN_ASSET_TRN_LOG_IDASSET",
+                table: "TRN_ASSET");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_TRN_LOG_TRN_ASSET_IDASSET",
-                table: "TRN_LOG");
+                name: "FK_TRN_DTL_PICTURE_TRN_ASSET_IDASSET",
+                table: "TRN_DTL_PICTURE");
 
-            migrationBuilder.DropIndex(
-                name: "IX_TRN_LOG_IDASSET",
-                table: "TRN_LOG");
+            migrationBuilder.DropForeignKey(
+                name: "FK_TRN_DTL_SOFTWARE_TRN_ASSET_IDASSET",
+                table: "TRN_DTL_SOFTWARE");
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_TRN_HIST_MAINTENANCE",
@@ -46,6 +46,10 @@ namespace Master_GCM.Migrations
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_TRN_DTL_PICTURE",
+                table: "TRN_DTL_PICTURE");
+
+            migrationBuilder.DropIndex(
+                name: "IX_TRN_DTL_PICTURE_IDASSET",
                 table: "TRN_DTL_PICTURE");
 
             migrationBuilder.DropColumn(
@@ -156,6 +160,15 @@ namespace Master_GCM.Migrations
                 type: "text",
                 nullable: false,
                 defaultValue: "");
+
+            migrationBuilder.AlterColumn<int>(
+                name: "IDASSET",
+                table: "TRN_ASSET",
+                type: "integer",
+                nullable: false,
+                oldClrType: typeof(int),
+                oldType: "integer")
+                .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             migrationBuilder.AddColumn<DateOnly>(
                 name: "ADDEDDATE",
@@ -500,6 +513,15 @@ namespace Master_GCM.Migrations
                 nullable: false,
                 defaultValue: 0);
 
+            migrationBuilder.AlterColumn<int>(
+                name: "IDASSET",
+                table: "TRN_ASSET",
+                type: "integer",
+                nullable: false,
+                oldClrType: typeof(int),
+                oldType: "integer")
+                .OldAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
             migrationBuilder.AddPrimaryKey(
                 name: "PK_TRN_HIST_MAINTENANCE",
                 table: "TRN_HIST_MAINTENANCE",
@@ -526,27 +548,34 @@ namespace Master_GCM.Migrations
                 columns: new[] { "IDASSETPIC", "IDASSET" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_TRN_LOG_IDASSET",
-                table: "TRN_LOG",
-                column: "IDASSET",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TRN_DTL_SOFTWARE_IDASSET",
                 table: "TRN_DTL_SOFTWARE",
                 column: "IDASSET");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_TRN_DTL_PICTURE_IDASSET",
+                table: "TRN_DTL_PICTURE",
+                column: "IDASSET");
+
             migrationBuilder.AddForeignKey(
-                name: "FK_TRN_DTL_SOFTWARE_TRN_ASSET_IDASSET",
-                table: "TRN_DTL_SOFTWARE",
+                name: "FK_TRN_ASSET_TRN_LOG_IDASSET",
+                table: "TRN_ASSET",
+                column: "IDASSET",
+                principalTable: "TRN_LOG",
+                principalColumn: "LOGID",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_TRN_DTL_PICTURE_TRN_ASSET_IDASSET",
+                table: "TRN_DTL_PICTURE",
                 column: "IDASSET",
                 principalTable: "TRN_ASSET",
                 principalColumn: "IDASSET",
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_TRN_LOG_TRN_ASSET_IDASSET",
-                table: "TRN_LOG",
+                name: "FK_TRN_DTL_SOFTWARE_TRN_ASSET_IDASSET",
+                table: "TRN_DTL_SOFTWARE",
                 column: "IDASSET",
                 principalTable: "TRN_ASSET",
                 principalColumn: "IDASSET",

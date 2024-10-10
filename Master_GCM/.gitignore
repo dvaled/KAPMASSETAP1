@@ -1,2 +1,3 @@
 # Ignore all environment-specific appsettings files
 appsettings.*.json
+appsettings.Development.json

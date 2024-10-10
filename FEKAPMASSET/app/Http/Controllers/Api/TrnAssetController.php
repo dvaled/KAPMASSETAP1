@@ -5,16 +5,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
-class TrnDtlPictureController extends Controller
+class TrnAssetController extends Controller
 {
     public function index() {
         $client = new Client();
-        $response = $client->request('GET', 'http://localhost:5252/api/TrnDtlPicture');
+        $response = $client->request('GET', 'http://localhost:5252/api/Master');
         $body = $response->getBody();
         $content = $body->getContents();
         $data = json_decode($content, true);
 
-        return view('master.index', ['trnpictureData' => $data]); // Keep the view name consistent
-
+        return view('detailAsset.Laptop', ['masterData' => $data]); // Keep the view name consistent
     }
+
+    // public function detail(){
+    //     return view('detailAsset.laptop');
+    // }
 }

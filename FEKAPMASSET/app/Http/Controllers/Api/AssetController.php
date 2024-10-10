@@ -14,17 +14,32 @@ class AssetController extends Controller
     public function index() 
     {
         $client = new Client();
-        $response = $client->requeest('get', 'http://localhost:5252/api/Log');
+        $response = $client->request('get', 'http://localhost:5252/api/Log');
         $body = $response -> getBody();
         $content = $body -> getContents();
         $data = json_decode($content, true);
-
+        
+        // Check the contents of $data
+           if (empty($data)) {
+            dd('No data received from API');
+        }    
+  
         return view('dashboard', ['logData' => $data]);
     }
 
-    public function store(){
+    public function create(){
         $client = new Client();
-        $response = $client->request('POST', 'http://localhost:5252/api/Log');
- 
+        $response = $client->request('GET', 'http://localhost:5252/api/Master');
+        $body = $response->getBody();
+        $content = $body->getContents();
+        $data = json_decode($content, true);
+
+        return view('dashboard', ['masterData' => $data]);
     }
+
+    // public function store(){
+    //     $client = new Client();
+    //     $response = $client->request('POST', 'http://localhost:5252/api/Log');
+ 
+    // }
 }

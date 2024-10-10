@@ -5,7 +5,7 @@
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
             <h2>Create New Master</h2>
-        </div>
+        </div>              
         <div class="pull-right">
             <a class="btn btn-primary" href="{{ route('master.index') }}"> Back</a>
         </div>
@@ -25,7 +25,6 @@
 
 <form action="{{ route('master.store') }}" method="POST">
     @csrf
-
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">

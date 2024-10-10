@@ -3,6 +3,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Master;
+use Exception;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Auth\Events\Validated;
@@ -21,13 +22,15 @@ class MasterController extends Controller
         return view('master.index', ['masterData' => $data]); // Keep the view name consistent
     }
 
-    // Edit method to show the form for editing the record
-    public function edit($id) {
-        // Fetch the master record using the $id
-        $master = Master::findOrFail($id);
-        
-        // Return the edit view with the master data
-        return view('master.edit', compact('master'));
+    public function create(){
+        $client = new Client();
+        $response = $client->request('GET', 'http://localhost:5252/api/Master');
+        $body = $response->getBody();
+        $content = $body->getContents();
+        $data = json_decode($content, true);
+    
+        // Pass the masterData to the view so that the sidebar can consume it
+        return view('master.create', ['masterData' => $data]);
     }
 
     public function store(Request $request){
@@ -44,11 +47,37 @@ class MasterController extends Controller
         $client = new Client();
 
         try {
-            $response = $client -> getBody();
-        } catch (\Throwable $th) {
-            //throw $th;
+            // Send POST request to your API
+            $response = $client->post('http://localhost:5252/api/master', [
+                'json' => [
+                    'mastername' => 'required|string|max:255',
+                    'conditions' => 'required|string|max:255',
+                    'nosr' => 'required|string|max:255',
+                    'description' => 'required|string',
+                    'valuegcm' => 'required|numeric',
+                    'typegcm' => 'required|string|max:255',
+                    'active' => 'boolean',
+                ]
+            ]);
+
+            $data = json_decode($response->getBody()->getContents(), true);
+             
+            // // Return the edit view with the master data
+            // return view('master.edit', compact('master'));
+        }catch(Exception $e){
+            return redirect('/dashboard')->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
+
+    // Edit method to show the form for editing the record
+    public function edit($id) {
+        // Fetch the master record using the $id
+        $master = Master::findOrFail($id);
+        
+        // Return the edit view with the master data
+        return view('master.edit', compact('master'));
+    }
+
 
     // Destroy method to delete a record
     public function destroy($id) {

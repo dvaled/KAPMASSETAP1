@@ -19,7 +19,8 @@ class Log extends Model
         "ROLEID",
         "ACTIONPERFORMED",
         "USERADDED",
-        "DATEADDED"
+        "DATEADDED",
+        "ASSETCODE"
     ];
     
     public function User(){
