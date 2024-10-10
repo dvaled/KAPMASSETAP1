@@ -30,7 +30,11 @@ class MasterController extends Controller
         $data = json_decode($content, true);
     
         // Pass the masterData to the view so that the sidebar can consume it
+<<<<<<< HEAD
         return view('master.create', ['sidebarData' => $data]);
+=======
+        return view('layouts.sidebar', ['sidebarData' => $data]);
+>>>>>>> 60463b3af7eaf7976958feb7d6a2346523c6cd46
     }
 
     public function boot()
