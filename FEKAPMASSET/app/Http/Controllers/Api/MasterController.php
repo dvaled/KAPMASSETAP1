@@ -22,7 +22,7 @@ class MasterController extends Controller
         return view('master.index', ['masterData' => $data]); // Keep the view name consistent
     }
 
-    public function create(){
+    public function sidebar(){
         $client = new Client();
         $response = $client->request('GET', 'http://localhost:5252/api/Master');
         $body = $response->getBody();
@@ -30,7 +30,21 @@ class MasterController extends Controller
         $data = json_decode($content, true);
     
         // Pass the masterData to the view so that the sidebar can consume it
-        return view('master.create', ['masterData' => $data]);
+        return view('layouts.sidebar', ['sidebarData' => $data]);
+    }
+
+    public function boot()
+    {
+        View::composer('layouts.sidebar', function ($view) {
+            $client = new Client();
+            $response = $client->request('GET', 'http://localhost:5252/api/Master');
+            $body = $response->getBody();
+            $content = $body->getContents();
+            $data = json_decode($content, true);
+
+            // Share the master data with the sidebar
+            $view->with('masterData', $data);
+        });
     }
 
     public function store(Request $request){

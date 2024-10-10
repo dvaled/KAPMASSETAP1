@@ -24,8 +24,9 @@ Route::get('/dashboard', [AssetController::class, 'create'])->name('dashboard');
 //Master
 Route::prefix('master')->name('master.')->group(function() {
     Route::get('/', [MasterController::class, 'index'])->name('index');//return master view with all of the master data
-    Route::get('/create', [MasterController::class, 'create'])->name('create');//return master view with all of the master data
+    Route::get('/create', [MasterController::class, 'sidebar'])->name('create');//return master view with all of the master data
     Route::post('/store', [MasterController::class, 'store'])->name('store');//send a post request to the API for master_gcm table
+    Route::get('/log', [LogController::class, 'index'])->name('log.index');//return log view with all of the log data
 });
 
 
@@ -40,18 +41,10 @@ Route::view('/detailAssetP', 'detailAsset.others');
 //Hardware 
 Route::get('hardware/store', [HardwareController::class, 'store']); // Get a specific hardware
 
+// //Master
+// Route::get('/master', [MasterController::class, 'index'])->name('master.index'); //display the master tables
 
+// //Sidebar Master
+// Route::get('/', [MasterController::class, 'sidebar'])->name('sidebar');
 
-
-
-
-
-
-
-
-
-
-
-
-
-//Route::get('/detailAsset', [MasterController::class, 'index'])->name('detailAsset.laptop');
+//Employee

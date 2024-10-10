@@ -64,6 +64,7 @@
                         $description = $masters['description'];
                     @endphp
                     <li>
+                        
                       <h5 class="mb-0">
                         <button class="relative flex items-center w-full p-4 font-semibold text-left transition-all border-b border-solid cursor-pointer border-slate-100 ease-soft-in text-white rounded-t-1"
                                 aria-expanded="false" onclick="toggleDropdown(this)">
