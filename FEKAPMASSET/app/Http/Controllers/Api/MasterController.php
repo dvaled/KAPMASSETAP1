@@ -21,6 +21,16 @@ class MasterController extends Controller
         return view('master.index', ['masterData' => $data]); // Keep the view name consistent
     }
 
+    public function sidebar() {
+        $client = new Client();
+        $response = $client->request('GET', 'http://localhost:5252/api/Master');
+        $body = $response->getBody();
+        $content = $body->getContents();
+        $data = json_decode($content, true);
+
+        return view('', ['sidebarData' => $data]); // Keep the view name consistent
+    }
+
     // Edit method to show the form for editing the record
     public function edit($id) {
         // Fetch the master record using the $id
