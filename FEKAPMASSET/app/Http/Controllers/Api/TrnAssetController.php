@@ -12,6 +12,16 @@ class TRNAssetController extends Controller
         return view('trnasset.create');
     }
 
+    public function index() {
+        $client = new Client();
+        $response = $client->request('GET', 'http://localhost:5252/api/Master');
+        $body = $response->getBody();
+        $content = $body->getContents();
+        $data = json_decode($content, true);
+
+        return view('detailAsset.Laptop', ['masterData' => $data]); // Keep the view name consistent
+    }
+
     public function store(Request $request)
     {
         // Validate the incoming data
@@ -69,14 +79,4 @@ class TRNAssetController extends Controller
         }
     }
 
-
-    public function index() {
-        $client = new Client();
-        $response = $client->request('GET', 'http://localhost:5252/api/Master');
-        $body = $response->getBody();
-        $content = $body->getContents();
-        $data = json_decode($content, true);
-
-        return view('detailAsset.Laptop', ['masterData' => $data]); // Keep the view name consistent
-    }
 }

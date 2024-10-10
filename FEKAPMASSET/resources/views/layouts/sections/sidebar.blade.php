@@ -57,7 +57,7 @@
                       </li>
                   </ul> --}}
                   <ul>
-                    @foreach ($sidebarData as $masters)
+                    @foreach ($masterData as $masters)
                     @if($masters['condition'] == 'FIELD')
                     @php
                         // Assign the description value

@@ -25,6 +25,7 @@ class LogController extends Controller
         
         return view('log.index', ['logData' => $data]);
     }
+    
 
     // Get a specific log record by ID
     public function show($id)
