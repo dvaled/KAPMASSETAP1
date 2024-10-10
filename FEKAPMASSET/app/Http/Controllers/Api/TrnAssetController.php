@@ -68,4 +68,15 @@ class TRNAssetController extends Controller
             return back()->withErrors(['message' => 'Failed to create asset.'])->withInput();
         }
     }
+
+
+    public function index() {
+        $client = new Client();
+        $response = $client->request('GET', 'http://localhost:5252/api/Master');
+        $body = $response->getBody();
+        $content = $body->getContents();
+        $data = json_decode($content, true);
+
+        return view('detailAsset.Laptop', ['masterData' => $data]); // Keep the view name consistent
+    }
 }

@@ -12,5 +12,6 @@ class ImageController extends Controller
     public function index(){
         $client = new Client();
         $response = $client->request('GET', 'http://localhost:5252/api/Log');
+
     }
 }
