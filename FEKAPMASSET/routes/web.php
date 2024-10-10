@@ -40,50 +40,10 @@ Route::view('/detailAssetP', 'detailAsset.others');
 //Hardware 
 Route::get('hardware/store', [HardwareController::class, 'store']); // Get a specific hardware
 
-<<<<<<< HEAD
 //Master
 Route::get('/master', [MasterController::class, 'index'])->name('master.index'); //display the master tables
 
 //Sidebar Master
 Route::get('/', [MasterController::class, 'sidebar'])->name('sidebar');
 
-
-// Route::('')
-
-
-=======
->>>>>>> 3f53272606907389fbd5e9b73d4176e7c9fda18a
-
-
-
-Route::prefix('master')->group(function () {
-    Route::get('/Detail-Asset-Laptop', function () {
-        // Matches The "/admin/users" URL
-    });
-
-
-    
-    Route::get('/Detail-Asset-Mobile', function () {
-        // Matches The "/admin/users" URL
-    });
-    Route::get('/Detail-Asset-Others', function () {
-        // Matches The "/admin/users" URL
-    });
-    Route::get('/Detail-Asset-Employee', function () {
-        // Matches The "/admin/users" URL
-    });
-    Route::get('/Detail-Asset-User', function () {
-        // Matches The "/admin/users" URL
-    });
-});
-
-
-
-
-
-
-
-
-
-
-//Route::get('/detailAsset', [MasterController::class, 'index'])->name('detailAsset.laptop');
+//Employee
