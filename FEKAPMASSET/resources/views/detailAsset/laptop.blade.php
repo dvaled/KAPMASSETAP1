@@ -17,20 +17,24 @@
                     {{-- <a href="#">
                         <img class="rounded-t-lg w-full" src="D:/laragon/www/KAPMASSETAP1/FEKAPMASSET/public/assets/KAI.png" alt="" />
                     </a> --}}
-                    <!-- Read more button -->
-                    <div class="w-full p-4 m-4 flex justify-end space-x-4">
-                        <button href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mt-4">
-                            Print QR
-                        </button>
-                        <button href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mt-4">
-                            Update Asset    
-                        </button> 
-                    </div>
                     <div class="p-5">
-                        <a href="#">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">PT. KAI Properti</h5>
-                        </a>
-                        <p class="mb-3 font-normal text-gray-700">KAI Properti</p>
+                        <div class="flex justify-between items-center pb-4 mb-4">
+                            <!-- Left Aligned Heading -->
+                            <a href="#">
+                                <h5 class="text-2xl font-bold tracking-tight text-gray-900">
+                                    PT. KAI Properti
+                                </h5>
+                            </a>
+                            <!-- Right Aligned Buttons -->
+                            <div class="flex space-x-4">
+                                <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                    Print QR
+                                </button>
+                                <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                    Update Asset
+                                </button>
+                            </div>
+                        </div>
                         <div class="relative overflow-x-auto">
                             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                 <tbody>
@@ -160,43 +164,72 @@
         <div class="p-0 overflow-x-auto">
             <div class="flex flex-wrap justify-evenly gap-4 p-4 bg-white">
                 <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">Software</h5>
+                    <div class="flex justify-between items-center pb-4 mb-4">
+                        <!-- Left Aligned Heading -->
+                        <a href="#">
+                            <h5 class="text-2xl font-bold tracking-tight text-gray-900">
+                                Software
+                            </h5>
+                        </a>
+                        <!-- Right Aligned Buttons -->
+                        <div class="flex space-x-4">
+                            <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" onclick="openEditModal({{ json_encode($masterData) }})">
+                                Add Software
+                            </button>
+                        </div>
+                    </div>
                     <!-- Dynamic Table-like Section with Headers as Rows -->
                         <div class="relative overflow-x-auto">
                             <table class="p-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
                                 <thead class="align-bottom">
                                     <tr>
-                                    <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Master Id</th>
-                                    <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Condition</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Description</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Value</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Type</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Active</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Action</th>
+                                    <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">ID</th>
+                                    <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Type</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Category</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Name</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">License</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Active</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">PIC Added</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Date Added</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Date Updated</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Asset Code</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Action</th>
                                 </thead>
                                 <tbody class= "justify-center">
                                     {{-- get software (remove masterData to softwareData) --}}
                                     @foreach ($masterData as $masters)
                                     <tr>
-                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
                                             <p class="mb-0 font-semibold leading-tight text-xs">{{ $masters['masterid'] }}</p> <!-- Display Condition -->
                                         </td>
-                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
                                             <p class="mb-0 font-semibold leading-tight text-xs">{{ $masters['condition'] }}</p> <!-- Display Condition -->
                                         </td>
-                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
                                             <span class="font-semibold leading-tight text-xs text-black">{{ $masters['description'] }}</span> <!-- Display Description -->
                                         </td>
-                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
                                             <span class="font-semibold leading-tight text-xs text-black">{{ $masters['valuegcm']}}</span> <!-- Display Value -->
                                         </td>
-                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
                                             <span class="font-semibold leading-tight text-xs text-black">{{ $masters['typegcm']}}</span> <!-- Display Type -->
                                         </td>
-                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                            <span class="font-semibold leading-tight text-xs text-black">{{ $masters['typegcm']}}</span> <!-- Display Type -->
+                                        </td>
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                            <span class="font-semibold leading-tight text-xs text-black">{{ $masters['typegcm']}}</span> <!-- Display Type -->
+                                        </td>
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                            <span class="font-semibold leading-tight text-xs text-black">{{ $masters['typegcm']}}</span> <!-- Display Type -->
+                                        </td>
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                            <span class="font-semibold leading-tight text-xs text-black">{{ $masters['typegcm']}}</span> <!-- Display Type -->
+                                        </td>
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
                                             <span class="font-semibold leading-tight text-xs text-black">{{ $masters['active'] }}</span> <!-- Display Active status -->
                                         </td>
-                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
                                         <!-- Edit Icon -->
                                         <a href="javascript:void(0);" class="text-blue-500 text-sm font-bold mr-2" onclick="openEditModal({{ json_encode($masters) }})">
                                             <i class="fas fa-edit"></i>
@@ -215,14 +248,358 @@
                                     @endforeach
                                 </tbody>
                                 </table>
-                        </div>
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
+    <div class="flex-auto px-0 pt-0 pb-2">
+        <div class="p-0 overflow-x-auto">
+            <div class="flex flex-wrap justify-evenly gap-4 p-4 bg-white">
+                <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow">
+                    <div class="flex justify-between items-center pb-4 mb-4">
+                        <!-- Left Aligned Heading -->
+                        <a href="#">
+                            <h5 class="text-2xl font-bold tracking-tight text-gray-900">
+                                Image
+                            </h5>
+                        </a>
+                        <!-- Right Aligned Buttons -->
+                        <div class="flex space-x-4">
+                            <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                Add Image
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Dynamic Table-like Section with Headers as Rows -->
+                        <div class="relative overflow-x-auto">
+                            <table class="p-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
+                                <thead class="align-bottom">
+                                    <tr>
+                                    <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Overview</th>
+                                    <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Front-View</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Under-View</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Action</th>
+                                </thead>
+                                <tbody class= "justify-center">
+                                    {{-- get software (remove masterData to softwareData) --}}
+                                    @foreach ($masterData as $masters)
+                                    <tr>
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                            <p class="mb-0 font-semibold leading-tight text-xs">{{ $masters['masterid'] }}</p> <!-- Display Condition -->
+                                        </td>
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                            <p class="mb-0 font-semibold leading-tight text-xs">{{ $masters['condition'] }}</p> <!-- Display Condition -->
+                                        </td>
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                            <span class="font-semibold leading-tight text-xs text-black">{{ $masters['description'] }}</span> <!-- Display Description -->
+                                        </td>
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                        <!-- Edit Icon -->
+                                        <a href="javascript:void(0);" class="text-blue-500 text-sm font-bold mr-2" onclick="openEditModal({{ json_encode($masters) }})">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <!-- Delete Icon (using a form for DELETE) -->
+                                        <form {{-- action="{{ route('masters.destroy', $masters['masterid']) }}"--}} method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-500 text-sm font-bold" onclick="openDeleteModal({{ json_encode($masters) }})">
+                                                <i class="fas fa-trash"></i> <!-- Font Awesome Trash Icon -->
+                                            </button>
+                                        </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                                </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex-auto px-0 pt-0 pb-2">
+        <div class="p-0 overflow-x-auto">
+            <div class="flex flex-wrap justify-evenly gap-4 p-4 bg-white">
+                <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow">
+                    <div class="flex justify-between items-center pb-4 mb-4">
+                        <!-- Left Aligned Heading -->
+                        <a href="#">
+                            <h5 class="text-2xl font-bold tracking-tight text-gray-900">
+                                History
+                            </h5>
+                        </a>
+                    </div>
+                    <!-- Dynamic Table-like Section with Headers as Rows -->
+                    <div class="relative overflow-x-auto">
+                        <table class="p-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
+                            <thead class="align-bottom">
+                                <tr>
+                                <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">ID History</th>
+                                <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">NIPP</th>
+                                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Name</th>
+                                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Position</th>
+                                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Unit</th>
+                                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Department</th>
+                                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Directorate</th>
+                                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">PIC Added</th>
+                                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Date Added</th>
+                                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Date Updated</th>
+                                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Asset Code</th>
+                                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Action</th>
+                            </thead>
+                            <tbody class= "justify-center">
+                                {{-- get software (remove masterData to softwareData) --}}
+                                @foreach ($masterData as $masters)
+                                <tr>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300 ">
+                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $masters['masterid'] }}</p> <!-- Display Condition -->
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $masters['condition'] }}</p> <!-- Display Condition -->
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">                                        <span class="font-semibold leading-tight text-xs text-black">{{ $masters['description'] }}</span> <!-- Display Description -->
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                        <span class="font-semibold leading-tight text-xs text-black">{{ $masters['valuegcm']}}</span> <!-- Display Value -->
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                        <span class="font-semibold leading-tight text-xs text-black">{{ $masters['typegcm']}}</span> <!-- Display Type -->
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                        <span class="font-semibold leading-tight text-xs text-black">{{ $masters['active'] }}</span> <!-- Display Active status -->
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                        <span class="font-semibold leading-tight text-xs text-black">{{ $masters['active'] }}</span> <!-- Display Active status -->
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                        <span class="font-semibold leading-tight text-xs text-black">{{ $masters['active'] }}</span> <!-- Display Active status -->
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                        <span class="font-semibold leading-tight text-xs text-black">{{ $masters['active'] }}</span> <!-- Display Active status -->
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                        <span class="font-semibold leading-tight text-xs text-black">{{ $masters['active'] }}</span> <!-- Display Active status -->
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                        <span class="font-semibold leading-tight text-xs text-black">{{ $masters['active'] }}</span> <!-- Display Active status -->
+                                    </td>
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                        <!-- Edit Icon -->
+                                        <a href="javascript:void(0);" class="text-blue-500 text-sm font-bold mr-2" onclick="openEditModal({{ json_encode($masters) }})">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        
+                                        <!-- Delete Icon (using a form for DELETE) -->
+                                        <form {{-- action="{{ route('masters.destroy', $masters['masterid']) }}"--}} method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-500 text-sm font-bold" onclick="openDeleteModal({{ json_encode($masters) }})">
+                                                <i class="fas fa-trash"></i> <!-- Font Awesome Trash Icon -->
+                                            </button>
+                                        </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex-auto px-0 pt-0 pb-2">
+        <div class="p-0 overflow-x-auto">
+            <div class="flex flex-wrap justify-evenly gap-4 p-4 bg-white">
+                <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow">
+                    <div class="flex justify-between items-center pb-4 mb-4">
+                        <!-- Left Aligned Heading -->
+                        <a href="#">
+                            <h5 class="text-2xl font-bold tracking-tight text-gray-900">
+                                Maintenance History
+                            </h5>
+                        </a>
+                        <!-- Right Aligned Buttons -->
+                        <div class="flex space-x-4">
+                            <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                Add Maintenance History
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Dynamic Table-like Section with Headers as Rows -->
+                    <div class="relative overflow-x-auto">
+                        <table class="p-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
+                            <thead class="align-bottom">
+                                <tr>
+                                    <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Maintenance ID</th>
+                                    <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">PIC Added</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Notes</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Date Added</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Asset Code</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="justify-center">
+                                @foreach ($masterData as $masters)
+                                <tr>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $masters['masterid'] }}</p>
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $masters['condition'] }}</p>
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                        <span class="font-semibold leading-tight text-xs text-black">{{ $masters['description'] }}</span>
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                        <span class="font-semibold leading-tight text-xs text-black">{{ $masters['valuegcm'] }}</span>
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-r border-gray-300">
+                                        <span class="font-semibold leading-tight text-xs text-black">{{ $masters['typegcm'] }}</span>
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <!-- Edit Icon -->
+                                        <a href="javascript:void(0);" class="text-blue-500 text-sm font-bold mr-2" onclick="openEditModal({{ json_encode($masters) }})">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <!-- Delete Icon -->
+                                        <form {{-- action="{{ route('masters.destroy', $masters['masterid']) }}" --}} method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-500 text-sm font-bold" onclick="openDeleteModal({{ json_encode($masters) }})">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal for all of the tables --}}
+    <!-- Software Modal -->
+    <div id="softwareModal" class="modal hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-6 rounded-md w-96">
+            <h2 class="text-xl font-bold mb-4">Edit Software</h2>
+
+            <form id="editFormSoftware">
+                @csrf
+                @method('PUT') <!-- Use PUT method for updates -->
+
+                <!-- Input fields for master data -->
+                <div class="mb-4">
+                    <label for="masterid" class="block text-sm font-semibold">ID</label>
+                    <input type="text" id="masterid" name="masterid" class="w-full p-2 border rounded" readonly>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="condition" class="block text-sm font-semibold">Type</label>
+                    <input type="text" id="conditionModal" name="condition" class="w-full p-2 border rounded" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="nosrModal" class="block text-sm font-semibold">Category</label>
+                    <input type="text" id="nosrModal" name="nosrModal" class="w-full p-2 border rounded" required>
+                </div>
+                <div class="mb-4">
+                  <label for="description" class="block text-sm font-semibold"> Name </label>
+                  <input type="text" id="descriptionModal" name="description" class="w-full p-2 border rounded" required>
+              </div>
+              <div class="mb-4">
+                  <label for="valuegcm" class="block text-sm font-semibold"> Lincense </label>
+                  <input type="text" id="valuegcmModal" name="valuegcm" class="w-full p-2 border rounded" required>
+              </div>
+              <div class="mb-4">
+                  <label for="typegcm" class="block text-sm font-semibold"> Active </label>
+                  <input type="text" id="typegcmModal" name="typegcm" class="w-full p-2 border rounded" required>
+              </div>
+              <div class="mb-4">
+                  <label for="active" class="block text-sm font-semibold"> PIC Added </label>
+                  <input type="text" id="activeModal" name="active" class="w-full p-2 border rounded" required>
+              </div>
+              <div class="mb-4">
+                  <label for="active" class="block text-sm font-semibold"> Date Added </label>
+                  <input type="text" id="activeModal" name="active" class="w-full p-2 border rounded" required>
+              </div>
+              <div class="mb-4">
+                  <label for="active" class="block text-sm font-semibold"> Date Updated </label>
+                  <input type="text" id="activeModal" name="active" class="w-full p-2 border rounded" required>
+              </div>
+              <div class="mb-4">
+                  <label for="active" class="block text-sm font-semibold"> Asset Code </label>
+                  <input type="text" id="activeModal" name="active" class="w-full p-2 border rounded" required>
+              </div>
+
+                <!-- Add more fields as necessary -->
+
+                <div class="flex justify-end">
+                    <button type="button" onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
+                </div>
+            </form>
+        </div>
+      </div>
 </div>
+
+
+<script>
+    // Function to open modal and pre-fill form
+  function openSoftwareModal(masterData) {
+    document.getElementById('masterid').value = masterData.masterid;
+    document.getElementById('conditionModal').value = masterData.condition;
+    document.getElementById('nosrModal').value = masterData.nosr;
+    document.getElementById('descriptionModal').value = masterData.description;
+    document.getElementById('valuegcmModal').value = masterData.valuegcm;
+    document.getElementById('typegcmModal').value = masterData.typegcm;
+    document.getElementById('activeModal').value = masterData.active;
+      // Populate other form fields as necessary
+      
+      document.getElementById('editModal').classList.remove('hidden');
+  }
+
+  // Function to close modal
+  function closeSoftwareModal() {
+      document.getElementById('editModal').classList.add('hidden');
+  }
+
+  // Handle form submission via AJAX
+  document.getElementById('editForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const masterid = document.getElementById('masterid').value;
+      const formData = new FormData(this);
+
+      fetch(`/master/${masterid}`, {
+          method: 'POST',
+          headers: {
+              'X-CSRF-TOKEN': '{{ csrf_token() }}',
+              'Accept': 'application/json',
+          },
+          body: formData
+      })
+      .then(response => {
+          if (response.ok) {
+              return response.json();
+          } else {
+              throw new Error('Failed to update record');
+          }
+      })
+      .then(data => {
+          alert('Master updated successfully');
+          location.reload(); // Refresh the page to reflect the changes
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          alert('Failed to update the record');
+      });
+  });
+
+
+</script>
 
 
 @endsection
