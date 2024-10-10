@@ -28,13 +28,38 @@ Route::view('/detailAssetP', 'detailAsset.others');
 Route::get('hardware/store', [HardwareController::class, 'store']); // Get a specific hardware
 
 //Master
+Route::get('/master', [MasterController::class, 'index'])->name('master.index'); //display the master tables
+
+//Sidebar Master
+Route::get('/', [MasterController::class, 'sidebar'])->name('sidebar');
+
+
 // Route::('')
 
 
 
 
 
+Route::prefix('master')->group(function () {
+    Route::get('/Detail-Asset-Laptop', function () {
+        // Matches The "/admin/users" URL
+    });
 
+
+    
+    Route::get('/Detail-Asset-Mobile', function () {
+        // Matches The "/admin/users" URL
+    });
+    Route::get('/Detail-Asset-Others', function () {
+        // Matches The "/admin/users" URL
+    });
+    Route::get('/Detail-Asset-Employee', function () {
+        // Matches The "/admin/users" URL
+    });
+    Route::get('/Detail-Asset-User', function () {
+        // Matches The "/admin/users" URL
+    });
+});
 
 
 
