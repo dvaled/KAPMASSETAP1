@@ -11,6 +11,7 @@ use App\Http\Controllers\API\HardwareController;
 use App\Http\Controllers\API\MasterController;
 use App\Http\Controllers\API\TrnAssetController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\TrnAssetSpecController;
 
 //Authentication
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login'); //view login page
@@ -31,7 +32,12 @@ Route::prefix('master')->name('master.')->group(function() {
 
 
 //View Details
-Route::get('/detailAssetL', [TrnAssetController::class, 'index'])-> name('detailAsset.laptop');
+Route::get('/detailAssetL/{assetcode}', [TrnAssetController::class, 'show'])->name('detailAsset.laptop.show'); //view detail asset laptop
+// Route::get('/detailAssetL/{assetcode}', [SoftwareController::class, 'index'])->name('detailAsset.laptop.index');
+// Route::get('/detailAssetL/{assetcode}', [TrnDtlPictureController::class, 'index'])->name('detailAsset.laptop.index');
+// Route::get('/detailAssetL/{assetcode}', [MaintenanceController::class, 'index'])->name('detailAsset.laptop.index');
+// Route::get('/detailAssetL/{assetcode}', [HistoryController::class, 'index'])->name('detailAsset.laptop.index');
+// Route::get('/detailAssetL/{assetcode}', [TrnAssetController::class, 'index'])->name('detailAsset.laptop.index');
 
 
 //Route::view('/detailAssetL', 'detailAsset.laptop');
