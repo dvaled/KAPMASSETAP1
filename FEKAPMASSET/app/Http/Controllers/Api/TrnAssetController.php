@@ -11,7 +11,18 @@ class TRNAssetController extends Controller
 {
     public function create()
     {
-        return view('trnasset.create');
+        
+    }
+
+    public function sidebar(){
+        $client = new Client();
+        $response = $client->request('GET', 'http://localhost:5252/api/Master');
+        $body = $response->getBody();
+        $content = $body->getContents();
+        $data = json_decode($content, true);
+    
+        // Pass the masterData to the view so that the sidebar can consume it
+        return view('Transaction.create', ['sidebarData' => $data]);
     }
 
     public function index() {
@@ -37,6 +48,7 @@ class TRNAssetController extends Controller
             'ADDEDDATE' => 'required|date',
             'ACTIVE' => 'required|string|in:YES,NO',
             'NIPP' => 'nullable|integer',
+            'ASSETCODE' => 'nullable|integer',
         ]);
 
         // Prepare data for initial API request (without ASSETCODE)

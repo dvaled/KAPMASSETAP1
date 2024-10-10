@@ -24,23 +24,24 @@ Route::get('/dashboard', [AssetController::class, 'create'])->name('dashboard');
 //Master
 Route::prefix('master')->name('master.')->group(function() {
     Route::get('/', [MasterController::class, 'index'])->name('index');//return master view with all of the master data
-<<<<<<< HEAD
-    Route::get('/create', [MasterController::class, 'sidebar'])->name('create');//return master view with all of the master data    
-=======
     Route::get('/create', [MasterController::class, 'sidebar'])->name('create');//return master view with all of the master data
->>>>>>> 60463b3af7eaf7976958feb7d6a2346523c6cd46
     Route::post('/store', [MasterController::class, 'store'])->name('store');//send a post request to the API for master_gcm table
     Route::get('/log', [LogController::class, 'index'])->name('log.index');//return log view with all of the log data
 });
 
+//Transaction
+Route::prefix('Transaction')->name('Transaction.')->group(function(){
+    Route::get('/asset', [TrnAssetController::class, 'index'])->name('view');
+    Route::get('/detailAssetL', [TrnAssetController::class, 'index'])-> name('detailAsset.laptop');
+    Route::get('/asset/create', [TrnAssetController::class, 'sidebar'])-> name('transaction.create');
+    Route::Post('/asset/create/store', [TrnAssetController::class, 'store'])-> name('store');
+});
 
-//View Details
-Route::get('/detailAssetL', [TrnAssetController::class, 'index'])-> name('detailAsset.laptop');
 
 
 //Route::view('/detailAssetL', 'detailAsset.laptop');
-Route::view('/detailAssetM', 'detailAsset.mobile');
-Route::view('/detailAssetP', 'detailAsset.others');
+// Route::view('/detailAssetM', 'detailAsset.mobile');
+// Route::view('/detailAssetP', 'detailAsset.others');
 
 //Hardware 
 Route::get('hardware/store', [HardwareController::class, 'store']); // Get a specific hardware
