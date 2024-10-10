@@ -30,7 +30,7 @@ class MasterController extends Controller
         $data = json_decode($content, true);
     
         // Pass the masterData to the view so that the sidebar can consume it
-        return view('layouts.sidebar', ['sidebarData' => $data]);
+        return view('master.create', ['sidebarData' => $data]);
     }
 
     public function boot()
@@ -76,8 +76,6 @@ class MasterController extends Controller
 
             $data = json_decode($response->getBody()->getContents(), true);
              
-            // // Return the edit view with the master data
-            // return view('master.edit', compact('master'));
         }catch(Exception $e){
             return redirect('/dashboard')->back()->withErrors(['error' => $e->getMessage()]);
         }

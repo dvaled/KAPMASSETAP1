@@ -24,7 +24,7 @@
 <body class="bg-gray-100">
     <div class="min-h-screen grid grid-cols-12">
         <!-- Sidebar (1st Column) -->
-        <aside class="col-span-2 bg-gray-800 text-white h-screen sticky top-0 overflow-auto">
+        <aside class="col-span-2 t  ext-white h-screen sticky top-0 overflow-auto">
             @include('layouts.sections.sidebar')
         </aside>
     
