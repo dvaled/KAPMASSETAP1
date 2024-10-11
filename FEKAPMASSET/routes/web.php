@@ -11,6 +11,7 @@ use App\Http\Controllers\API\HardwareController;
 use App\Http\Controllers\API\MasterController;
 use App\Http\Controllers\API\TrnAssetController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\TrnAssetSpecController;
 
 //Authentication
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login'); //view login page

@@ -25,6 +25,28 @@ class TRNAssetController extends Controller
         return view('Transaction.create', ['sidebarData' => $data]);
     }
 
+    public function show($assetcode)
+    {
+        // Create a new HTTP client instance
+        $client = new Client();
+
+        // First API call to fetch asset data (TrnAsset)
+        $responseAsset = $client->request('GET', "http://localhost:5252/api/TrnAsset/{$assetcode}");
+        $contentAsset = $responseAsset->getBody()->getContents();
+        $assetData = json_decode($contentAsset, true);
+
+        // Second API call to fetch asset spec data (TrnAssetSpec)
+        $responseAssetSpec = $client->request('GET', "http://localhost:5252/api/TrnAssetSpec/{$assetcode}");
+        $contentAssetSpec = $responseAssetSpec->getBody()->getContents();
+        $assetSpecData = json_decode($contentAssetSpec, true);
+
+        // Pass both assetData and assetSpecData to the view
+        return view('detailAsset.Laptop', [
+            'assetData' => $assetData,
+            'assetSpecData' => $assetSpecData
+        ]);
+    }
+    
     public function index() {
         $client = new Client();
         $response = $client->request('GET', 'http://localhost:5252/api/Master');
@@ -34,6 +56,7 @@ class TRNAssetController extends Controller
 
         return view('detailAsset.Laptop', ['masterData' => $data]); // Keep the view name consistent
     }
+
 
     public function store(Request $request)
     {
