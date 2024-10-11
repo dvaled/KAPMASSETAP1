@@ -1,55 +1,87 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row">
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
-            <h2>history List</h2>
-        </div>
-        <div class="pull-right">
-            <a class="btn btn-success" href="{{ route('history.create') }}">Create New history</a>
-        </div>
-    </div>
-</div>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>  
+            @endforeach
+        </ul>
+    </div>  
+@endif
+@extends('layouts.app')
 
-@if ($message = Session::get('success'))
-    <div class="alert alert-success">
-        <p>{{ $message }}</p>
-    </div>
+@section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>  
 @endif
 
-<table class="table table-bordered">
-    <tr>
-        <th>MasterID</th>
-        <th>Condition</th>
-        <th>NoSr</th>
-        <th>Description</th>
-        <th>ValueGcm</th>
-        <th>logGcm</th>
-        <th>Active</th>
-        <th width="280px">Action</th>
-    </tr>
-    @foreach ($logs as $history)
-    <tr>
-        <td>{{ $history->MasterID }}</td>
-        <td>{{ $history->Condition }}</td>
-        <td>{{ $history->NoSr }}</td>
-        <td>{{ $history->Description }}</td>
-        <td>{{ $history->ValueGcm }}</td>
-        <td>{{ $history->logGcm }}</td>
-        <td>{{ $history->Active }}</td>
-        <td>
-            <form action="{{ route('history.destroy', $history->id) }}" method="POST">
-                <a class="btn btn-info" href="{{ route('history.show', $history->id) }}">Show</a>
-                <a class="btn btn-primary" href="{{ route('history.edit', $history->id) }}">Edit</a>
-                @csrf
-                @method('DELETE')
-                <button history="submit" class="btn btn-danger">Delete</button>
-            </form>
-        </td>
-    </tr>
-    @endforeach
-</table>
+<div id="createAsset" class="inset-0 bg-white flex justify-center items-center p-4">
+    <div class="bg-white p-6 rounded-md w-96">
+        <h2 class="text-xl font-bold mb-4">Add new asset here</h2>
 
-{!! $logs->links() !!}
+        <form id="editForm" action="{{ route('Transaction.store') }}" method="POST">
+            @csrf <!-- CSRF protection -->
+            <!-- Input fields for master data -->
+            <div class="mb-4">
+                <label for="BrandName" class="block text-sm font-semibold"> Brand Name </label>
+                <select id="description" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    @foreach ($sidebarData as $asset)
+                        <option value="{{ $asset['description'] }}">{{ $asset['description'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="Model" class="block text-sm font-semibold"> Model </label>
+                <select id="description" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    @foreach ($sidebarData as $asset)
+                        <option value="{{ $asset['description'] }}">{{ $asset['description'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="series" class="block text-sm font-semibold"> Series </label>
+                <select id="description" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    @foreach ($sidebarData as $asset)
+                        <option value="{{ $asset['description'] }}">{{ $asset['description'] }}</option>
+                    @endforeach
+                </select>
+            </div>  
+            <div class="mb-4">
+                <label for="Serial Number" class="block text-sm font-semibold"> Serial Number </label>
+                <input type="text" id="Serial Number" name="Serial Number" class="w-full p-2 border rounded" required>
+            </div>
+            <div class="mb-4">
+                <label for="Active" class="block text-sm font-semibold"> Active </label>
+                <select id="active" name="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    @foreach ($sidebarData as $asset)
+                        <option value="{{ $asset['active'] }}">{{ $asset['active'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="Type" class="block text-sm font-semibold"> Type </label>
+                <select id="Type" name="Type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    @foreach ($sidebarData as $asset)
+                        <option value="{{ $asset['description'] }}">{{ $asset['description'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <!-- Buttons -->
+            <div class="flex justify-end">
+                <button type="button" onclick="window.location.href='{{ route('master.index') }}'" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Back to Master</button>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection

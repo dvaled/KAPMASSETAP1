@@ -25,25 +25,36 @@
     </div>  
 @endif
 
-<div id="createMaster" class="inset-0 bg-white flex justify-center items-center p-4">
+<div id="createAsset" class="inset-0 bg-white flex justify-center items-center p-4">
     <div class="bg-white p-6 rounded-md w-96">
-        <h2 class="text-xl font-bold mb-4">Create New Master</h2>
+        <h2 class="text-xl font-bold mb-4">Add new asset here</h2>
 
         <form id="editForm" action="{{ route('Transaction.store') }}" method="POST">
             @csrf <!-- CSRF protection -->
             <!-- Input fields for master data -->
             <div class="mb-4">
                 <label for="BrandName" class="block text-sm font-semibold"> Brand Name </label>
-                <input type="text" id="BrandName" name="BrandName" class="w-full p-2 border rounded" required>
-                
+                <select id="description" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    @foreach ($sidebarData as $asset)
+                        <option value="{{ $asset['description'] }}">{{ $asset['description'] }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="mb-4">
                 <label for="Model" class="block text-sm font-semibold"> Model </label>
-                <input type="text" id="Model" name="Model" class="w-full p-2 border rounded" required>
+                <select id="description" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    @foreach ($sidebarData as $asset)
+                        <option value="{{ $asset['description'] }}">{{ $asset['description'] }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="mb-4">
                 <label for="series" class="block text-sm font-semibold"> Series </label>
-                <input type="text" id="series" name="series" class="w-full p-2 border rounded" required>
+                <select id="description" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    @foreach ($sidebarData as $asset)
+                        <option value="{{ $asset['description'] }}">{{ $asset['description'] }}</option>
+                    @endforeach
+                </select>
             </div>  
             <div class="mb-4">
                 <label for="Serial Number" class="block text-sm font-semibold"> Serial Number </label>

@@ -8,7 +8,7 @@ public class TRNSOFTWAREMODEL{
     public required string SOFTWARENAME { get; set; }
     public required string SOFTWARELICENSE { get; set; }
     public required string ACTIVE { get; set; }
-    public string? PICADDED { get; set; }
+    public required string PICADDED { get; set; }
     public DateOnly DATEADDED { get; set; }
     public string? PICUPDATED { get; set; }
     public DateOnly DATEUPDATED { get; set; }

@@ -25,32 +25,47 @@
               <tr>
                 <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">ID Asset</th>
                 <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Assigned Employee</th>
+                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Model</th>
+                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Series</th>
+                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Serial Number</th>
+                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Active</th>
+                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Category</th>
+                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Code</th>
                 <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Type</th>
-                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Description</th>
-                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Condition</th>
                 <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Action</th>
             </thead>
             <tbody class= "justify-center">
-              @dump($logData)
               @foreach ($logData as $log)
               <tr>
                   <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                      <p class="mb-0 font-semibold leading-tight text-xs">{{ $log['logid'] }}</p> <!-- Display Condition -->
+                      <p class="mb-0 font-semibold leading-tight text-xs">{{ $log['idasset'] }}</p> <!-- Display Condition -->
                   </td>
                   <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                      <p class="mb-0 font-semibold leading-tight text-xs">{{ $log['roleid'] }}</p> <!-- Display Condition -->
+                      <p class="mb-0 font-semibold leading-tight text-xs">{{ $log['nipp'] }}</p> <!-- Display Condition -->
                   </td>
                   <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                      <span class="font-semibold leading-tight text-xs text-black"> {{ $log['actionperformed'] }}</span> <!-- Display Description -->
+                      <span class="font-semibold leading-tight text-xs text-black"> {{ $log['assetbrand'] }}</span> <!-- Display Description -->
                   </td>
                   <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                      <span class="font-semibold leading-tight text-xs text-black">{{ $log['useradded'] }}</span> <!-- Display Value -->
+                      <span class="font-semibold leading-tight text-xs text-black">{{ $log['assetmodel'] }}</span> <!-- Display Value -->
                   </td>
                   <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                      <span class="font-semibold leading-tight text-xs text-black">{{ $log['dateadded'] }}<span> <!-- Display Type -->
+                      <span class="font-semibold leading-tight text-xs text-black">{{ $log['assetseries'] }}<span> <!-- Display Type -->
+                  </td>
+                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                      <span class="font-semibold leading-tight text-xs text-black">{{ $log['assetserialnumber'] }}<span> <!-- Display Type -->
+                  </td>
+                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                      <span class="font-semibold leading-tight text-xs text-black">{{ $log['active'] }}<span> <!-- Display Type -->
+                  </td>
+                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                      <span class="font-semibold leading-tight text-xs text-black">{{ $log['assetcategory'] }}<span> <!-- Display Type -->
                   </td>
                   <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                       <span class="font-semibold leading-tight text-xs text-black">{{ $log['assetcode'] }}<span> <!-- Display Type -->
+                  </td>
+                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                      <span class="font-semibold leading-tight text-xs text-black">{{ $log['assettype'] }}<span> <!-- Display Type -->
                   </td>
                   <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                     <!-- Edit Icon -->
@@ -71,6 +86,7 @@
               @endforeach
           </tbody>
           </table>
+          </div>
           <div class="flex flex-wrap justify-evenly gap-2 p-2 bg-white">
             <div class="flex-1 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 m-4">
                 <a href="#">
@@ -97,7 +113,7 @@
                     <a href="#">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black">PT. KAI Properti</h5>
                     </a>
-                    <p class880="mb-3 font-normal text-gray-700 dark:text-gray-400">KAI Properti</p>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">KAI Properti</p>
                     <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         Read more
                         <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -123,7 +139,6 @@
                     </a>
                 </div>
             </div>
-          </div>
         </div>
     </div>
 </div>

@@ -17,17 +17,17 @@ public class MasterController : ControllerBase
     return await _context.MST_GCM.ToListAsync();
     }
 
-    [HttpGet("{ACTIVE}")]
-    public async Task<ActionResult<List<MASTERMODEL>>> GetMaster(string active){
-        var masters = await _context.MST_GCM
-                                    .Where(e =>  e.ACTIVE == active) // Adjust condition based on your model
-                                    .ToListAsync(); // Retrieve a list
-        if (masters == null || !masters.Any()){
-            return NotFound();
-        }
+    // [HttpGet("{ACTIVE}")]
+    // public async Task<ActionResult<List<MASTERMOEL>>> GetMaster(string active){
+    //     var masters = await _context.MST_GCM
+    //                                 .Where(e =>  e.ACTIVE == active) // Adjust condition based on your model
+    //                                 .ToListAsync(); // Retrieve a list
+    //     if (masters == null || !masters.Any()){
+    //         return NotFound();
+    //     }
 
-        return masters;
-    }
+    //     return masters;
+    // }
 
 //Post master value to db
     [HttpPost]
