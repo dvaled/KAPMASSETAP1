@@ -29,4 +29,32 @@ public class TrnSoftwareController : ControllerBase{
 
         return CreatedAtAction("GetTrnSoftware", new { id = trnSoftware.IDASSETSOFTWARE }, trnSoftware);
     }
+
+    [HttpPut("{IDASSETSOFTWARE:int}")]
+    public async Task<ActionResult<TRNSOFTWAREMODEL>> PutTrnSoftware(int IDASSETSOFTWARE, TRNSOFTWAREMODEL trnSoftware){
+
+        if(IDASSETSOFTWARE != trnSoftware.IDASSETSOFTWARE){
+            return BadRequest();
+        }
+
+        _context.Entry(trnSoftware).State = EntityState.Modified;
+
+        try
+        {
+            await _context.SaveChangesAsync();
+
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+             if (!SoftwarerExists(IDASSETSOFTWARE)){
+                return NotFound();
+            }
+            else{throw;}
+        }
+        return NoContent();
+    }
+    private bool SoftwarerExists(int idAssetSoftware){
+        return _context.TRN_DTL_SOFTWARE.Any(e => e.IDASSETSOFTWARE == idAssetSoftware);
+
+    }
 }       

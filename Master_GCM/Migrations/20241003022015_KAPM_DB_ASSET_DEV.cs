@@ -112,7 +112,7 @@ namespace Master_GCM.Migrations
                 {
                     MAINTENANCEID = table.Column<int>(type: "integer", nullable: false),
                     IDASSET = table.Column<int>(type: "integer", nullable: false),
-                    PICADDED = table.Column<int>(type: "integer", nullable: false),
+                    PICADDED = table.Column<string>(type: "integer", nullable: false),
                     NOTES = table.Column<string>(type: "text", nullable: false),
                     DATEADDED = table.Column<DateOnly>(type: "date", nullable: false)
                 },
@@ -128,7 +128,7 @@ namespace Master_GCM.Migrations
                     LOGID = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     IDASSET = table.Column<int>(type: "integer", nullable: false),
-                    ROLEID = table.Column<int>(type: "integer", nullable: false),
+                    ROLE = table.Column<string>(type: "text", nullable: false),
                     ACTIONPERFORMED = table.Column<string>(type: "text", nullable: false),
                     USERADDED = table.Column<string>(type: "text", nullable: false),
                     DATEADDED = table.Column<DateOnly>(type: "date", nullable: false)
@@ -152,7 +152,6 @@ namespace Master_GCM.Migrations
                     DIRECTORATE = table.Column<string>(type: "text", nullable: false),
                     PICADDED = table.Column<string>(type: "text", nullable: false),
                     DATEADDED = table.Column<DateOnly>(type: "date", nullable: false),
-                    DATEUPDATED = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -201,10 +200,10 @@ namespace Master_GCM.Migrations
                     IDASSET = table.Column<int>(type: "integer", nullable: false),
                     ASSETPIC = table.Column<string>(type: "text", nullable: false),
                     ACTIVE = table.Column<string>(type: "text", nullable: false),
-                    PICADDED = table.Column<string>(type: "text", nullable: true),
+                    PICADDED = table.Column<string>(type: "text", nullable: false),
                     DATEADDED = table.Column<DateOnly>(type: "date", nullable: false),
                     PICUPDATED = table.Column<string>(type: "text", nullable: true),
-                    DATEUPDATED = table.Column<DateOnly>(type: "date", nullable: false)
+                    DATEUPDATED = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -228,10 +227,10 @@ namespace Master_GCM.Migrations
                     SOFTWARENAME = table.Column<string>(type: "text", nullable: false),
                     SOFTWARELICENSE = table.Column<string>(type: "text", nullable: false),
                     ACTIVE = table.Column<string>(type: "text", nullable: false),
-                    PICADDED = table.Column<string>(type: "text", nullable: true),
+                    PICADDED = table.Column<string>(type: "text", nullable: false),
                     DATEADDED = table.Column<DateOnly>(type: "date", nullable: false),
                     PICUPDATED = table.Column<string>(type: "text", nullable: true),
-                    DATEUPDATED = table.Column<DateOnly>(type: "date", nullable: false)
+                    DATEUPDATED = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
                 {

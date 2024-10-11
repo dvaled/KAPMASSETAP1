@@ -35,6 +35,7 @@
             <div class="mb-4">
                 <label for="BrandName" class="block text-sm font-semibold"> Brand Name </label>
                 <input type="text" id="BrandName" name="BrandName" class="w-full p-2 border rounded" required>
+                
             </div>
             <div class="mb-4">
                 <label for="Model" class="block text-sm font-semibold"> Model </label>
@@ -43,7 +44,7 @@
             <div class="mb-4">
                 <label for="series" class="block text-sm font-semibold"> Series </label>
                 <input type="text" id="series" name="series" class="w-full p-2 border rounded" required>
-            </div>
+            </div>  
             <div class="mb-4">
                 <label for="Serial Number" class="block text-sm font-semibold"> Serial Number </label>
                 <input type="text" id="Serial Number" name="Serial Number" class="w-full p-2 border rounded" required>

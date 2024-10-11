@@ -31,7 +31,7 @@ Route::prefix('master')->name('master.')->group(function() {
 
 //Transaction
 Route::prefix('Transaction')->name('Transaction.')->group(function(){
-    Route::get('/asset', [TrnAssetController::class, 'index'])->name('view');
+    Route::get('/asset', [TrnAssetController::class, 'index'])->name('view'); //return view with all of the data.
     Route::get('/detailAssetL', [TrnAssetController::class, 'index'])-> name('detailAsset.laptop');
     Route::get('/asset/create', [TrnAssetController::class, 'sidebar'])-> name('transaction.create');
     Route::Post('/asset/create/store', [TrnAssetController::class, 'store'])-> name('store');
