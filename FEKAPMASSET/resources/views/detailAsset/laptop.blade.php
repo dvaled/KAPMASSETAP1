@@ -298,6 +298,7 @@
                     </div>
                     <!-- Dynamic Table-like Section with Headers as Rows -->
                     <div class="relative overflow-x-auto">
+                        @foreach ($historyMaintenanceData as $history)
                         <table class="p-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
                             <thead class="align-bottom">
                                 <tr>
@@ -309,7 +310,14 @@
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Action</th>
                                 </tr>
                             </thead>
-                        </table>                        
+                            <tbody>
+                                <tr>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $history['maintenanceid'] }}</p> <!-- Display Condition --></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        @endforeach
                     </div>
                 </div>
             </div>
