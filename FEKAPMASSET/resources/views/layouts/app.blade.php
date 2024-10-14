@@ -24,7 +24,7 @@
 <body class="bg-gray-100">
     <div class="min-h-screen grid grid-cols-12">
         <!-- Sidebar (1st Column) -->
-        <aside class="col-span-2 bg-gray-800 text-white h-screen sticky top-0 overflow-auto">
+        <aside class="col-span-2 t  ext-white h-screen sticky top-0 overflow-auto">
             @include('layouts.sections.sidebar')
         </aside>
     
@@ -47,7 +47,7 @@
                                 {{-- <svg class="w-3 h-3 mx-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M10 2a1 1 0 0 0-1 1v3H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2v3a1 1 0 1 0 2 0v-3h2a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-2V3a1 1 0 0 0-1-1z"/>
                                 </svg> --}}
-                                <h6 class="inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-400">/ </h6>
+                                <h6 class="inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-400">/</h6>
                                 <a href="{{ $link }}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-black">
                                     {{ ucwords(str_replace('-', ' ', $segment)) }}
                                 </a>

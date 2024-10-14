@@ -13,6 +13,7 @@ public class TRNASSETMODEL{
     public required string ASSETMODEL {get; set;}
     public required string ASSETSERIES {get; set;}
     public required string ASSETSERIALNUMBER {get; set;}
+    public required string CONDITION {get; set;}
     public DateOnly ADDEDDATE {get; set;}
     public required string ACTIVE {get; set;}
     

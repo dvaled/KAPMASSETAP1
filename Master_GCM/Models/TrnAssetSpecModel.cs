@@ -15,11 +15,16 @@ public class TRNASSETSPECMODEL{
     public string? STORAGEBRAND { get; set; }
     public string? STORAGEMODEL { get; set; }
     public string? STORAGECAPACITY { get; set; }
-    public string? GRAPHICSTYPE { get; set; }
-    public string? GRAPHICSBRAND { get; set; }
-    public string? GRAPHICSMODEL { get; set; }
-    public string? GRAPHICSSERIES { get; set; }
-    public string? GRAPHICSCAPACITY { get; set; }
+    public string? GRAPHICSTYPE1 { get; set; }
+    public string? GRAPHICSBRAND1 { get; set; }
+    public string? GRAPHICSMODEL1 { get; set; }
+    public string? GRAPHICSSERIES1 { get; set; }
+    public string? GRAPHICSCAPACITY1 { get; set; }
+    public string? GRAPHICSTYPE2 { get; set; }
+    public string? GRAPHICSBRAND2 { get; set; }
+    public string? GRAPHICSMODEL2 { get; set; }
+    public string? GRAPHICSSERIES2 { get; set; }
+    public string? GRAPHICSCAPACITY2 { get; set; }
     public string? SCREENRESOLUTION { get; set; }
     public bool? TOUCHSCREEN { get; set; }
     public bool? BACKLIGHTKEYBOARD { get; set; }

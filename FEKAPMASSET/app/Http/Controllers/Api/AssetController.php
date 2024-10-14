@@ -32,9 +32,19 @@ class AssetController extends Controller
         $response = $client->request('GET', 'http://localhost:5252/api/Master');
         $body = $response->getBody();
         $content = $body->getContents();
-        $data = json_decode($content, true);
+        $masterData = json_decode($content, true);
 
-        return view('dashboard', ['masterData' => $data]);
+        $client = new Client();
+        $response = $client->request('GET', 'http://localhost:5252/api/TrnAsset/all');
+        $body = $response->getBody()->getContents();
+        $logData = json_decode($body, true);
+        return view('dashboard', [
+            'masterData' => $masterData,
+            'logData' => $logData
+        
+        ]);
+
+
     }
 
     // public function store(){

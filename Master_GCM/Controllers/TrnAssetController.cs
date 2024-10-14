@@ -57,7 +57,7 @@ public class TrnAssetController : ControllerBase
     // }
         
     // Get all hardware
-    [HttpGet("all")]
+    [HttpGet]
     public async Task<ActionResult<List<TRNASSETMODEL>>> GetAllHardware()
     {
         var transHardware = await _context.TRN_ASSET.ToListAsync();

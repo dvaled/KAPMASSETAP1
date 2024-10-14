@@ -1,0 +1,107 @@
+.nav-pills2 .nav-link {
+    border-radius: var(--bs-border-radius);
+    color: #000;
+    /* background-color: #fff; */
+}
+
+.nav-pills2 .nav-link.active {
+    border-radius: var(--bs-border-radius);
+    color: #0B56A7;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.nav-pills2 .nav-link:focus,
+.nav-pills2 .nav-link.active {
+    border-radius: var(--bs-border-radius);
+    color: #0B56A7;
+    font-weight: 600;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.badge-rounded {
+    --bs-badge-padding-x: 8px;
+    --bs-badge-padding-y: 5px;
+    --bs-badge-font-size: 0.875rem;
+    --bs-badge-font-weight: 400;
+    --bs-badge-color: #fff;
+    --bs-badge-border-radius: 50px;
+    /* Nilai ini bisa disesuaikan sesuai kebutuhan */
+    display: inline-block;
+    padding: var(--bs-badge-padding-y) var(--bs-badge-padding-x);
+    font-size: var(--bs-badge-font-size);
+    font-weight: var(--bs-badge-font-weight);
+    line-height: 1;
+    color: var(--bs-badge-color);
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: var(--bs-badge-border-radius);
+    /* Menggunakan variabel untuk border-radius */
+    background-color: red;
+    /* Sesuaikan warna latar belakang badge */
+}
+
+.card-body-app {
+    flex: 1 1 auto;
+    padding: 20px 20px;
+    color: var(--bs-card-color)
+}
+
+.text-grey {
+    color: #818181 !important
+}
+
+.my-actions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.lihat-status {
+    width: 90% !important;
+}
+
+.ke-hal-izin {
+    width: 90% !important;
+    pointer-events: auto;
+    /* Agar elemen tetap bisa diklik */
+}
+
+.ke-hal-izin:hover {
+    background-image: none !important;
+    /* Menghapus background-image saat hover */
+}
+
+.swal-popup {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-kembali {
+    border: 1px solid #2A3547 !important;
+}
+
+.swal2-actions {
+    display: flex;
+    justify-content: space-between;
+    /* Memisahkan tombol ke kiri dan kanan */
+    width: 90%;
+    /* Memastikan aksi tombol menggunakan lebar penuh */
+}
+
+.swal2-confirm,
+.swal2-cancel {
+    width: 47%;
+    /* Lebar tombol */
+}
+
+.swal2-icon.custom-warning .swal2-icon-content {
+    display: flex;
+    align-items: center;
+    font-size: 3.75em;
+    color: #F6AA00;
+    /* Warna orange untuk ikon warning */
+}
+

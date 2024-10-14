@@ -13,13 +13,14 @@ use App\Http\Controllers\API\TrnAssetController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\TrnAssetSpecController;
 
+
 //Authentication
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login'); //view login page
 Route::post('/login/check', [AuthController::class, 'loginCheck'])->name('login.check'); //authenticate user before going to the dashboard
 Route::get('/dashboard', [AuthController::class, 'showDashboard'])->name('dashboard'); //return view to dashboard if login success
 
 //Dashboard
-Route::get('/dashboard', [AssetController::class, 'index'])->name('dashboard'); //view dashboard and retrieve all asset list using index func
+// Route::get('/dashboard', [AssetController::class, 'index'])->name('dashboard'); //view dashboard and retrieve all asset list using index func
 Route::get('/dashboard', [AssetController::class, 'create'])->name('dashboard'); //view dashboard and retrieve all asset list using index func
 
 //Master
@@ -30,22 +31,27 @@ Route::prefix('master')->name('master.')->group(function() {
     Route::get('/log', [LogController::class, 'index'])->name('log.index');//return log view with all of the log data
 });
 
+//Transaction
+Route::prefix('Transaction')->name('Transaction.')->group(function(){
+    Route::get('/asset', [TrnAssetController::class, 'index'])->name('view'); //return view with all of the data.
+    Route::get('/detailAssetL/{assetcode}', [TrnAssetController::class, 'index'])-> name('detailAsset.laptop');
+    Route::get('/asset/create', [TrnAssetController::class, 'newAssetView'])-> name('transaction.create'); //View 
+    Route::get('/asset/assign', [TrnAssetController::class, 'AssignView'])-> name('transaction.assign'); //Retrieve transaction.assing view along with all the data
+    Route::Post('/asset/create/store', [TrnAssetController::class, 'store'])-> name('store');
+});
 
-//View Details
-Route::get('/detailAssetL/{assetcode}', [TrnAssetController::class, 'show'])->name('detailAsset.laptop.show'); //view detail asset laptop
-// Route::get('/detailAssetL/{assetcode}', [SoftwareController::class, 'index'])->name('detailAsset.laptop.index');
-// Route::get('/detailAssetL/{assetcode}', [TrnDtlPictureController::class, 'index'])->name('detailAsset.laptop.index');
-// Route::get('/detailAssetL/{assetcode}', [MaintenanceController::class, 'index'])->name('detailAsset.laptop.index');
-// Route::get('/detailAssetL/{assetcode}', [HistoryController::class, 'index'])->name('detailAsset.laptop.index');
-// Route::get('/detailAssetL/{assetcode}', [TrnAssetController::class, 'index'])->name('detailAsset.laptop.index');
+Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('maintenance.index');
+
+
+
 
 
 //Route::view('/detailAssetL', 'detailAsset.laptop');
-Route::view('/detailAssetM', 'detailAsset.mobile');
-Route::view('/detailAssetP', 'detailAsset.others');
+// Route::view('/detailAssetM', 'detailAsset.mobile');
+// Route::view('/detailAssetP', 'detailAsset.others');
 
 //Hardware 
-Route::get('hardware/store', [HardwareController::class, 'store']); // Get a specific hardware
+Route::get('hardware/', [HardwareController::class, 'store']); // Get a specific hardware
 
 // //Master
 // Route::get('/master', [MasterController::class, 'index'])->name('master.index'); //display the master tables

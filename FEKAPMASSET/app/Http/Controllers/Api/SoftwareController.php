@@ -13,12 +13,12 @@ class SoftwareController extends Controller
     // Get all software records
     public function index() {
         $client = new Client();
-        $response = $client->request('GET', 'http://localhost:5252/api/TrnSoftware');
+        $response = $client->request('GET', 'http://localhost:5252/api/Master');
         $body = $response->getBody();
         $content = $body->getContents();
         $data = json_decode($content, true);
 
-        return view('master.index', ['masterData' => $data]); // Keep the view name consistent
+        return view('detailAsset.Laptop', ['softwareData' => $data]); // Keep the view name consistent
     }
 
     public function store(Request $request){

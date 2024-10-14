@@ -15,7 +15,7 @@ class MaintenanceController extends Controller
         $response = $client->request('GET', 'http://localhost:5252/api/Maintenance');
         $body = $response->getBody();
         $content = $body->getContents();
-        $data = json_decode($content, true);
+        $data = json_decode($content, true)::paginate(10);
 
         return view('maintenance.index', ['maintenanceData' => $data]); // Keep the view name consistent
     }

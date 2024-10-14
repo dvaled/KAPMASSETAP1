@@ -1,0 +1,97 @@
+a {
+    color: #0b56a7;
+}
+
+.text-primary-kai {
+    color: #0b56a7;
+}
+
+.text-white-kai {
+    color: #ffffff;
+}
+
+.bg-primary-dark-kai {
+    background-color: #09488b;
+    color: #ffffff !important;
+}
+
+.bg-primary-kai {
+    background-color: #0b56a7;
+}
+
+.sidebar-nav ul .sidebar-item .first-level .sidebar-item .sidebar-link.active {
+    color: #ffffff !important;
+    font-weight: 700;
+}
+
+.sidebar-nav ul .sidebar-item.selected > .sidebar-link,
+.sidebar-nav ul .sidebar-item.selected > .sidebar-link.active,
+.sidebar-nav ul .sidebar-item > .sidebar-link.active {
+    background-color: #3472b6 !important;
+}
+
+.sidebar-nav ul .sidebar-item .sidebar-link:hover.has-arrow::after {
+    border-color: #ffffff;
+}
+
+.sidebar-nav .has-arrow::after {
+    border-color: #ffffff;
+}
+
+.sidebar-nav ul .sidebar-item .sidebar-link {
+    white-space: initial;
+}
+
+.sidebar-nav ul .sidebar-item .first-level .sidebar-link {
+    margin-left: 8px;
+}
+
+.hide-menu {
+    font-size: 12px;
+}
+
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #09488b;
+    --bs-btn-border-color: #09488b;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #4f73d9;
+    --bs-btn-hover-border-color: #3472b6;
+    --bs-btn-focus-shadow-rgb: 117, 153, 255;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #3472b6;
+    --bs-btn-active-border-color: #3472b6;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #09488b;
+    --bs-btn-disabled-border-color: #09488b;
+}
+
+.bg-primary {
+    background-color: #09488b !important;
+}
+
+.btn-outline-primary {
+    --bs-btn-color: #09488b;
+    --bs-btn-border-color: #09488b;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #09488b;
+    --bs-btn-hover-border-color: #09488b;
+    --bs-btn-focus-shadow-rgb: 93, 135, 255;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #09488b;
+    --bs-btn-active-border-color: #09488b;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #09488b;
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: #09488b;
+    --bs-gradient: none;
+}
+
+.user-profile-tab .nav-item .nav-link {
+    color: #202020;
+}
+.user-profile-tab .nav-item .nav-link.active {
+    color: #09488b;
+    border-bottom: 2px solid #09488b;
+}

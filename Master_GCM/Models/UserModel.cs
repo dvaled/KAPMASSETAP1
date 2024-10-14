@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class USERMODEL{
     public required string NIPP { get; set; }
-    public required string ROLEID { get; set; }
+    public required string ROLE { get; set; }
     public required string USER_PICTURE { get; set; }
     public required string NAME { get; set; }
     public required string POSITION { get; set; }

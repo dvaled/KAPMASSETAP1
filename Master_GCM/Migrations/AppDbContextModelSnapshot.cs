@@ -39,8 +39,9 @@ namespace Master_GCM.Migrations
                     b.Property<DateOnly>("DATEADDED")
                         .HasColumnType("date");
 
-                    b.Property<int>("ROLEID")
-                        .HasColumnType("integer");
+                    b.Property<string>("ROLE")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("USERADDED")
                         .IsRequired()
@@ -139,9 +140,6 @@ namespace Master_GCM.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateOnly>("DATEADDED")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly>("DATEUPDATED")
                         .HasColumnType("date");
 
                     b.Property<string>("DEPARTMENT")
@@ -257,10 +255,11 @@ namespace Master_GCM.Migrations
                     b.Property<DateOnly>("DATEADDED")
                         .HasColumnType("date");
 
-                    b.Property<DateOnly>("DATEUPDATED")
+                    b.Property<DateOnly?>("DATEUPDATED")
                         .HasColumnType("date");
 
                     b.Property<string>("PICADDED")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PICUPDATED")
@@ -295,19 +294,34 @@ namespace Master_GCM.Migrations
                     b.Property<bool?>("CONVERTIBLE")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("GRAPHICSBRAND")
+                    b.Property<string>("GRAPHICSBRAND1")
                         .HasColumnType("text");
 
-                    b.Property<string>("GRAPHICSCAPACITY")
+                    b.Property<string>("GRAPHICSBRAND2")
                         .HasColumnType("text");
 
-                    b.Property<string>("GRAPHICSMODEL")
+                    b.Property<string>("GRAPHICSCAPACITY1")
                         .HasColumnType("text");
 
-                    b.Property<string>("GRAPHICSSERIES")
+                    b.Property<string>("GRAPHICSCAPACITY2")
                         .HasColumnType("text");
 
-                    b.Property<string>("GRAPHICSTYPE")
+                    b.Property<string>("GRAPHICSMODEL1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("GRAPHICSMODEL2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("GRAPHICSSERIES1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("GRAPHICSSERIES2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("GRAPHICSTYPE1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("GRAPHICSTYPE2")
                         .HasColumnType("text");
 
                     b.Property<string>("MEMORYBRAND")
@@ -390,8 +404,9 @@ namespace Master_GCM.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("PICADDED")
-                        .HasColumnType("integer");
+                    b.Property<string>("PICADDED")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("MAINTENANCEID");
 
@@ -420,10 +435,11 @@ namespace Master_GCM.Migrations
                     b.Property<DateOnly>("DATEADDED")
                         .HasColumnType("date");
 
-                    b.Property<DateOnly>("DATEUPDATED")
+                    b.Property<DateOnly?>("DATEUPDATED")
                         .HasColumnType("date");
 
                     b.Property<string>("PICADDED")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PICUPDATED")
@@ -482,7 +498,7 @@ namespace Master_GCM.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ROLEID")
+                    b.Property<string>("ROLE")
                         .IsRequired()
                         .HasColumnType("text");
 
