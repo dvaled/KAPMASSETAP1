@@ -40,6 +40,8 @@ Route::prefix('Transaction')->name('Transaction.')->group(function(){
     Route::Post('/asset/create/store', [TrnAssetController::class, 'store'])-> name('store');
 });
 
+Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('maintenance.index');
+
 
 
 

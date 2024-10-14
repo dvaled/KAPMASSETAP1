@@ -11,7 +11,7 @@ public class TRNSOFTWAREMODEL{
     public required string PICADDED { get; set; }
     public DateOnly DATEADDED { get; set; }
     public string? PICUPDATED { get; set; }
-    public DateOnly DATEUPDATED { get; set; }
+    public DateOnly? DATEUPDATED { get; set; }
 
     [ForeignKey("ASSETCODE")]
     public required TRNASSETMODEL TRNASSET { get; set; }
