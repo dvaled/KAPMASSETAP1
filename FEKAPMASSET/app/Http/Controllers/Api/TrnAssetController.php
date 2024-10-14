@@ -33,8 +33,6 @@ class TRNAssetController extends Controller
         $contentEmployee = $responseEmployee->getBody()->getContents();
         $employeeData = json_decode($contentEmployee, true);
 
-    
-
         // Pass both assetData and assetSpecData to the view
         return view('transaction.assign', [
             // 'assetData' => $assetData,

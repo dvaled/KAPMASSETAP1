@@ -1,28 +1,17 @@
 @extends('layouts.app')
-
 @section('content')
 @if ($errors->any())
     <div class="alert alert-danger">
         <strong>Whoops!</strong> There were some problems with your input.<br><br>
         <ul>
-            @foreach ($errors->all() as $error)
+            @foreac h ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
     </div>  
-@endif
-@extends('layouts.app')
-
-@section('content')
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>  
+    <script>
+        console.log("error");
+    </script>
 @endif
 
 <div id="createMaster" class="inset-0 bg-white flex justify-center items-center p-4">
@@ -39,8 +28,8 @@
             </div>
 
             <div class="mb-4">
-                <label for="nosrModal" class="block text-sm font-semibold">Serial Number</label>
-                <input type="text" id="nosrModal" name="nosrModal" class="w-full p-2 border rounded" required>
+                <label for="nosrModal" class="block text    -sm font-semibold">Serial Number</label>
+                <input type="text" id="nosrModal" name="nosr" class="w-full p-2 border rounded" required>
             </div>
             
             <div class="mb-4">
@@ -55,16 +44,16 @@
 
             <div class="mb-4">
                 <label for="typegcmModal" class="block text-sm font-semibold">TypeGCM</label>
-                <input type="text" id="typegcmModal" name="typegcm" class="w-full p-2 border rounded" required>
+                <input type="text" id="typegcmModal" name="typegcm" class="w-full p-2 border rounded">
             </div>
 
             <div class="mb-4">
                 <label for="active" class="block text-sm font-semibold">Active</label>
                 <select id="active" name="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    <option value="YES">TRUE</option>
-                    <option value="NO">FALSE</option>
+                    <option value="1">Y</option>  <!-- Represents true -->
+                    <option value="0">N</option>  <!-- Represents false -->
                 </select>
-            </div>
+            </div>       
 
             <!-- Buttons -->
             <div class="flex justify-end">
@@ -74,6 +63,4 @@
         </form>
     </div>
 </div>
-@endsection
-
 @endsection

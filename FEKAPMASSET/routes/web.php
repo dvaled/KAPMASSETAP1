@@ -28,6 +28,7 @@ Route::prefix('master')->name('master.')->group(function() {
     Route::get('/', [MasterController::class, 'index'])->name('index');//return master view with all of the master data
     Route::get('/create', [MasterController::class, 'sidebar'])->name('create');//return master view with all of the master data
     Route::post('/store', [MasterController::class, 'store'])->name('store');//send a post request to the API for master_gcm table
+    Route::put('/update/{masterid}', [MasterController::class, 'update'])->name('update');
     Route::get('/log', [LogController::class, 'index'])->name('log.index');//return log view with all of the log data
 });
 

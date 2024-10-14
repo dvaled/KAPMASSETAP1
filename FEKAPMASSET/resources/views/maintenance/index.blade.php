@@ -5,9 +5,9 @@
     <div class="p-6 pb-0 mb-0 bg-white rounded-t-2xl">
       <h6>Asset under maintenance</h6>
     </div>
-    <div class="flex-auto px-0 pt-0 pb-2">
-      <div class="p-0 overflow-x-auto">
-        <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
+    <div class="flex-auto px-0 pt-0 pb-2 space-x-5">
+      <div class="p-4 overflow-x-auto">
+        <table class="-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
           <thead class="align-bottom">
             <tr>
               <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Maintenance ID</th>
@@ -23,7 +23,7 @@
                 <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                     <p class="mb-0 font-semibold leading-tight text-xs">{{ $mthist['maintenanceid'] }}</p> 
                 </td>
-                <td class="p-2 align-middle bg-transparent bor  der-b whitespace-nowrap shadow-transparent">
+                <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                     <span class="font-semibold leading-tight text-xs text-black">{{ $mthist['picadded'] }}</span> 
                 </td>
                 <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
@@ -52,9 +52,59 @@
                   </td>
             </tr>   
             @endforeach
-            {{$mthist-> links()}}
         </tbody>
         </table>
+
+        <nav aria-label="Page navigation example">
+                <ul class="inline-flex -space-x-px text-sm">
+                    <!-- Previous Page Link -->
+                    @if ($maintenanceData->onFirstPage())
+                        <li>
+                            <span class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-700 bg-gray-200 border border-gray-300 rounded-s-lg cursor-not-allowed">
+                                Previous
+                            </span>
+                        </li>
+                    @else
+                        <li>
+                            <a href="{{ $maintenanceData->previousPageUrl() }}" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-700 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-800">
+                                Previous
+                            </a>
+                        </li>
+                    @endif
+            
+                    <!-- Pagination Elements -->
+                    @foreach ($maintenanceData->links()->elements[0] as $page => $url)
+                        @if ($page == $maintenanceData->currentPage())
+                            <li>
+                                <span class="flex items-center justify-center px-3 h-8 text-white border border-gray-300 bg-blue-600 hover:bg-blue-700 hover:text-white">
+                                    {{ $page }}
+                                </span>
+                            </li>
+                        @else
+                            <li>
+                                <a href="{{ $url }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-800">
+                                    {{ $page }}
+                                </a>
+                            </li>
+                        @endif
+                    @endforeach
+            
+                    <!-- Next Page Link -->
+                    @if ($maintenanceData->hasMorePages())
+                        <li>
+                            <a href="{{ $maintenanceData->nextPageUrl() }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-800">
+                                Next
+                            </a>
+                        </li>
+                    @else
+                        <li>
+                            <span class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-gray-200 border border-gray-300 rounded-e-lg cursor-not-allowed">
+                                Next
+                            </span>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
         <!-- Edit Modal -->
         <div id="editModal" class="modal hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
             <div class="bg-white p-6 rounded-md w-96">

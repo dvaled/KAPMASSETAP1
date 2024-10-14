@@ -105,7 +105,7 @@
                   </a>
               </li>
           </ul>
-      </nav>
+      </nav>    
       
 
         <!-- Edit Modal -->
@@ -125,33 +125,32 @@
                   
                   <div class="mb-4">
                       <label for="condition" class="block text-sm font-semibold">Condition</label>
-                      <input type="text" id="conditionModal" name="condition" class="w-full p-2 border rounded" required>
+                      <input type="text" id="condition" name="condition" class="w-full p-2 border rounded" required>
                   </div>
 
                   <div class="mb-4">
-                      <label for="nosrModal" class="block text-sm font-semibold">Serial Number</label>
-                      <input type="text" id="nosrModal" name="nosrModal" class="w-full p-2 border rounded" required>
+                      <label for="nosr" class="block text-sm font-semibold">Serial Number</label>
+                      <input type="text" id="nosr" name="nosr" class="w-full p-2 border rounded" required>
                   </div>
                   <div class="mb-4">
                     <label for="description" class="block text-sm font-semibold"> Description </label>
-                    <input type="text" id="descriptionModal" name="description" class="w-full p-2 border rounded" required>
+                    <input type="text" id="description" name="description" class="w-full p-2 border rounded" required>
                 </div>
                 <div class="mb-4">
-                    <label for="valuegcm" class="block text-sm font-semibold"> ValueGCM </label>
-                    <input type="text" id="valuegcmModal" name="valuegcm" class="w-full p-2 border rounded" required>
+                    <label for="valuegcm" class="block text-sm font-semibold"> Value </label>
+                    <input type="text" id="valuegcm" name="valuegcm" class="w-full p-2 border rounded" required>
                 </div>
                 <div class="mb-4">
-                    <label for="typegcm" class="block text-sm font-semibold"> TypeGCM </label>
-                    <input type="text" id="typegcmModal" name="typegcm" class="w-full p-2 border rounded" required>
+                    <label for="typegcm" class="block text-sm font-semibold"> Type </label>
+                    <input type="text" id="typegcm" name="typegcm" class="w-full p-2 border rounded" required>
                 </div>
                 <div class="mb-4">
-                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
-                    <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected>Active</option>
-                        <option value="TRUE">TRUE</option>
-                        <option value="FALSE">FALSE</option>
+                    <label for="active" class="block text-sm font-semibold">Active</label>
+                    <select id="active" name="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <option value="1">Y</option>  <!-- Represents true -->
+                        <option value="0">N</option>  <!-- Represents false -->
                     </select>
-                </div>
+                </div>    
 
                   <!-- Add more fields as necessary -->
 
@@ -197,12 +196,12 @@
   // Function to open modal and pre-fill form
   function openEditModal(masterData) {
     document.getElementById('masterid').value = masterData.masterid;
-    document.getElementById('conditionModal').value = masterData.condition;
-    document.getElementById('nosrModal').value = masterData.nosr;
-    document.getElementById('descriptionModal').value = masterData.description;
-    document.getElementById('valuegcmModal').value = masterData.valuegcm;
-    document.getElementById('typegcmModal').value = masterData.typegcm;
-    document.getElementById('activeModal').value = masterData.active;
+    document.getElementById('condition').value = masterData.condition;
+    document.getElementById('nosr').value = masterData.nosr;
+    document.getElementById('description').value = masterData.description;
+    document.getElementById('valuegcm').value = masterData.valuegcm;
+    document.getElementById('typegcm').value = masterData.typegcm;
+    document.getElementById('active').value = masterData.active;
       // Populate other form fields as necessary
       
       document.getElementById('editModal').classList.remove('hidden');
@@ -214,36 +213,38 @@
   }
 
   // Handle form submission via AJAX
-  document.getElementById('editForm').addEventListener('submit', function (event) {
-      event.preventDefault();
+document.getElementById('editForm').addEventListener('submit', function (event) {
+    event.preventDefault();
 
-      const masterid = document.getElementById('masterid').value;
-      const formData = new FormData(this);
+    const masterid = document.getElementById('masterid').value;
+    const formData = new FormData(this);
 
-      fetch(`/master/${masterid}`, {
-          method: 'POST',
-          headers: {
-              'X-CSRF-TOKEN': '{{ csrf_token() }}',
-              'Accept': 'application/json',
-          },
-          body: formData
-      })
-      .then(response => {
-          if (response.ok) {
-              return response.json();
-          } else {
-              throw new Error('Failed to update record');
-          }
-      })
-      .then(data => {
-          alert('Master updated successfully');
-          location.reload(); // Refresh the page to reflect the changes
-      })
-      .catch(error => {
-          console.error('Error:', error);
-          alert('Failed to update the record');
-      });
-  });
+    fetch(`/master/${masterid}`, {
+        method: 'PUT', // Change this to PUT
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json',
+            // 'Content-Type': 'application/json' <-- You don't need this with FormData
+        },
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Failed to update record');
+        }
+    })
+    .then(data => {
+        alert('Master updated sucessfully');
+        location.reload(); // Refresh the page to reflect the changes
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to update the record');
+    });
+});
+
 
   function openDeleteModal(masterData) {
     document.getElementById('masterid').value = masterData.masterid;
