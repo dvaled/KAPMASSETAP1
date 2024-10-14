@@ -50,8 +50,9 @@
                         </button>
                     </form>
                   </td>
-            </tr>
+            </tr>   
             @endforeach
+            {{$mthist-> links()}}
         </tbody>
         </table>
         <!-- Edit Modal -->
