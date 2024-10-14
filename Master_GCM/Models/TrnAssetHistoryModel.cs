@@ -11,7 +11,6 @@ public class TRNASSETHISTORYMODEL{
     public required string DIRECTORATE { get; set; }
     public required string PICADDED { get; set; }
     public DateOnly DATEADDED { get; set; }
-    public DateOnly DATEUPDATED { get; set; }
 
     [ForeignKey("NIPP")]
     public required MSTEMPLOYEEMODEL EMPLOYEE { get; set; }
