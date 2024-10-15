@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class TRNAssetController extends Controller
 {
@@ -32,8 +33,6 @@ class TRNAssetController extends Controller
         $responseEmployee = $client->request('GET', "http://localhost:5252/api/Employee");
         $contentEmployee = $responseEmployee->getBody()->getContents();
         $employeeData = json_decode($contentEmployee, true);
-
-    
 
         // Pass both assetData and assetSpecData to the view
         return view('transaction.assign', [
@@ -107,60 +106,31 @@ class TRNAssetController extends Controller
 
     //Store new asset
     public function store(Request $request){
-        // Validate the incoming data
-        $validatedData = $request->validate([
-            'ASSETCATEGORY' => 'required|string|max:255',
-            'ASSETTYPE' => 'required|string|max:255',
-            'ASSETBRAND' => 'required|string|max:255',
-            'ASSETMODEL' => 'required|string|max:255',
-            'ASSETSERIES' => 'required|string|max:255',
-            'ASSETSERIALNUMBER' => 'required|string|max:255',
-            'ADDEDDATE' => 'required|date',
-            'ACTIVE' => 'required|string|in:YES,NO',
-            'NIPP' => 'nullable|integer',
-            'ASSETCODE' => 'nullable|integer',
+         $validatedData = $request->validate([
+             'assetbrand' => 'required|string|max:255',
+             'assetmodel' => 'required|string|max:255',
+             'assetseries' => 'required|string|max:255',
+             'assetserialnumber' => 'required|string|max:255',
+             'active' => 'required|string|max:255',
+             'assetcategory' => 'required|string|max:255',
+             'assetcode' => 'required|string|max:255',
+             'assettype' => 'required|string|max:255'            
         ]);
 
-        // Prepare data for initial API request (without ASSETCODE)
-        $data = [
-            'ASSETCATEGORY' => $validatedData['ASSETCATEGORY'],
-            'ASSETTYPE' => $validatedData['ASSETTYPE'],
-            'ASSETBRAND' => $validatedData['ASSETBRAND'],
-            'ASSETMODEL' => $validatedData['ASSETMODEL'],
-            'ASSETSERIES' => $validatedData['ASSETSERIES'],
-            'ASSETSERIALNUMBER' => $validatedData['ASSETSERIALNUMBER'],
-            'ADDEDDATE' => Carbon::parse($validatedData['ADDEDDATE'])->toDateString(),
-            'ACTIVE' => $validatedData['ACTIVE'],
-            'NIPP' => $validatedData['NIPP'] ?? null,
-        ];
-
-        // Send POST request to the external API to create asset (without ASSETCODE)
-        $response = Http::post('http://localhost:5252/api/TrnAsset', $data);
-
-        // Check if the API request was successful
-        if ($response->successful()) {
-            // Get the newly created asset's ID from the API response
-            $assetId = $response->json('id');  // Assuming the API returns the new ID in the response
-
-            // Generate the ASSETCODE using ASSETCATEGORY, ASSETTYPE, ADDEDDATE, and IDASSET
-            $addedDate = Carbon::parse($validatedData['ADDEDDATE'])->format('Ymd');
-            $assetCode = $validatedData['ASSETCATEGORY'] . $validatedData['ASSETTYPE'] . $addedDate . str_pad($assetId, 4, '0', STR_PAD_LEFT);
-
-            // Prepare data to update the asset with the generated ASSETCODE
-            $updateData = ['ASSETCODE' => $assetCode];
-
-            // Send PATCH request to update the asset with the new ASSETCODE
-            $updateResponse = Http::patch("http://localhost:5252/api/TrnAsset/{$assetId}", $updateData);
-
-            if ($updateResponse->successful()) {
-                return redirect()->route('trnasset.index')->with('success', 'Asset created successfully!');
-            } else {
-                return back()->withErrors(['message' => 'Failed to update asset with ASSETCODE.'])->withInput();
-            }
-        } else {
-            // Handle error response from the initial POST request
-            return back()->withErrors(['message' => 'Failed to create asset.'])->withInput();
-        }
+        $client = new Client();
+        try{
+            $response = $client->post('http://localhost:5252/api/TrnAsset', [
+                'json' => $validatedData,
+            ]);
+            $data = json_decode($response->getBody()->getContents(), true);
+            Log::info('API Response:', $data);  // Log the API response for inspection
+            return redirect('/dashboard')->with('success', 'Data submitted successfully!');
+        }catch (\GuzzleHttp\Exception\RequestException $e) {
+            $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;
+            Log::error('API Error: ' . $e->getMessage() . ' - Response Body: ' . $responseBody);
+        
+            return redirect('/master/create')->withErrors(['error' => 'An error occurred while submitting the data.']);
+        }   
     }
 
     public function assignAsset(Request $request){

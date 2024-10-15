@@ -35,7 +35,7 @@ class AssetController extends Controller
         $masterData = json_decode($content, true);
 
         $client = new Client();
-        $response = $client->request('GET', 'http://localhost:5252/api/TrnAsset/all');
+        $response = $client->request('GET', 'http://localhost:5252/api/TrnAsset');
         $body = $response->getBody()->getContents();
         $logData = json_decode($body, true);
         return view('dashboard', [
@@ -43,13 +43,33 @@ class AssetController extends Controller
             'logData' => $logData
         
         ]);
-
-
     }
 
-    // public function store(){
-    //     $client = new Client();
-    //     $response = $client->request('POST', 'http://localhost:5252/api/Log');
- 
-    // }
+    public function store(Request $request){
+        $validatedData = $request-validate([
+            'assetcode' => 'required|string|max:255',
+            'assettype' => 'required|string|max:255',
+            'assetcategory' => 'required|string|max:255',
+            'assetbrand' => 'required|string|max:255',
+            'assetmodel' => 'required|string|max:255',
+            'assetseries' => 'required|string|max:255',
+            'assetserialnumber' => 'required|string|max:255',
+            'active' => 'required|string|max:255',
+        ]);
+
+        $client = new Client();
+        try{
+            $response = $client->post('POST', 'http://localhost:5252/api/TrnAsset',[
+                'json'=> $validatedData,
+            ]);
+            $data = json_decode($response->getBody()->getContents(), true);
+            Log::info('API Response:', $data);  // Log the API response for inspection
+            return redirect('/dashboard')->with('success', 'Data submitted successfully!');
+        }catch (\GuzzleHttp\Exception\RequestException $e) {
+            $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;
+            Log::error('API Error: ' . $e->getMessage() . ' - Response Body: ' . $responseBody);
+        
+            return redirect('/master/create')->withErrors(['error' => 'An error occurred while submitting the data.']);
+        }   
+    }
 }

@@ -11,9 +11,9 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
-    <!-- Icons -->
+    {{-- <!-- Icons -->
     <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="../assets/css/nucleo-svg.css" rel="stylesheet" /> --}}
 
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
@@ -66,14 +66,14 @@
     
     
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    {{-- <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script> --}}
     <!-- Core -->
-    <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap.min.js"></script>
+    {{-- <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script> --}}
 
     <!-- Theme JS -->
-    <script src="../assets/js/soft-ui-dashboard.min.js"></script>
+    {{-- <script src="../assets/js/soft-ui-dashboard.min.js"></script> --}}
 </body>
 </html>
         {{-- <div class="ml-72 min-h-screen flex flex-col justify-between p-6">

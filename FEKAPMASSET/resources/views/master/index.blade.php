@@ -52,15 +52,10 @@
                   <a href="javascript:void(0);" class="text-blue-500 text-sm font-bold mr-2" onclick="openEditModal({{ json_encode($masters) }})">
                      <i class="fas fa-edit"></i>
                   </a>
-                  
-                  <!-- Delete Icon (using a form for DELETE) -->
-                  <form {{-- action="{{ route('masters.destroy', $masters['masterid']) }}"--}} method="POST" style="display:inline;">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="text-red-500 text-sm font-bold" onclick="openDeleteModal({{ json_encode($masters) }})">
-                          <i class="fas fa-trash"></i> <!-- Font Awesome Trash Icon -->
-                      </button>
-                  </form>
+                  <a href="javascript:void(0);" class="text-red-500 text-sm font-bold mr-2" onclick="openDeleteModal({{json_encode($masters)}})">
+                     <i class="fas fa-trash"></i>
+                  </a>
+                
                 </td>
             </tr>
             @endforeach
@@ -105,7 +100,7 @@
                   </a>
               </li>
           </ul>
-      </nav>
+      </nav>    
       
 
         <!-- Edit Modal -->
@@ -120,38 +115,37 @@
                   <!-- Input fields for master data -->
                   <div class="mb-4">
                       <label for="masterid" class="block text-sm font-semibold">Master ID</label>
-                      <input type="text" id="masterid" name="masterid" class="w-full p-2 border rounded" readonly>
+                      <input type="number" id="masterid" name="masterid" class="w-full p-2 border rounded" readonly>
                   </div>
                   
                   <div class="mb-4">
                       <label for="condition" class="block text-sm font-semibold">Condition</label>
-                      <input type="text" id="conditionModal" name="condition" class="w-full p-2 border rounded" required>
+                      <input type="text" id="condition" name="condition" class="w-full p-2 border rounded" required>
                   </div>
 
                   <div class="mb-4">
-                      <label for="nosrModal" class="block text-sm font-semibold">Serial Number</label>
-                      <input type="text" id="nosrModal" name="nosrModal" class="w-full p-2 border rounded" required>
+                      <label for="nosr" class="block text-sm font-semibold">NOSR</label>
+                      <input type="number" id="nosr" name="nosr" class="w-full p-2 border rounded" required>
                   </div>
                   <div class="mb-4">
                     <label for="description" class="block text-sm font-semibold"> Description </label>
-                    <input type="text" id="descriptionModal" name="description" class="w-full p-2 border rounded" required>
+                    <input type="text" id="description" name="description" class="w-full p-2 border rounded" required>
                 </div>
                 <div class="mb-4">
-                    <label for="valuegcm" class="block text-sm font-semibold"> ValueGCM </label>
-                    <input type="text" id="valuegcmModal" name="valuegcm" class="w-full p-2 border rounded" required>
+                    <label for="valuegcm" class="block text-sm font-semibold"> Value </label>
+                    <input type="number" id="valuegcm" name="valuegcm" class="w-full p-2 border rounded" required>
                 </div>
                 <div class="mb-4">
-                    <label for="typegcm" class="block text-sm font-semibold"> TypeGCM </label>
-                    <input type="text" id="typegcmModal" name="typegcm" class="w-full p-2 border rounded" required>
+                    <label for="typegcm" class="block text-sm font-semibold"> Type </label>
+                    <input type="text" id="typegcm" name="typegcm" class="w-full p-2 border rounded" required>
                 </div>
                 <div class="mb-4">
-                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
-                    <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected>Active</option>
-                        <option value="TRUE">TRUE</option>
-                        <option value="FALSE">FALSE</option>
+                    <label for="active" class="block text-sm font-semibold">Active</label>
+                    <select id="active" name="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <option value="Y">Y</option>  <!-- Represents true -->
+                        <option value="N">N</option>  <!-- Represents false -->
                     </select>
-                </div>
+                </div>    
 
                   <!-- Add more fields as necessary -->
 
@@ -167,19 +161,26 @@
           <div class="bg-white p-6 rounded-md w-96">
               <h2 class="text-xl font-bold mb-4">Delete Master</h2>
 
-              <form id="editForm">
+              <form id="deleteForm" method="POST">
                   @csrf
-                  @method('DELETE') <!-- Use Delete method for deleting -->
+                  @method('PUT') <!-- Use Delete method for deleting -->
 
                   <div class="mb-4">
-                      <label for="masterid" class="block text-sm font-semibold">Master ID</label>
-                      <input type="text" id="masterid" name="masterid" class="w-full p-2 border rounded" readonly>
+                      <label for="idmaster" class="block text-sm font-semibold">Master ID</label>
+                      <input type="text" id="idmaster" name="idmaster" class="w-full p-2 border rounded" readonly>
                   </div>
+                  <div class="mb-4">
+                    <label for="active" class="block text-sm font-semibold">Active</label>
+                    <select id="active" name="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <option value="Y">Y</option>  <!-- Represents true -->
+                        <option value="N">N</option>  <!-- Represents false -->
+                    </select>
+                </div>   
 
                   <!-- Add more fields as necessary -->
 
                   <div class="flex justify-end">
-                      <button type="button" onclick="closeDeleteModal()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
+                      <button type="button" onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
                       <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
                   </div>
               </form>
@@ -197,12 +198,12 @@
   // Function to open modal and pre-fill form
   function openEditModal(masterData) {
     document.getElementById('masterid').value = masterData.masterid;
-    document.getElementById('conditionModal').value = masterData.condition;
-    document.getElementById('nosrModal').value = masterData.nosr;
-    document.getElementById('descriptionModal').value = masterData.description;
-    document.getElementById('valuegcmModal').value = masterData.valuegcm;
-    document.getElementById('typegcmModal').value = masterData.typegcm;
-    document.getElementById('activeModal').value = masterData.active;
+    document.getElementById('condition').value = masterData.condition;
+    document.getElementById('nosr').value = masterData.nosr;
+    document.getElementById('description').value = masterData.description;
+    document.getElementById('valuegcm').value = masterData.valuegcm;
+    document.getElementById('typegcm').value = masterData.typegcm;
+    document.getElementById('active').value = masterData.active;
       // Populate other form fields as necessary
       
       document.getElementById('editModal').classList.remove('hidden');
@@ -211,89 +212,93 @@
   // Function to close modal
   function closeModal() {
       document.getElementById('editModal').classList.add('hidden');
-  }
-
-  // Handle form submission via AJAX
-  document.getElementById('editForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-
-      const masterid = document.getElementById('masterid').value;
-      const formData = new FormData(this);
-
-      fetch(`/master/${masterid}`, {
-          method: 'POST',
-          headers: {
-              'X-CSRF-TOKEN': '{{ csrf_token() }}',
-              'Accept': 'application/json',
-          },
-          body: formData
-      })
-      .then(response => {
-          if (response.ok) {
-              return response.json();
-          } else {
-              throw new Error('Failed to update record');
-          }
-      })
-      .then(data => {
-          alert('Master updated successfully');
-          location.reload(); // Refresh the page to reflect the changes
-      })
-      .catch(error => {
-          console.error('Error:', error);
-          alert('Failed to update the record');
-      });
-  });
-
-  function openDeleteModal(masterData) {
-    document.getElementById('masterid').value = masterData.masterid;
-    document.getElementById('conditionModal').value = masterData.condition;
-    document.getElementById('nosrModal').value = masterData.nosr;
-    document.getElementById('descriptionModal').value = masterData.description;
-    document.getElementById('valuegcmModal').value = masterData.valuegcm;
-    document.getElementById('typegcmModal').value = masterData.typegcm;
-    document.getElementById('activeModal').value = masterData.active;
-      // Populate other form fields as necessary
-      
-      document.getElementById('deleteModal').classList.remove('hidden');
-  }
-
-  // Function to close modal
-  function closeDeleteModal() {
       document.getElementById('deleteModal').classList.add('hidden');
   }
 
-  // Handle form submission via AJAX
-  document.getElementById('deleteForm').addEventListener('submit', function (event) {
-      event.preventDefault();
+  // Handle form edit submission via AJAX
+document.getElementById('editForm').addEventListener('submit', function (event) {
+    event.preventDefault();
 
-      const masterid = document.getElementById('masterid').value;
-      const formData = new FormData(this);
+    const masterid = document.getElementById('masterid').value;
+    const formData = new FormData(this);
 
-      fetch(`/master/${masterid}`, {
-          method: 'POST',
-          headers: {
-              'X-CSRF-TOKEN': '{{ csrf_token() }}',
-              'Accept': 'application/json',
-          },
-          body: formData
-      })
-      .then(response => {
-          if (response.ok) {
-              return response.json();
-          } else {
-              throw new Error('Failed to update record');
-          }
-      })
-      .then(data => {
-          alert('Master updated successfully');
-          location.reload(); // Refresh the page to reflect the changes
-      })
-      .catch(error => {
-          console.error('Error:', error);
-          alert('Failed to update the record');
-      });
-  });
+    // Debugging output: Log form data
+    for (let pair of formData.entries()) {
+        console.log(pair[0]+ ': ' + pair[1]);
+    }
+
+    fetch(`/master/update/${masterid}`, {
+        method: 'PUT', // Change this to PUT
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json',
+        },
+        body: formData
+
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Failed to update record');
+        }
+    })
+    .then(data => {
+        alert('Master updated sucessfully');
+        location.reload(); 
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to update the record');
+    });
+});
+
+// Function to open modal and pre-fill form
+    function openDeleteModal(masterData) {
+        document.getElementById('idmaster').value = masterData.masterid;
+        document.getElementById('active').value = masterData.active;
+
+        // Set the form action dynamically for the delete request
+        document.getElementById('deleteForm').action = `/master/${masterData.idmaster}`;
+
+        
+        document.getElementById('deleteModal').classList.remove('hidden');
+    }
+
+    document.getElementById('deleteForm').addEventListener('submit', function(event){
+        event.preventDefault();
+
+        const masterid = document.getElementById('masterid').value;
+        const formData = new FormData(this);
+
+        fetch(`/master/destroy/${masterid}`, {
+            method: 'PUT', 
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json',
+            },
+            body: formData
+            
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Failed to update record');
+            }
+        })
+        .then(data => {
+            alert('Master deleted sucessfully');
+            location.reload(); 
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to delete this record');
+        });
+
+    })
+
+
 </script>
 @endsection
 

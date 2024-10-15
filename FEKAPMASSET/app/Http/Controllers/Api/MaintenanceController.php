@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Maintenance;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class MaintenanceController extends Controller
 {
@@ -15,9 +16,21 @@ class MaintenanceController extends Controller
         $response = $client->request('GET', 'http://localhost:5252/api/Maintenance');
         $body = $response->getBody();
         $content = $body->getContents();
-        $data = json_decode($content, true)::paginate(10);
+        $data = json_decode($content, true);
 
-        return view('maintenance.index', ['maintenanceData' => $data]); // Keep the view name consistent
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $perPage = 5;
+        $currentItems = array_slice($data, ($currentPage-1)*$perPage, $perPage);
+
+        $paginatedData = new LengthAwarePaginator(
+            $currentItems,
+            count($data), // Total items
+            $perPage, // Items per page
+            $currentPage, // Current page
+            ['path' => request()->url(), 'query' => request()->query()] // Maintain query parameters
+        );
+
+        return view('maintenance.index', ['maintenanceData' => $paginatedData]); // Keep the view name consistent
     }
 
     // // Get a specific maintenance record by ID

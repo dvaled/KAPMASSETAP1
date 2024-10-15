@@ -27,7 +27,7 @@
                     <p class="mb-0 font-semibold leading-tight text-xs">{{ $logs['assetcode'] }}</p> 
                 </td>
                 <td class="p-2 align-middle bg-transparent bor  der-b whitespace-nowrap shadow-transparent">
-                    <span class="font-semibold leading-tight text-xs text-black">{{ $logs['roleid'] }}</span> 
+                    <span class="font-semibold leading-tight text-xs text-black">{{ $logs['role'] }}</span> 
                 </td>
                 <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                     <span class="font-semibold leading-tight text-xs text-black">{{ $logs['actionperformed']}}</span>

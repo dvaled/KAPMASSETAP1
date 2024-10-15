@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Auth\Events\Validated;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use PDO;
 
@@ -48,44 +49,41 @@ class MasterController extends Controller
         });
     }
 
-    public function store(Request $request){
-        $validated = $request -> validate([
-            'mastername' => 'required|string|max:255',
-            'conditions' => 'required|string|max:255',
-            'nosr' => 'required|string|max:255',
-            'description' => 'required|string',
-            'valuegcm' => 'required|numeric',
-            'typegcm' => 'required|string|max:255',
-            'active' => 'boolean',
+    public function store(Request $request)
+{
+    // Validate the incoming request data
+    $validated = $request->validate([
+        'condition' => 'required|string|max:255',
+        'nosr' => 'required|numeric|max:255',
+        'description' => 'required|string',
+        'valuegcm' => 'required|numeric',
+        'typegcm' => 'nullable|string|max:255', // Use 'nullable' if this field can be optional
+        'active' => 'required|string',
+    ]);
+
+    $client = new Client();
+
+    try {
+        $response = $client->post('http://localhost:5252/api/master', [
+            'json' => $validated,  // Use the validated data
         ]);
-
-        $client = new Client();
-
-        try {
-            // Send POST request to your API
-            $response = $client->post('http://localhost:5252/api/master', [
-                'json' => [
-                    'mastername' => 'required|string|max:255',
-                    'conditions' => 'required|string|max:255',
-                    'nosr' => 'required|string|max:255',
-                    'description' => 'required|string',
-                    'valuegcm' => 'required|numeric',
-                    'typegcm' => 'required|string|max:255',
-                    'active' => 'boolean',
-                ]
-            ]);
-
-            $data = json_decode($response->getBody()->getContents(), true);
-             
-        }catch(Exception $e){
-            return redirect('/dashboard')->back()->withErrors(['error' => $e->getMessage()]);
-        }
-    }
+    
+        $data = json_decode($response->getBody()->getContents(), true);
+        Log::info('API Response:', $data);  // Log the API response for inspection
+    
+        return redirect('/master')->with('success', 'Data submitted successfully!');
+    } catch (\GuzzleHttp\Exception\RequestException $e) {
+        $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;
+        Log::error('API Error: ' . $e->getMessage() . ' - Response Body: ' . $responseBody);
+    
+        return redirect('/master/create')->withErrors(['error' => 'An error occurred while submitting the data.']);
+    }    
+}
 
     // Edit method to show the form for editing the record
     public function edit($id) {
         // Fetch the master record using the $id
-        $master = Master::findOrFail($id);
+        $master = Master::findOrFail($id);  
         
         // Return the edit view with the master data
         return view('master.edit', compact('master'));
@@ -93,45 +91,62 @@ class MasterController extends Controller
 
 
     // Destroy method to delete a record
-    public function destroy($id) {
-        // Fetch the master record using the $id
-        $master = Master::findOrFail($id);
+    public function destroy($masterid, Request $request) {
 
-        // Perform the deletion
-        $master->delete();
+        /// Validate the incoming request data
+        $validated = $request->validate([ 
+            'active' => 'required|string', 
+        ]);
         
-        // Redirect back to the index page with a success message
-        return redirect()->route('master.index')->with('success', 'Master record deleted successfully.');
+        $client = new Client();     
+
+        try {
+            // Send the PUT request to the API to update the master data
+            $response = $client->post('PUT', "http://localhost:5252/api/Master/{$masterid}", [
+                'json' => $validated // Send the validated data as JSON
+            ]);                                 
+    
+            $data = json_decode($response->getBody()->getContents(), true);
+            Log::info('API Response:', $data);  // Log the API response for inspection
+        
+            return redirect('/master')->with('success', 'Data submitted successfully!');
+        } catch (\GuzzleHttp\Exception\RequestException $e) {
+            $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;
+            Log::error('API Error: ' . $e->getMessage() . ' - Response Body: ' . $responseBody);
+        
+            return redirect('/master')->withErrors(['error' => 'An error occurred while submitting the data.']);
+        }    
     }
 
     public function update(Request $request, $id) {
         // Validate the incoming request data
-        $validatedData = $request->validate([
-            'mastername' => 'required|string|max:255',
-            'conditions' => 'required|string|max:255',
+        $validated = $request->validate([
+            'idmaster' => 'required|integer',
+            'condition' => 'required|string|max:255',
             'nosr' => 'required|string|max:255',
             'description' => 'required|string',
             'valuegcm' => 'required|numeric',
-            'typegcm' => 'required|string|max:255',
-            'active' => 'boolean',
+            'typegcm' => 'nullable|string|max:255', 
+            'active' => 'required|string', 
         ]);
-    
-        // Create a new HTTP client
-        $client = new Client();
+        
+        $client = new Client();     
         
         try {
             // Send the PUT request to the API to update the master data
-            $response = $client->request('PUT', "http://localhost:5252/api/Master/{$id}", [
-                'json' => $validatedData // Send the validated data as JSON
-            ]);
+            $response = $client->post('PUT', "http://localhost:5252/api/Master/{$id}", [
+                'json' => $validated // Send the validated data as JSON
+            ]);                                 
     
-            // Optionally handle the response here (e.g., check if the update was successful)
-            $responseBody = json_decode($response->getBody(), true);
-    
-            return response()->json(['message' => 'Record updated successfully', 'data' => $responseBody], 200);
-        } catch (\Exception $e) {
-            // Handle any exceptions that occur during the request
-            return response()->json(['message' => 'Failed to update record', 'error' => $e->getMessage()], 500);
-        }
+            $data = json_decode($response->getBody()->getContents(), true);
+            Log::info('API Response:', $data);  // Log the API response for inspection
+        
+            return redirect('/master')->with('success', 'Data submitted successfully!');
+        } catch (\GuzzleHttp\Exception\RequestException $e) {
+            $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;
+            Log::error('API Error: ' . $e->getMessage() . ' - Response Body: ' . $responseBody);
+        
+            return redirect('/master/create')->withErrors(['error' => 'An error occurred while submitting the data.']);
+        }    
     }   
 }
