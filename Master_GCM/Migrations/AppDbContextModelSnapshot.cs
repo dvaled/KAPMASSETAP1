@@ -222,6 +222,10 @@ namespace Master_GCM.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("CONDITION")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int?>("NIPP")
                         .HasColumnType("integer");
 
@@ -294,6 +298,12 @@ namespace Master_GCM.Migrations
                     b.Property<bool?>("CONVERTIBLE")
                         .HasColumnType("boolean");
 
+                    b.Property<DateOnly>("DATEADDED")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly?>("DATEUPDATED")
+                        .HasColumnType("date");
+
                     b.Property<string>("GRAPHICSBRAND1")
                         .HasColumnType("text");
 
@@ -341,6 +351,13 @@ namespace Master_GCM.Migrations
 
                     b.Property<bool?>("MICROPHONE")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("PICADDED")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PICUPDATED")
+                        .HasColumnType("text");
 
                     b.Property<string>("PROCESSORBRAND")
                         .HasColumnType("text");

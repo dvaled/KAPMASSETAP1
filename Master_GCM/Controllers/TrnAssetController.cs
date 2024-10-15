@@ -18,10 +18,11 @@ public class TrnAssetController : ControllerBase
     public async Task<ActionResult<TRNASSETMODEL>> GetTrnAssetById(string ASSETCODE)
     {
         var trndtlAsset = await _context.TRN_ASSET
-        .Where(x => x.ASSETCODE == ASSETCODE)
-        .ToListAsync();
+            .Include(x => x.EMPLOYEE) // Eagerly load the related employee information
+            .Where(x => x.ASSETCODE == ASSETCODE)
+            .ToListAsync();
 
-        if (trndtlAsset == null || !trndtlAsset.Any())
+        if (trndtlAsset == null)
         {
             return NotFound("Asset not found");
         }
