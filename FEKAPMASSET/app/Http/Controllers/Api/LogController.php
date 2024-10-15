@@ -45,7 +45,7 @@ class LogController extends Controller
         $validatedData = $request->validate([
             "LOGID" => 'required',
             "ASSETID" => 'required',
-            "ROLEID" => 'required',
+            "ROLE" => 'required',
             "ACTIONPERFORMED"=> 'required',
             "USERADDED" => 'required',
             "DATEADDED" => 'required'

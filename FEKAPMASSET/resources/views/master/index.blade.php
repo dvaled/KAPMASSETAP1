@@ -52,15 +52,10 @@
                   <a href="javascript:void(0);" class="text-blue-500 text-sm font-bold mr-2" onclick="openEditModal({{ json_encode($masters) }})">
                      <i class="fas fa-edit"></i>
                   </a>
-                  
-                  <!-- Delete Icon (using a form for DELETE) -->
-                  <form {{-- action="{{ route('masters.destroy', $masters['masterid']) }}"--}} method="POST" style="display:inline;">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="text-red-500 text-sm font-bold" onclick="openDeleteModal({{ json_encode($masters) }})">
-                          <i class="fas fa-trash"></i> <!-- Font Awesome Trash Icon -->
-                      </button>
-                  </form>
+                  <a href="javascript:void(0);" class="text-red-500 text-sm font-bold mr-2" onclick="openDeleteModal({{json_encode($masters)}})">
+                     <i class="fas fa-trash"></i>
+                  </a>
+                
                 </td>
             </tr>
             @endforeach
@@ -120,7 +115,7 @@
                   <!-- Input fields for master data -->
                   <div class="mb-4">
                       <label for="masterid" class="block text-sm font-semibold">Master ID</label>
-                      <input type="text" id="masterid" name="masterid" class="w-full p-2 border rounded" readonly>
+                      <input type="number" id="masterid" name="masterid" class="w-full p-2 border rounded" readonly>
                   </div>
                   
                   <div class="mb-4">
@@ -129,8 +124,8 @@
                   </div>
 
                   <div class="mb-4">
-                      <label for="nosr" class="block text-sm font-semibold">Serial Number</label>
-                      <input type="text" id="nosr" name="nosr" class="w-full p-2 border rounded" required>
+                      <label for="nosr" class="block text-sm font-semibold">NOSR</label>
+                      <input type="number" id="nosr" name="nosr" class="w-full p-2 border rounded" required>
                   </div>
                   <div class="mb-4">
                     <label for="description" class="block text-sm font-semibold"> Description </label>
@@ -138,7 +133,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="valuegcm" class="block text-sm font-semibold"> Value </label>
-                    <input type="text" id="valuegcm" name="valuegcm" class="w-full p-2 border rounded" required>
+                    <input type="number" id="valuegcm" name="valuegcm" class="w-full p-2 border rounded" required>
                 </div>
                 <div class="mb-4">
                     <label for="typegcm" class="block text-sm font-semibold"> Type </label>
@@ -147,8 +142,8 @@
                 <div class="mb-4">
                     <label for="active" class="block text-sm font-semibold">Active</label>
                     <select id="active" name="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                        <option value="1">Y</option>  <!-- Represents true -->
-                        <option value="0">N</option>  <!-- Represents false -->
+                        <option value="Y">Y</option>  <!-- Represents true -->
+                        <option value="N">N</option>  <!-- Represents false -->
                     </select>
                 </div>    
 
@@ -166,19 +161,26 @@
           <div class="bg-white p-6 rounded-md w-96">
               <h2 class="text-xl font-bold mb-4">Delete Master</h2>
 
-              <form id="editForm">
+              <form id="deleteForm" method="POST">
                   @csrf
-                  @method('DELETE') <!-- Use Delete method for deleting -->
+                  @method('PUT') <!-- Use Delete method for deleting -->
 
                   <div class="mb-4">
-                      <label for="masterid" class="block text-sm font-semibold">Master ID</label>
-                      <input type="text" id="masterid" name="masterid" class="w-full p-2 border rounded" readonly>
+                      <label for="idmaster" class="block text-sm font-semibold">Master ID</label>
+                      <input type="text" id="idmaster" name="idmaster" class="w-full p-2 border rounded" readonly>
                   </div>
+                  <div class="mb-4">
+                    <label for="active" class="block text-sm font-semibold">Active</label>
+                    <select id="active" name="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <option value="Y">Y</option>  <!-- Represents true -->
+                        <option value="N">N</option>  <!-- Represents false -->
+                    </select>
+                </div>   
 
                   <!-- Add more fields as necessary -->
 
                   <div class="flex justify-end">
-                      <button type="button" onclick="closeDeleteModal()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
+                      <button type="button" onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
                       <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
                   </div>
               </form>
@@ -210,23 +212,29 @@
   // Function to close modal
   function closeModal() {
       document.getElementById('editModal').classList.add('hidden');
+      document.getElementById('deleteModal').classList.add('hidden');
   }
 
-  // Handle form submission via AJAX
+  // Handle form edit submission via AJAX
 document.getElementById('editForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
     const masterid = document.getElementById('masterid').value;
     const formData = new FormData(this);
 
-    fetch(`/master/${masterid}`, {
+    // Debugging output: Log form data
+    for (let pair of formData.entries()) {
+        console.log(pair[0]+ ': ' + pair[1]);
+    }
+
+    fetch(`/master/update/${masterid}`, {
         method: 'PUT', // Change this to PUT
         headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}',
             'Accept': 'application/json',
-            // 'Content-Type': 'application/json' <-- You don't need this with FormData
         },
         body: formData
+
     })
     .then(response => {
         if (response.ok) {
@@ -237,7 +245,7 @@ document.getElementById('editForm').addEventListener('submit', function (event) 
     })
     .then(data => {
         alert('Master updated sucessfully');
-        location.reload(); // Refresh the page to reflect the changes
+        location.reload(); 
     })
     .catch(error => {
         console.error('Error:', error);
@@ -245,56 +253,52 @@ document.getElementById('editForm').addEventListener('submit', function (event) 
     });
 });
 
+// Function to open modal and pre-fill form
+    function openDeleteModal(masterData) {
+        document.getElementById('idmaster').value = masterData.masterid;
+        document.getElementById('active').value = masterData.active;
 
-  function openDeleteModal(masterData) {
-    document.getElementById('masterid').value = masterData.masterid;
-    document.getElementById('conditionModal').value = masterData.condition;
-    document.getElementById('nosrModal').value = masterData.nosr;
-    document.getElementById('descriptionModal').value = masterData.description;
-    document.getElementById('valuegcmModal').value = masterData.valuegcm;
-    document.getElementById('typegcmModal').value = masterData.typegcm;
-    document.getElementById('activeModal').value = masterData.active;
-      // Populate other form fields as necessary
-      
-      document.getElementById('deleteModal').classList.remove('hidden');
-  }
+        // Set the form action dynamically for the delete request
+        document.getElementById('deleteForm').action = `/master/${masterData.idmaster}`;
 
-  // Function to close modal
-  function closeDeleteModal() {
-      document.getElementById('deleteModal').classList.add('hidden');
-  }
+        
+        document.getElementById('deleteModal').classList.remove('hidden');
+    }
 
-  // Handle form submission via AJAX
-  document.getElementById('deleteForm').addEventListener('submit', function (event) {
-      event.preventDefault();
+    document.getElementById('deleteForm').addEventListener('submit', function(event){
+        event.preventDefault();
 
-      const masterid = document.getElementById('masterid').value;
-      const formData = new FormData(this);
+        const masterid = document.getElementById('masterid').value;
+        const formData = new FormData(this);
 
-      fetch(`/master/${masterid}`, {
-          method: 'POST',
-          headers: {
-              'X-CSRF-TOKEN': '{{ csrf_token() }}',
-              'Accept': 'application/json',
-          },
-          body: formData
-      })
-      .then(response => {
-          if (response.ok) {
-              return response.json();
-          } else {
-              throw new Error('Failed to update record');
-          }
-      })
-      .then(data => {
-          alert('Master updated successfully');
-          location.reload(); // Refresh the page to reflect the changes
-      })
-      .catch(error => {
-          console.error('Error:', error);
-          alert('Failed to update the record');
-      });
-  });
+        fetch(`/master/destroy/${masterid}`, {
+            method: 'PUT', 
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json',
+            },
+            body: formData
+            
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Failed to update record');
+            }
+        })
+        .then(data => {
+            alert('Master deleted sucessfully');
+            location.reload(); 
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to delete this record');
+        });
+
+    })
+
+
 </script>
 @endsection
 
