@@ -28,33 +28,38 @@
         <div class="p-0 overflow-x-auto">
             <div class="flex flex-wrap justify-evenly gap-4 p-4 bg-white">
                 <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow">
-                    <div class="flex justify-between  pb-4 mb-4">
-                        @if (empty($employeeNIPP) || $employeeNIPP === 'N/A')
-                            <!-- Display message when the device is unassigned -->
-                            <tr>
-                                <th scope="row" class="text-center font-medium text-black whitespace-nowrap underline text">
-                                    This asset is unassigned to any employee.
-                                </th>
-                                <td>
-                                    <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">
-                                        Assign
-                                    </button>
-                                </td>
-                            </tr>
-                        @else
-                            <!-- Display employee details -->
-                            <tr>
-                                <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap underline">
-                                    {{$employeeNIPP}} {{$employeeName}} {{$employeePosition}} {{$employeeUnit}}
-                                </th>
-                                <td>
-                                    <!-- Buttons to assign and unassign the asset -->
-                                    <button class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700 ml-2">
-                                        Unassign
-                                    </button>
-                                </td>
-                            </tr>
-                        @endif
+                    <div class="p-5">
+                        <div class="flex justify-between items-center pb-4 mb-4">
+                            <!-- Left Aligned Heading -->
+                            @if (empty($employeeNIPP) || $employeeNIPP === 'N/A')
+                            <a href="#">
+                                <h4 class="text-2xl font-bold tracking-tight text-gray-900">
+                                    This asset is available and ready to be assigned
+                                </h4>
+                            </a>
+                            <!-- Right Aligned Buttons -->
+                            <div class="flex space-x-4">
+                                <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                    Assign
+                                </button>
+                            </div>
+                            @else
+                            <a href="#">
+                                <h4 class="text-2xl font-bold tracking-tight text-gray-900 flex flex-wrap">
+                                    <span class="mr-4">{{$employeeNIPP}}</span>
+                                    <span class="mr-4">{{$employeeName}}</span>
+                                    <span class="mr-4">{{$employeePosition}}</span>
+                                    <span>{{$employeeUnit}}</span>
+                                </h4>
+                            </a>    
+                            <!-- Right Aligned Buttons -->
+                            <div class="flex space-x-4">
+                                <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                    Assign
+                                </button>
+                            </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -240,7 +245,7 @@
                         </a>
                         <!-- Right Aligned Buttons -->
                         <div class="flex space-x-4">
-                            <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" onclick="">
+                            <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" onclick="window.location.href='{{ route('software.create') }}'">
                                 Add Software
                             </button>
                         </div>

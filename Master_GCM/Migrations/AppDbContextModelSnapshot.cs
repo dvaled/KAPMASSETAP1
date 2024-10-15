@@ -52,7 +52,7 @@ namespace Master_GCM.Migrations
                     b.HasIndex("ASSETCODE")
                         .IsUnique();
 
-                    b.ToTable("TRN_LOG", (string)null);
+                    b.ToTable("TRN_LOG");
                 });
 
             modelBuilder.Entity("MASTERMODEL", b =>
@@ -87,7 +87,7 @@ namespace Master_GCM.Migrations
 
                     b.HasKey("MASTERID");
 
-                    b.ToTable("MST_GCM", (string)null);
+                    b.ToTable("MST_GCM");
                 });
 
             modelBuilder.Entity("MSTEMPLOYEEMODEL", b =>
@@ -124,7 +124,7 @@ namespace Master_GCM.Migrations
 
                     b.HasKey("NIPP");
 
-                    b.ToTable("MST_EMPLOYEE", (string)null);
+                    b.ToTable("MST_EMPLOYEE");
                 });
 
             modelBuilder.Entity("TRNASSETHISTORYMODEL", b =>
@@ -176,7 +176,7 @@ namespace Master_GCM.Migrations
 
                     b.HasIndex("NIPP");
 
-                    b.ToTable("TRN_HIST_ASSET", (string)null);
+                    b.ToTable("TRN_HIST_ASSET");
                 });
 
             modelBuilder.Entity("TRNASSETMODEL", b =>
@@ -233,7 +233,7 @@ namespace Master_GCM.Migrations
 
                     b.HasIndex("NIPP");
 
-                    b.ToTable("TRN_ASSET", (string)null);
+                    b.ToTable("TRN_ASSET");
                 });
 
             modelBuilder.Entity("TRNASSETPICTUREMODEL", b =>
@@ -274,7 +274,7 @@ namespace Master_GCM.Migrations
                     b.HasIndex("ASSETCODE")
                         .IsUnique();
 
-                    b.ToTable("TRN_DTL_PICTURE", (string)null);
+                    b.ToTable("TRN_DTL_PICTURE");
                 });
 
             modelBuilder.Entity("TRNASSETSPECMODEL", b =>
@@ -400,7 +400,7 @@ namespace Master_GCM.Migrations
                     b.HasIndex("ASSETCODE")
                         .IsUnique();
 
-                    b.ToTable("TRN_DTL_SPEC", (string)null);
+                    b.ToTable("TRN_DTL_SPEC");
                 });
 
             modelBuilder.Entity("TRNMAINTENANCEMODEL", b =>
@@ -430,7 +430,7 @@ namespace Master_GCM.Migrations
                     b.HasIndex("ASSETCODE")
                         .IsUnique();
 
-                    b.ToTable("TRN_HIST_MAINTENANCE", (string)null);
+                    b.ToTable("TRN_HIST_MAINTENANCE");
                 });
 
             modelBuilder.Entity("TRNSOFTWAREMODEL", b =>
@@ -483,7 +483,7 @@ namespace Master_GCM.Migrations
                     b.HasIndex("ASSETCODE")
                         .IsUnique();
 
-                    b.ToTable("TRN_DTL_SOFTWARE", (string)null);
+                    b.ToTable("TRN_DTL_SOFTWARE");
                 });
 
             modelBuilder.Entity("USERMODEL", b =>
@@ -529,7 +529,7 @@ namespace Master_GCM.Migrations
 
                     b.HasKey("NIPP");
 
-                    b.ToTable("MST_USER", (string)null);
+                    b.ToTable("MST_USER");
                 });
 
             modelBuilder.Entity("LOGMODEL", b =>
