@@ -1,7 +1,65 @@
 @extends('layouts.app')
 
 @section('content')
+@foreach ($assetData as $assets)
+@php
+    // Asset Information
+    $assetbrand = isset($assets['assetbrand']) ? $assets['assetbrand'] : 'N/A';
+    $assetmodel = isset($assets['assetmodel']) ? $assets['assetmodel'] : 'N/A';
+    $assetseries = isset($assets['assetseries']) ? $assets['assetseries'] : 'N/A';
+    $assetbms = $assetbrand . ' ' . $assetmodel . ' ' . $assetseries;
+    $assettype = isset($assets['assettype']) ? $assets['assettype'] : 'N/A';
+    $assetcategory = isset($assets['assetcategory']) ? $assets['assetcategory'] : 'N/A';
+    $assetcode = isset($assets['assetcode']) ? $assets['assetcode'] : 'N/A';
+    $assetserialnumber = isset($assets['assetserialnumber']) ? $assets['assetserialnumber'] : 'N/A';
+    // Employee Information
+    $employeeNIPP = isset($assets['employee']['nipp']) ? $assets['employee']['nipp'] : 'N/A';
+    $employeeName = isset($assets['employee']['name']) ? $assets['employee']['name'] : 'N/A';
+    $employeePosition = isset($assets['employee']['position']) ? $assets['employee']['position'] : 'N/A';
+    $employeeUnit = isset($assets['employee']['unit']) ? $assets['employee']['unit'] : 'N/A';
+    $employeeDepartment = isset($assets['employee']['department']) ? $assets['employee']['department'] : 'N/A';
+    $employeeDirectorate = isset($assets['employee']['directorate']) ? $assets['employee']['directorate'] : 'N/A';
+    $employeeActive = isset($assets['employee']['active']) ? $assets['employee']['active'] : 'N/A';
+@endphp
+@endforeach
+
 <div class="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-lg bg-clip-border">
+    <div class="flex-auto px-0 pt-0 pb-2">
+        <div class="p-0 overflow-x-auto">
+            <div class="flex flex-wrap justify-evenly gap-4 p-4 bg-white">
+                <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow">
+                    <div class="flex justify-between  pb-4 mb-4">
+                        @if (empty($employeeNIPP) || $employeeNIPP === 'N/A')
+                            <!-- Display message when the device is unassigned -->
+                            <tr>
+                                <th scope="row" class="text-center font-medium text-black whitespace-nowrap underline text">
+                                    This asset is unassigned to any employee.
+                                </th>
+                                <td>
+                                    <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">
+                                        Assign
+                                    </button>
+                                </td>
+                            </tr>
+                        @else
+                            <!-- Display employee details -->
+                            <tr>
+                                <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap underline">
+                                    {{$employeeNIPP}} {{$employeeName}} {{$employeePosition}} {{$employeeUnit}}
+                                </th>
+                                <td>
+                                    <!-- Buttons to assign and unassign the asset -->
+                                    <button class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700 ml-2">
+                                        Unassign
+                                    </button>
+                                </td>
+                            </tr>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
     <div class="flex-auto px-0 pt-0 pb-2">
         <div class="p-0 overflow-x-auto">
             <div class="flex flex-wrap justify-evenly gap-4 p-4 rounded-lg bg-white">
@@ -29,18 +87,6 @@
                             </div>
                         </div>
                         <div class="relative overflow-x-auto">
-                            @foreach ($assetData as $assets)
-                            @php
-                                $assetbrand = isset($assets['assetbrand']) ? $assets['assetbrand'] : 'N/A';
-                                $assetmodel = isset($assets['assetmodel']) ? $assets['assetmodel'] : 'N/A';
-                                $assetseries = isset($assets['assetseries']) ? $assets['assetseries'] : 'N/A';
-                                $assetbms = $assetbrand . ' ' . $assetmodel . ' ' . $assetseries;
-                                $assettype = isset($assets['assettype']) ? $assets['assettype'] : 'N/A';
-                                $assetcategory = isset($assets['assetcategory']) ? $assets['assetcategory'] : 'N/A';
-                                $assetcode = isset($assets['assetcode']) ? $assets['assetcode'] : 'N/A';
-                                $assetserialnumber = isset($assets['assetserialnumber']) ? $assets['assetserialnumber'] : 'N/A';
-                            @endphp
-                            @endforeach
                             @foreach ($assetSpecData as $assetspecs)
                             @php
                                 $processorbrand = isset($assetspecs['processorbrand']) ? $assetspecs['processorbrand'] : 'N/A';
@@ -58,12 +104,20 @@
                                 $storagemodel = isset($assetspecs['storagemodel']) ? $assetspecs['storagemodel'] : 'N/A';
                                 $storagecapacity = isset($assetspecs['storagecapacity']) ? $assetspecs['storagecapacity'] : 'N/A';
                                 $storage = $storagetype . ' ' . $storagebrand . ' ' . $storagemodel . ' ' . $storagecapacity . ' GB';
-                                $graphicsbrand = isset($assetspecs['graphicsbrand']) ? $assetspecs['graphicsbrand'] : 'N/A';
-                                $graphicsmodel = isset($assetspecs['graphicsmodel']) ? $assetspecs['graphicsmodel'] : 'N/A';
-                                $graphicsseries = isset($assetspecs['graphicsseries']) ? $assetspecs['graphicsseries'] : 'N/A';
-                                $graphicscapacity = isset($assetspecs['graphicscapacity']) ? $assetspecs['graphicscapacity'] : 'N/A';
-                                $graphics = $graphicsbrand . ' ' . $graphicsmodel . ' ' . $graphicsseries . ' ' . $graphicscapacity . ' GB';
-                                $graphicstype = isset($assetspecs['graphicstype']) ? $assetspecs['graphicstype'] : 'N/A';
+                                $graphicsbrand1 = isset($assetspecs['graphicsbranD1']) ? $assetspecs['graphicsbranD1'] : 'N/A';
+                                $graphicsmodel1 = isset($assetspecs['graphicsmodeL1']) ? $assetspecs['graphicsmodeL1'] : 'N/A';
+                                $graphicsseries1 = isset($assetspecs['graphicsserieS1']) ? $assetspecs['graphicsserieS1'] : 'N/A';
+                                $graphicscapacity1 = isset($assetspecs['graphicscapacitY1']) ? $assetspecs['graphicscapacitY1'] : 'N/A';
+                                $graphics1 = $graphicsbrand1 . ' ' . $graphicsmodel1 . ' ' . $graphicsseries1 . ' ' . $graphicscapacity1 . ' GB';
+                                $graphicstype1 = isset($assetspecs['graphicstypE1']) ? $assetspecs['graphicstypE1'] : 'N/A';
+
+                                $graphicsbrand2 = isset($assetspecs['graphicsbranD2']) ? $assetspecs['graphicsbranD2'] : 'N/A';
+                                $graphicsmodel2 = isset($assetspecs['graphicsmodeL2']) ? $assetspecs['graphicsmodeL2'] : 'N/A';
+                                $graphicsseries2 = isset($assetspecs['graphicsserieS2']) ? $assetspecs['graphicsserieS2'] : 'N/A';
+                                $graphicscapacity2 = isset($assetspecs['graphicscapacitY2']) ? $assetspecs['graphicscapacitY2'] : 'N/A';
+                                $graphics2 = $graphicsbrand2 . ' ' . $graphicsmodel2 . ' ' . $graphicsseries2 . ' ' . $graphicscapacity2 . ' GB';
+                                $graphicstype2 = isset($assetspecs['graphicstypE2']) ? $assetspecs['graphicstypE2'] : 'N/A';
+
                                 $screenresolution = isset($assetspecs['screenresolution']) ? $assetspecs['screenresolution'] : 'N/A';
                                 $touchscreen = isset($assetspecs['touchscreen']) ? $assetspecs['touchscreen'] : 'N/A';
                                 $backlightkeyboard = isset($assetspecs['backlightkeyboard']) ? $assetspecs['backlightkeyboard'] : 'N/A';
@@ -113,48 +167,56 @@
                                         <td class="px-6 py-4">: {{$storage}}</td>
                                     </tr>
                                     <tr class="bg-white">
-                                        <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">Graphics Card Type</th>
-                                        <td class="px-6 py-4">: {{$graphicstype}}</td>
+                                        <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">First Graphics Card Type</th>
+                                        <td class="px-6 py-4">: {{$graphicstype1}}</td>
                                     </tr>
                                     <tr class="bg-white">
-                                        <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">Graphics Card</th>
-                                        <td class="px-6 py-4">: {{$graphics}}</td>
+                                        <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">First Graphics Card</th>
+                                        <td class="px-6 py-4">: {{$graphics1}}</td>
+                                    </tr>
+                                    <tr class="bg-white">
+                                        <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">Second Graphics Card Type</th>
+                                        <td class="px-6 py-4">: {{$graphicstype2}}</td>
+                                    </tr>
+                                    <tr class="bg-white">
+                                        <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">Second Graphics Card</th>
+                                        <td class="px-6 py-4">: {{$graphics2}}</td>
                                     </tr>
                                     <tr class="bg-white">
                                         <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">Screen Resolution</th>
-                                        <td class="px-6 py-4">{{$screenresolution}}</td>
+                                        <td class="px-6 py-4">: {{$screenresolution}}</td>
                                     </tr>
                                     <tr class="bg-white">
                                         <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">Touchscreen</th>
-                                        <td class="px-6 py-4">@if($touchscreen == 'true') yes @else no @endif</td>
+                                        <td class="px-6 py-4">: @if($touchscreen == 'true') yes @else no @endif</td>
                                     </tr>
                                     <tr class="bg-white">
                                         <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">Backlight Keyboard</th>
-                                        <td class="px-6 py-4">@if($backlightkeyboard == 'true') yes @else no @endif</td>
+                                        <td class="px-6 py-4">: @if($backlightkeyboard == 'true') yes @else no @endif</td>
                                     </tr>
                                     <tr class="bg-white">
                                         <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">Convertible</th>
-                                        <td class="px-6 py-4">@if($convertible == 'true') yes @else no @endif</td>
+                                        <td class="px-6 py-4">: @if($convertible == 'true') yes @else no @endif</td>
                                     </tr>
                                     <tr class="bg-white">
                                         <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">Web Camera</th>
-                                        <td class="px-6 py-4">@if($webcamera == 'true') yes @else no @endif</td>
+                                        <td class="px-6 py-4">: @if($webcamera == 'true') yes @else no @endif</td>
                                     </tr>
                                     <tr class="bg-white">
                                         <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">Speaker</th>
-                                        <td class="px-6 py-4">@if($speaker == 'true') yes @else no @endif</td>
+                                        <td class="px-6 py-4">: @if($speaker == 'true') yes @else no @endif</td>
                                     </tr>
                                     <tr class="bg-white">
                                         <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">Microphone</th>
-                                        <td class="px-6 py-4">@if($microphone == 'true') yes @else no @endif</td>
+                                        <td class="px-6 py-4">: @if($microphone == 'true') yes @else no @endif</td>
                                     </tr>
                                     <tr class="bg-white">
                                         <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">Wifi</th>
-                                        <td class="px-6 py-4">@if($wifi == 'true') yes @else no @endif</td>
+                                        <td class="px-6 py-4">: @if($wifi == 'true') yes @else no @endif</td>
                                     </tr>
                                     <tr class="bg-white">
                                         <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">Bluetooth</th>
-                                        <td class="px-6 py-4">@if($bluetooth == 'true') yes @else no @endif</td>
+                                        <td class="px-6 py-4">: @if($bluetooth == 'true') yes @else no @endif</td>
                                     </tr>
                                     <!-- Add more rows as necessary -->
                                 </tbody>
@@ -185,22 +247,44 @@
                     </div>
                     <!-- Dynamic Table-like Section with Headers as Rows -->
                         <div class="relative overflow-x-auto">
+                            @foreach ($detailSoftwareData as $software)
                             <table class="p-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
                                 <thead class="align-bottom">
                                     <tr>
-                                    <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">ID</th>
-                                    <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Type</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">ID</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Type</th>
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Category</th>
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Name</th>
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">License</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Active</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">PIC Added</th>
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Date Added</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Date Updated</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Asset Code</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Active</th>
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Action</th>
                                 </thead>
+                                <tbody>
+                                    <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <p class="text-center mb-0 font-semibold leading-tight text-xs">{{ $software['idassetsoftware'] }}</p> <!-- Display Condition -->
+                                    </td>
+                                    <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $software['softwaretype'] }}</p> <!-- Display Condition -->
+                                    </td>
+                                    <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $software['softwarecategory'] }}</p> <!-- Display Condition -->
+                                    </td>
+                                    <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $software['softwarename'] }}</p> <!-- Display Condition -->
+                                    </td>
+                                    <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $software['softwarelicense'] }}</p> <!-- Display Condition -->
+                                    </td>
+                                    <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $software['dateadded'] }}</p> <!-- Display Condition -->
+                                    </td>
+                                    <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $software['active'] }}</p> <!-- Display Condition -->
+                                    </td>
+                                </tbody>
                             </table>
+                            @endforeach
                         </div>    
                     </div>
                 </div>
@@ -304,16 +388,27 @@
                                 <tr>
                                     <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Maintenance ID</th>
                                     <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">PIC Added</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Notes</th>
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Date Added</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Asset Code</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Notes</th>
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $history['maintenanceid'] }}</p> <!-- Display Condition --></td>
+                                        <p class="text-center mb-0 font-semibold leading-tight text-xs">{{ $history['maintenanceid'] }}</p> <!-- Display Condition -->
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <p class="text-center mb-0 font-semibold leading-tight text-xs">{{ $history['picadded'] }}</p> <!-- Display Condition -->
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <p class="text-center mb-0 font-semibold leading-tight text-xs">{{ $history['dateadded'] }}</p> <!-- Display Condition -->
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <p class="text-center mb-0 font-semibold leading-tight text-xs">{{ $history['notes'] }}</p> <!-- Display Condition -->
+                                    </td>
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <button class="bg-blue-500 text-white px-4 py-2 rounded items-center">Detail</button>
                                 </tr>
                             </tbody>
                         </table>

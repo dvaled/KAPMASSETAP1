@@ -75,11 +75,16 @@ class TRNAssetController extends Controller
         $contentHistoryMaintenance = $resposeHistoryMaintenance->getBody()->getContents();
         $historyMaintenanceData = json_decode($contentHistoryMaintenance, true);
 
+        $responseDetailSoftware = $client->request('GET', "http://localhost:5252/api/TrnSoftware/{$assetcode}");
+        $contentDetailSoftware = $responseDetailSoftware->getBody()->getContents();
+        $detailSoftwareData = json_decode($contentDetailSoftware, true);
+
         // Pass both assetData and assetSpecData to the view
         return view('detailAsset.Laptop', [
             'assetData' => $assetData,
             'assetSpecData' => $assetSpecData,
-            'historyMaintenanceData' => $historyMaintenanceData
+            'historyMaintenanceData' => $historyMaintenanceData,
+            'detailSoftwareData' => $detailSoftwareData
         ]);
     }
     

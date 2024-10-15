@@ -46,7 +46,7 @@ Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('maint
 
 
 
-//Route::view('/detailAssetL', 'detailAsset.laptop');
+Route::get('/detailAssetL/{assetcode}', [TrnAssetController::class, 'show'])->name('detailAsset.laptop'); //return view with all of the data.
 // Route::view('/detailAssetM', 'detailAsset.mobile');
 // Route::view('/detailAssetP', 'detailAsset.others');
 
