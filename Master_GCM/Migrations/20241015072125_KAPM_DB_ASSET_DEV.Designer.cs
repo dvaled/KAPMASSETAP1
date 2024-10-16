@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Master_GCM.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241014024205_KAPM_DB_ASSET_DEV")]
+    [Migration("20241015072125_KAPM_DB_ASSET_DEV")]
     partial class KAPM_DB_ASSET_DEV
     {
         /// <inheritdoc />

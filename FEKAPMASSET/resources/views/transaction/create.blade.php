@@ -6,19 +6,17 @@
         <strong>Whoops!</strong> There were some problems with your input.<br><br>
         <ul>
             @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>  
+                <li>{{ $error }}</li>
             @endforeach
         </ul>
-    </div>  
-@endif
+    </div>
+@endif  
 
 <div id="createAsset" class="inset-0 bg-white flex justify-center items-center p-4">
     <div class="bg-white p-6 rounded-md w-96">
         <h2 class="text-xl font-bold mb-4">Add new asset here</h2>
-
         <form id="editForm" action="{{ route('Transaction.store') }}" method="POST">
             @csrf <!-- CSRF protection -->
-            
             <div class="mb-4">
                 <label for="assetbrand" class="block text-sm font-semibold"> Brand Name </label>
                 <select id="assetbrand" name="assetbrand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">

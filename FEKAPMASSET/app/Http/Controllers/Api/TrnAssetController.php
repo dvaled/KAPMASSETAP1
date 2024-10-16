@@ -52,7 +52,7 @@ class TRNAssetController extends Controller
         $body = $response->getBody();
         $content = $body->getContents();
         $data = json_decode($content, true);
-    
+
         // Pass the masterData to the view so that the sidebar can consume it
         return view('Transaction.create', ['sidebarData' => $data]);
     }
@@ -109,7 +109,6 @@ class TRNAssetController extends Controller
             'detailSoftwareData' => $detailSoftwareData
         ]);
     }
-    
     public function index($assetcode) {
         $client = new Client();
         $response = $client->request('GET', 'http://localhost:5252/api/Master');
@@ -192,14 +191,16 @@ class TRNAssetController extends Controller
         'ASSETCODE' => 'required|string', // Assuming you are assigning an asset based on its code
     ]);
 
-    // Prepare data to send to the API
+    // Prepare data to send to the API 
     $data = [
         'NIPP' => $validatedData['NIPP'],
         'ASSETCODE' => $validatedData['ASSETCODE'], // Include asset code in the request
     ];
 
     // Send POST request to the external API to assign the asset to an employee
-    $response = Http::post('http://localhost:5252/api/AssignAsset', $data);
+    $response = Http::post('http://localhost:5252/api/AssignAsset', $data); 
+
+
 
     // Check if the API request was successful
     if ($response->successful()) {

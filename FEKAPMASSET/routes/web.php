@@ -51,12 +51,12 @@ Route::prefix('Log')->name('Log.')->group(function(){
 
 
 Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('maintenance.index');
-
-
-
-
-
 Route::get('/detailAssetL/{assetcode}', [TrnAssetController::class, 'show'])->name('detailAsset.laptop'); //return view with all of the data.
+
+Route::get('/software/create', [SoftwareController::class, 'store'])->name('software.create');
+
+
+
 // Route::view('/detailAssetM', 'detailAsset.mobile');
 // Route::view('/detailAssetP', 'detailAsset.others');
 
