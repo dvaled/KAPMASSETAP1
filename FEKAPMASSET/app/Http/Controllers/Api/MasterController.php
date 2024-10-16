@@ -24,6 +24,22 @@ class MasterController extends Controller
         return view('master.index', ['masterData' => $data]); // Keep the view name consistent
     }
 
+    public function show($condition){
+        // Create a new HTTP client instance
+        $client = new Client();
+
+        // First API call to fetch asset data (TrnAsset)
+        $responseMaster = $client->request('GET', "http://localhost:5252/api/Master/{$condition}");
+        $contentMaster = $responseMaster->getBody()->getContents();
+        $mastersData = json_decode($contentMaster, true);
+
+
+        // Pass both assetData and assetSpecData to the view
+        return view('master.index', [
+            'masterData' => $mastersData,
+        ]);
+    }
+
     public function sidebar(){
         $client = new Client();
         $response = $client->request('GET', 'http://localhost:5252/api/Master');

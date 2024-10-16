@@ -80,11 +80,13 @@
                         @if($innerMasters['condition'] == 'FIELD_VALUE' && $innerMasters['typegcm'] == $description)
                         @php
                             // Assign the description value
-                            $href = $innerMasters['description'];
+                            $href = url('master/' . $innerMasters['description']);
                         @endphp
                         <li>
                           <div class="p-3 leading-tight text-sm opacity-80">
-                            <span class="text-sm ml-2"><a href="master/{{$href}}">{{ $innerMasters['description'] }}</a></span>
+                            <span class="text-sm ml-2">
+                                <a href="{{$href}}">{{ $innerMasters['description'] }}</a>
+                            </span>
                           </div>
                         </li>
                         @endif

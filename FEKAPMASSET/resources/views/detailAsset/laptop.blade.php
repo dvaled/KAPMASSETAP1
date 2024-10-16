@@ -254,10 +254,8 @@
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">ID</th>
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Type</th>
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Category</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Name</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">License</th>
+                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Description</th>
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Date Added</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Active</th>
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Action</th>
                                 </thead>
                                 <tbody>
@@ -271,16 +269,10 @@
                                         <p class="mb-0 font-semibold leading-tight text-xs">{{ $software['softwarecategory'] }}</p> <!-- Display Condition -->
                                     </td>
                                     <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $software['softwarename'] }}</p> <!-- Display Condition -->
-                                    </td>
-                                    <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $software['softwarelicense'] }}</p> <!-- Display Condition -->
+                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $software['softwarename'] }} - {{ $software['softwarelicense'] }}</p> <!-- Display Condition -->
                                     </td>
                                     <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                         <p class="mb-0 font-semibold leading-tight text-xs">{{ $software['dateadded'] }}</p> <!-- Display Condition -->
-                                    </td>
-                                    <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $software['active'] }}</p> <!-- Display Condition -->
                                     </td>
                                 </tbody>
                             </table>
