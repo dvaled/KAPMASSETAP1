@@ -66,35 +66,36 @@ class MasterController extends Controller
     }
 
     public function store(Request $request)
-{
-    // Validate the incoming request data
-    $validated = $request->validate([
-        'condition' => 'required|string|max:255',
-        'nosr' => 'required|numeric|max:255',
-        'description' => 'required|string',
-        'valuegcm' => 'required|numeric',
-        'typegcm' => 'nullable|string|max:255', // Use 'nullable' if this field can be optional
-        'active' => 'required|string',
-    ]);
-
-    $client = new Client();
-
-    try {
-        $response = $client->post('http://localhost:5252/api/master', [
-            'json' => $validated,  // Use the validated data
+    {
+        // Validate the incoming request data
+        $validated = $request->validate([
+            'condition' => 'required|string|max:255',
+            'nosr' => 'required|numeric',
+            'description' => 'required|string',
+            'valuegcm' => 'required|numeric',
+            'typegcm' => 'nullable|string|max:255', // Use 'nullable' if this field can be optional
+            'active' => 'required|string',
+            'sbarcondition' => 'required|string|max:255',
         ]);
-    
-        $data = json_decode($response->getBody()->getContents(), true);
-        Log::info('API Response:', $data);  // Log the API response for inspection
-    
-        return redirect('/master')->with('success', 'Data submitted successfully!');
-    } catch (\GuzzleHttp\Exception\RequestException $e) {
-        $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;
-        Log::error('API Error: ' . $e->getMessage() . ' - Response Body: ' . $responseBody);
-    
-        return redirect('/master/create')->withErrors(['error' => 'An error occurred while submitting the data.']);
-    }    
-}
+
+        $client = new Client();
+
+        try {
+            $response = $client->post('http://localhost:5252/api/master', [
+                'json' => $validated,  // Use the validated data
+            ]);
+        
+            $data = json_decode($response->getBody()->getContents(), true);
+            Log::info('API Response:', $data);  // Log the API response for inspection
+        
+            return redirect('/master')->with('success', 'Data submitted successfully!');
+        } catch (\GuzzleHttp\Exception\RequestException $e) {
+            $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;
+            Log::error('API Error: ' . $e->getMessage() . ' - Response Body: ' . $responseBody);
+        
+            return redirect('/master/create')->withErrors(['error' => 'An error occurred while submitting the data.']);
+        }    
+    }
 
     // Edit method to show the form for editing the record
     public function edit($id) {

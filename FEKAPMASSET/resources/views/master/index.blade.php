@@ -30,7 +30,7 @@
             @foreach ($masterData as $masters)
             <tr>
                 <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                    <p class="mb-0 font-semibold leading-tight text-xs">{{ $masters['masterid'] }}</p> <!-- Display Condition -->
+                    <p class="mb-0 font-semibold leading-tight text-xs">{{ $masters['nosr'] }}</p> <!-- Display Condition -->
                 </td>
                 <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                     <p class="mb-0 font-semibold leading-tight text-xs">{{ $masters['condition'] }}</p> <!-- Display Condition -->
