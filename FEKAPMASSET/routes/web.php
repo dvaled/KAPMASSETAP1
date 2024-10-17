@@ -52,7 +52,13 @@ Route::prefix('Log')->name('Log.')->group(function(){
 Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('maintenance.index');
 Route::get('/detailAssetL/{assetcode}', [TrnAssetController::class, 'show'])->name('detailAsset.laptop'); //return view with all of the data.
 
-Route::get('/software/create', [SoftwareController::class, 'store'])->name('software.create');
+
+Route::prefix('Software')->name('Software.')->group(function(){
+    Route::get('/', [SoftwareController::class, 'index'])->name('index');
+    Route::get('/store', [SoftwareController::class, 'create'])->name('create');
+
+});
+
 
 
 

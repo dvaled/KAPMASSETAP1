@@ -59,6 +59,4 @@ class SoftwareController extends Controller
             return redirect()->back()->withErrors("error", "Failed to send data");
         }
     }
-
-    
 }
