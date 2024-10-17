@@ -44,9 +44,9 @@ public class AppDbContext : DbContext
             .HasPrincipalKey<TRNASSETMODEL>(a => a.ASSETCODE); // Link to the alternate key
         modelBuilder.Entity<TRNMAINTENANCEMODEL>()
             .HasOne(h => h.TRNASSET) // Navigation property
-            .WithOne()
-            .HasForeignKey<TRNMAINTENANCEMODEL>(h => h.ASSETCODE) // Foreign key relationship
-            .HasPrincipalKey<TRNASSETMODEL>(a => a.ASSETCODE); // Link to the alternate key
+            .WithMany()
+            .HasForeignKey(h => h.ASSETCODE) // Foreign key relationship
+            .HasPrincipalKey(a => a.ASSETCODE); // Link to the alternate key
         modelBuilder.Entity<TRNASSETPICTUREMODEL>()
             .HasOne(h => h.TRNASSET) // Navigation property
             .WithOne()
