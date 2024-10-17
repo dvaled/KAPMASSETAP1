@@ -17,10 +17,10 @@ public class MasterController : ControllerBase
     return await _context.MST_GCM.ToListAsync();
     }
 
-    [HttpGet("{SBARCONDITION}")]
-    public async Task<ActionResult<List<MASTERMODEL>>> GetMasterByCondition(string SBARCONDITION){
+    [HttpGet("{CONDITION}")]
+    public async Task<ActionResult<List<MASTERMODEL>>> GetMasterByCondition(string CONDITION){
         var mstsbarcondition = await _context.MST_GCM
-            .Where(e =>  e.SBARCONDITION == SBARCONDITION) // Adjust condition based on your model
+            .Where(e =>  e.CONDITION == CONDITION) // Adjust condition based on your model
             .ToListAsync(); // Retrieve a list
         if (mstsbarcondition == null){
             return NotFound();

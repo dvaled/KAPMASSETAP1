@@ -30,7 +30,7 @@ public class TrnHistMaintenanceController : ControllerBase{
 
     // Post value to db
     [HttpPost]
-    public async Task<ActionResult<List<TRNMAINTENANCEMODEL>>> PostMaintenance(TRNMAINTENANCEMODEL maintenance){
+    public async Task<ActionResult<TRNMAINTENANCEMODEL>> PostMaintenance(TRNMAINTENANCEMODEL maintenance){
 
         // Check if value exists
         if (await _context.TRN_HIST_MAINTENANCE.AnyAsync(e => e.MAINTENANCEID == maintenance.MAINTENANCEID)){

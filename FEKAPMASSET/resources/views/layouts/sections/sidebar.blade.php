@@ -58,7 +58,7 @@
                   </ul> --}}
                 <ul>
                     @foreach ($masterData as $masters)
-                        @if($masters['sbarcondition'] == 'FIELD')
+                        @if($masters['condition'] == 'FIELD')
                         @php
                             // Assign the description value
                             $description = $masters['description'];

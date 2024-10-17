@@ -35,11 +35,11 @@ Route::prefix('master')->name('master.')->group(function() {
 });
 
 //Transaction
-Route::prefix('Transaction')->name('Transaction.')->group(function(){
+Route::prefix('transaction')->name('transaction.')->group(function(){
     Route::get('/asset', [TrnAssetController::class, 'index'])->name('view'); //return view with all of the data.
     Route::get('/detailAssetL/{assetcode}', [TrnAssetController::class, 'index'])-> name('detailAsset.laptop');
     Route::get('/asset/create', [TrnAssetController::class, 'newAssetView'])-> name('create'); //View 
-    Route::get('/asset/assign', [TrnAssetController::class, 'AssignView'])-> name('transaction.assign'); //Retrieve transaction.assing view along with all the data
+    Route::get('/asset/assign', [TrnAssetController::class, 'AssignView'])-> name('assign'); //Retrieve transaction.assing view along with all the data
     Route::Post('/asset/create/store', [TrnAssetController::class, 'store'])-> name('store');
 });
 
@@ -48,13 +48,17 @@ Route::prefix('Log')->name('Log.')->group(function(){
     Route::get('/', [LogController::class, 'index'])->name('index');
 });
 
+//Maintenance
+Route::prefix('maintenance')->name('maintenance.')->group(function(){
+    Route::get('/', [MaintenanceController::class, 'index'])->name('index');
+    Route::get('/create', [MaintenanceController::class, 'sidebar'])->name('create');
+    Route::post('/store', [MaintenanceController::class, 'store'])->name('store');
+});
 
-
-Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('maintenance.index');
 Route::get('/detailAssetL/{assetcode}', [TrnAssetController::class, 'show'])->name('detailAsset.laptop'); //return view with all of the data.
 
 
-Route::prefix('Software')->name('Software.')->group(function(){
+Route::prefix('software')->name('software.')->group(function(){
     Route::get('/', [SoftwareController::class, 'index'])->name('index');
     Route::get('/store', [SoftwareController::class, 'create'])->name('create');
 
@@ -63,7 +67,7 @@ Route::prefix('Software')->name('Software.')->group(function(){
 
 
 
-// Route::view('/detailAssetM', 'detailAsset.mobile');
+// Route::view('/detailAssetM', 'detailAsset    .mobile');
 // Route::view('/detailAssetP', 'detailAsset.others');
 
 //Hardware 

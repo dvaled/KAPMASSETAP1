@@ -2,9 +2,14 @@
 
 @section('content')
 <div class="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border">
-    <div class="p-6 pb-0 mb-0 bg-white rounded-t-2xl">
-      <h6>Asset under maintenance</h6>
-    </div>
+    <div class="p-6 pb-0 mb-2 bg-white rounded-t-2xl">
+        <h6>Maintenance List</h6>
+      </div>
+      <div class="p-6 pb-0 mb-2 bg-white rounded-t-2xl">
+          <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" onclick="window.location.href='{{ route('maintenance.create') }}'">
+              Add new
+          </button>
+      </div> 
     <div class="flex-auto px-0 pt-0 pb-2 space-x-5">
       <div class="p-4 overflow-x-auto">
         <table class="-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
@@ -109,7 +114,6 @@
         <div id="editModal" class="modal hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
             <div class="bg-white p-6 rounded-md w-96">
                 <h2 class="text-xl font-bold mb-4">Edit Maintenance</h2>
-  
                 <form id="editForm">
                     @csrf
                     @method('PUT') <!-- Use PUT method for updates -->
@@ -131,11 +135,11 @@
                     </div>
                     <div class="mb-4">
                       <label for="dateadded" class="block text-sm font-semibold"> Date Added </label>
-                      <input type="text" id="dateadded" name="dateadded" class="w-full p-2 border rounded" required>
+                      <input type="date" id="dateadded" name="dateadded" class="w-full p-2 border rounded" required>
                   </div>
                   <div class="mb-4">
                       <label for="assetcode" class="block text-sm font-semibold"> Asset Code </label>
-                      <input type="text" id="assetcode" name="assetcode" class="w-full p-2 border rounded" required>
+                      <input type="text" id="assetcode" name="assetcode" class="w-full p-2 border rounded" required readonly>
                   </div>                  
                     <!-- Add more fields as necessary -->
   
