@@ -17,16 +17,16 @@ public class MasterController : ControllerBase
     return await _context.MST_GCM.ToListAsync();
     }
 
-    [HttpGet("{CONDITION}")]
-    public async Task<ActionResult<List<MASTERMODEL>>> GetMasterByCondition(string CONDITION){
-        var mstcondition = await _context.MST_GCM
-            .Where(e =>  e.CONDITION == CONDITION) // Adjust condition based on your model
+    [HttpGet("{SBARCONDITION}")]
+    public async Task<ActionResult<List<MASTERMODEL>>> GetMasterByCondition(string SBARCONDITION){
+        var mstsbarcondition = await _context.MST_GCM
+            .Where(e =>  e.SBARCONDITION == SBARCONDITION) // Adjust condition based on your model
             .ToListAsync(); // Retrieve a list
-        if (mstcondition == null){
+        if (mstsbarcondition == null){
             return NotFound();
         }
 
-        return mstcondition;
+        return Ok(mstsbarcondition);
     }
 
 //Post master value to db

@@ -7,6 +7,7 @@ public class TRNSOFTWAREMODEL{
     public required string SOFTWARECATEGORY { get; set; }
     public required string SOFTWARENAME { get; set; }
     public required string SOFTWARELICENSE { get; set; }
+    public required string SOFTWAREPERIOD { get; set; }
     public required string ACTIVE { get; set; }
     public required string PICADDED { get; set; }
     public DateOnly DATEADDED { get; set; }
