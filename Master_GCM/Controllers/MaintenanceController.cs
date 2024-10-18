@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-
-
 [Route("api/[controller]")]
 public class TrnHistMaintenanceController : ControllerBase{
     private readonly AppDbContext _context;
@@ -28,16 +26,31 @@ public class TrnHistMaintenanceController : ControllerBase{
         return Ok(trngetmaintenancebyac);
     }
 
-    // Post value to db
-    [HttpPost]
-    public async Task<ActionResult<TRNMAINTENANCEMODEL>> PostMaintenance(TRNMAINTENANCEMODEL maintenance){
+    [HttpPost("{ASSETCODE}")]
+    public async Task<ActionResult<TRNMAINTENANCEMODEL>> PostMaintenance(string ASSETCODE, [FromBody] TRNMAINTENANCEMODEL maintenance)
+    {
+        // Check if the asset code exists
+        var asset = await _context.TRN_ASSET.FirstOrDefaultAsync(a => a.ASSETCODE == ASSETCODE);
+        if (asset == null)
+        {
+            return NotFound("Asset not found");
+        }
 
-        // Check if value exists
-        if (await _context.TRN_HIST_MAINTENANCE.AnyAsync(e => e.MAINTENANCEID == maintenance.MAINTENANCEID)){
+        // Assign the asset code to the maintenance record
+        maintenance.ASSETCODE = ASSETCODE;
+
+        // Check if the maintenance ID already exists
+        if (await _context.TRN_HIST_MAINTENANCE.AnyAsync(e => e.MAINTENANCEID == maintenance.MAINTENANCEID))
+        {
             return Conflict("This Device is already in maintenance");
         }
+        
+        // Add value to db
         _context.TRN_HIST_MAINTENANCE.Add(maintenance);
         await _context.SaveChangesAsync();
-        return CreatedAtAction("Now is under Maintenance", new { id = maintenance.MAINTENANCEID }, maintenance); 
+
+        // Return response
+        return CreatedAtAction(nameof(GetMaintenanceDataByAssetCode), new { id = maintenance.MAINTENANCEID }, maintenance); 
     }
+
 }

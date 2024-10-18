@@ -28,7 +28,7 @@
                     @foreach ($asset as $assets)
                         <option value="{{ $assets['assetcode'] }}">{{ $assets['assetcode'] }}</option>
                     @endforeach
-                </select>
+                </select>  
             </div>
 
             <div class="mb-4">  

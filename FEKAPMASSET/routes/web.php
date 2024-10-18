@@ -52,7 +52,7 @@ Route::prefix('Log')->name('Log.')->group(function(){
 Route::prefix('maintenance')->name('maintenance.')->group(function(){
     Route::get('/', [MaintenanceController::class, 'index'])->name('index');
     Route::get('/create', [MaintenanceController::class, 'sidebar'])->name('create');
-    Route::post('/store', [MaintenanceController::class, 'store'])->name('store');
+    Route::post('/store/{assetcode}', [MaintenanceController::class, 'store'])->name('store');
 });
 
 Route::get('/detailAssetL/{assetcode}', [TrnAssetController::class, 'show'])->name('detailAsset.laptop'); //return view with all of the data.

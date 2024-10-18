@@ -54,7 +54,6 @@ class MaintenanceController extends Controller
         $asset = json_decode($contentMaster, true);
 
     
-
         // Pass both assetData and assetSpecData to the view
         return view('maintenance.create', [
             // 'assetData' => $assetData,
@@ -77,8 +76,7 @@ class MaintenanceController extends Controller
     // }
 
     // Store a new maintenance record
-    public function store(Request $request)
-    {
+    public function store(Request $request, $assetcode){
         $validatedData = $request->validate([
             "assetcode"=> 'required',
             "picadded"=> 'required',
@@ -89,12 +87,9 @@ class MaintenanceController extends Controller
         $client = new Client();
 
         try {
-            $response = $client->post("http://localhost:5252/api/TrnHistMaintenance", [
+            $response = $client->post("http://localhost:5252/api/TrnHistMaintenance/{assetcode}", [
                 'json' => [
-                    'ASSETCODE' => 'some-assetcode',
-                    'PICADDED' => 'John Doe',  // Test with a valid hardcoded value
-                    'NOTES' => 'Test notes',
-                    'DATEADDED' => '2024-10-16',
+                  $validatedData
                 ],
             ]);
 
