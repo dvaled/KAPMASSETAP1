@@ -33,7 +33,7 @@ class TRNAssetController extends Controller
         $contentEmployee = $responseEmployee->getBody()->getContents();
         $employeeData = json_decode($contentEmployee, true);
 
-    
+
 
         // Pass both assetData and assetSpecData to the view
         return view('transaction.assign', [
@@ -93,20 +93,28 @@ class TRNAssetController extends Controller
         $contentAssetSpec = $responseAssetSpec->getBody()->getContents();
         $assetSpecData = json_decode($contentAssetSpec, true);
 
+        // Fetch History Maintenance
         $resposeHistoryMaintenance = $client->request('GET', "http://localhost:5252/api/TrnHistMaintenance/{$assetcode}");
         $contentHistoryMaintenance = $resposeHistoryMaintenance->getBody()->getContents();
         $historyMaintenanceData = json_decode($contentHistoryMaintenance, true);
 
+        // Fetch Software Installed
         $responseDetailSoftware = $client->request('GET', "http://localhost:5252/api/TrnSoftware/{$assetcode}");
         $contentDetailSoftware = $responseDetailSoftware->getBody()->getContents();
         $detailSoftwareData = json_decode($contentDetailSoftware, true);
+
+        //Fetch PIC
+        $responsePic = $client->request('GET', "http://localhost:5252/api/User");
+        $contentPic = $responsePic->getBody()->getContents();
+        $userData = json_decode($contentPic, true);  
 
         // Pass both assetData and assetSpecData to the view
         return view('detailAsset.Laptop', [
             'assetData' => $assetData,
             'assetSpecData' => $assetSpecData,
             'historyMaintenanceData' => $historyMaintenanceData,
-            'detailSoftwareData' => $detailSoftwareData
+            'detailSoftwareData' => $detailSoftwareData,
+            'userData' => $userData
         ]);
     }
     public function index($assetcode) {

@@ -53,7 +53,6 @@ class MaintenanceController extends Controller
         $contentMaster = $responseMaster->getBody()->getContents();
         $asset = json_decode($contentMaster, true);
 
-    
         // Pass both assetData and assetSpecData to the view
         return view('maintenance.create', [
             // 'assetData' => $assetData,
@@ -87,7 +86,7 @@ class MaintenanceController extends Controller
         $client = new Client();
 
         try {
-            $response = $client->post("http://localhost:5252/api/TrnHistMaintenance/{assetcode}", [
+            $response = $client->post("http://localhost:5252/api/TrnHistMaintenance/{$assetcode}", [
                 'json' => [
                   $validatedData
                 ],

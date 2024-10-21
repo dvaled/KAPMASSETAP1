@@ -48,15 +48,20 @@ Route::prefix('Log')->name('Log.')->group(function(){
     Route::get('/', [LogController::class, 'index'])->name('index');
 });
 
+
+//Detail Asset
+Route::prefix('detailAsset')->name('detailAsset.')->group(function(){
+    Route::get('Laptop/{assetcode}', [TrnAssetController::class, 'show'])->name('laptop'); //return view with all of the data.
+    // Route::get('Laptop/{assetcode}', [MaintenanceController::class, 'sidebar'])->name('laptop'); //return view with all of the data.
+
+});
+
 //Maintenance
 Route::prefix('maintenance')->name('maintenance.')->group(function(){
     Route::get('/', [MaintenanceController::class, 'index'])->name('index');
     Route::get('/create', [MaintenanceController::class, 'sidebar'])->name('create');
     Route::post('/store/{assetcode}', [MaintenanceController::class, 'store'])->name('store');
 });
-
-Route::get('/detailAssetL/{assetcode}', [TrnAssetController::class, 'show'])->name('detailAsset.laptop'); //return view with all of the data.
-
 
 Route::prefix('software')->name('software.')->group(function(){
     Route::get('/', [SoftwareController::class, 'index'])->name('index');

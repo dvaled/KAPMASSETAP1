@@ -20,7 +20,7 @@
     $employeeDepartment = isset($assets['employee']['department']) ? $assets['employee']['department'] : 'N/A';
     $employeeDirectorate = isset($assets['employee']['directorate']) ? $assets['employee']['directorate'] : 'N/A';
     $employeeActive = isset($assets['employee']['active']) ? $assets['employee']['active'] : 'N/A';
-@endphp
+@endphp 
 @endforeach
 
 <div class="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-lg bg-clip-border">
@@ -373,8 +373,9 @@
                         </a>
                         <!-- Right Aligned Buttons -->
                         <div class="flex space-x-4">
-                            <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                                Add Maintenance History
+                            <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" onclick="openMtcModal()"
+                                data-assetcode="{{$assetcode}}">
+                                    Add Maintenance History
                             </button>
                         </div>
                     </div>
@@ -423,7 +424,7 @@
         <div class="bg-white p-6 rounded-md w-96">
             <h2 class="text-xl font-bold mb-4">Edit Software</h2>
 
-            <form id="editFormSoftware">
+            <form id="editFormSoftware"">
                 @csrf
                 @method('PUT') <!-- Use PUT method for updates -->
 
@@ -480,10 +481,67 @@
             </form>
         </div>
       </div>
+      <div id="mtcModal" class="modal hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-6 rounded-md w-96">
+            <h2 class="text-xl font-bold mb-4">Maintenance Record</h2>
+    
+            <form id="mtcForm" method="POST" {{ route('maintenance.store', ['assetcode' => $assetcode]) }}>
+                {{-- action="{{ route('maintenance.store') }}" --}}
+                @csrf <!-- CSRF protection -->
+    
+                <!-- Input fields for master data -->
+                <div class="mb-4">
+                    <label for="assetcode" class="block text-sm font-semibold">Asset Code</label>
+                    <input id="assetcode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{$assetcode}}"> {{$assetcode}}</input>
+                </div>
+                
+                <div class="mb-4">  
+                    <label for="picadded" class="block text-sm font-semibold">PIC</label>
+                    <select id="picadded" name="picadded" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        @foreach ($userData as $user)
+                            <option value="{{ $user['name'] }}">{{ $user['name'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                
+                <div class="mb-4">  
+                    <label for="notes" class="block text-sm font-semibold">Notes</label>
+                    <input type="text" id="notes" name="notes" class="w-full p-2 border rounded" required>
+                </div>
+    
+                <div class="mb-4">
+                    <label for="dateadded" class="block text-sm font-semibold">Date</label>
+                    <input type="date" id="dateadded" name="dateadded" class="w-full p-2 border rounded" required>
+                </div>    
+    
+                <!-- Buttons -->
+                <div class="flex justify-end">
+                    <button type="button" onclick="close()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Back</button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 
 <script>
+
+    function openMtcModal(mtc) {
+        // Retrieve the asset code from the button's data-attribute
+        // const assetcode = event.target.getAttribute('data-assetcode');
+
+        // Open the modal
+        document.getElementById('mtcModal').classList.remove('hidden');
+
+        // Set the asset code value in the modal input field
+        document.getElementById('assetcode').value = mtc.assetcode;
+    }
+
+    function close(){
+        document.getElementById('mtcModal').classList.add('hidden');
+    }
+
     // Function to open modal and pre-fill form
 //   function openSoftwareModal(masterData) {
 //     document.getElementById('masterid').value = masterData.masterid;
