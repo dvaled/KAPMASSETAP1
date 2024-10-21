@@ -33,7 +33,6 @@ class MasterController extends Controller
         $contentMaster = $responseMaster->getBody()->getContents();
         $mastersData = json_decode($contentMaster, true);
 
-
         // Pass both assetData and assetSpecData to the view
         return view('master.index', [
             'masterData' => $mastersData,

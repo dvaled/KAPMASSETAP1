@@ -27,30 +27,32 @@ public class TrnHistMaintenanceController : ControllerBase{
     }
 
     [HttpPost("{ASSETCODE}")]
-    public async Task<ActionResult<TRNMAINTENANCEMODEL>> PostMaintenance(string ASSETCODE, [FromBody] TRNMAINTENANCEMODEL maintenance)
+    public async Task<ActionResult<TRNMAINTENANCEMODEL>> PostMaintenance(string ASSETCODE, TRNMAINTENANCEMODEL maintenance)
     {
-        // Check if the asset code exists
+        // Fetch the asset based on the provided asset code
         var asset = await _context.TRN_ASSET.FirstOrDefaultAsync(a => a.ASSETCODE == ASSETCODE);
+
+        // If asset is not found, return a 404 error
         if (asset == null)
         {
-            return NotFound("Asset not found");
+            return NotFound("Asset not found.");
         }
 
-        // Assign the asset code to the maintenance record
-        maintenance.ASSETCODE = ASSETCODE;
+        // Set the foreign key relationship
+        maintenance.ASSETCODE = asset.ASSETCODE;
 
         // Check if the maintenance ID already exists
         if (await _context.TRN_HIST_MAINTENANCE.AnyAsync(e => e.MAINTENANCEID == maintenance.MAINTENANCEID))
         {
-            return Conflict("This Device is already in maintenance");
+            return Conflict("This Device is already in maintenance.");
         }
-        
-        // Add value to db
+
+        // Add maintenance record
         _context.TRN_HIST_MAINTENANCE.Add(maintenance);
         await _context.SaveChangesAsync();
 
-        // Return response
-        return CreatedAtAction(nameof(GetMaintenanceDataByAssetCode), new { id = maintenance.MAINTENANCEID }, maintenance); 
+        return CreatedAtAction(nameof(PostMaintenance), new { id = maintenance.MAINTENANCEID }, maintenance);
     }
+
 
 }
