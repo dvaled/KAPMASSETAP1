@@ -19,6 +19,16 @@ class MaintenanceController extends Controller
         $content = $body->getContents();
         $data = json_decode($content, true);
 
+        $assetResponse = $client->request('GET', 'http://localhost:5252/api/TrnAsset');
+        $assetBody = $assetResponse->getBody();
+        $assetContent = $assetBody->getContents();
+        $assetData = json_decode($assetContent, true);
+
+        $userResponse = $client->request('GET', 'http://localhost:5252/api/user');
+        $userBody = $userResponse->getBody();
+        $userContent = $userBody->getContents();
+        $userData = json_decode($userContent, true);
+        
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
         $perPage = 5;
         $currentItems = array_slice($data, ($currentPage-1)*$perPage, $perPage);
@@ -31,7 +41,11 @@ class MaintenanceController extends Controller
             ['path' => request()->url(), 'query' => request()->query()] // Maintain query parameters
         );
 
-        return view('maintenance.index', ['maintenanceData' => $paginatedData]); // Keep the view name consistent
+        return view('maintenance.index', [
+            'maintenanceData' => $paginatedData,
+            'assetData' => $assetData,
+            'userData' => $userData  
+        ]); // Keep the view name consistent
     }
 
     public function sidebar(){
@@ -102,8 +116,6 @@ class MaintenanceController extends Controller
         
             return redirect('/maintenance/create')->withErrors(['error' => 'An error occurred while submitting the data.']);
         }
-
-        
     }
 
     // // Update an existing maintenance record

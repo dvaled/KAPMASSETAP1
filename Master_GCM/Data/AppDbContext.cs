@@ -49,7 +49,7 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<TRNMAINTENANCEMODEL>()
             .HasOne(h => h.TRNASSET) // Navigation property
-            .WithMany(a =>)
+            .WithMany() // Assuming there is no navigation property on TRNASSET for maintenance
             .HasForeignKey(h => h.ASSETCODE) // Foreign key relationship
             .HasPrincipalKey(a => a.ASSETCODE); // Link to the alternate key
 
@@ -75,6 +75,7 @@ public class AppDbContext : DbContext
             .HasOne(h => h.TRNASSET) // Navigation property
             .WithOne()
             .HasForeignKey<TRNASSETHISTORYMODEL>(h => h.ASSETCODE) // Foreign key relationship
-            .HasPrincipalKey<TRNASSETMODEL>(a => a.ASSETCODE); // Link to the alternate key            
+            .HasPrincipalKey<TRNASSETMODEL>(a => a.ASSETCODE); // Link to the alternate key
+            
     }
 }

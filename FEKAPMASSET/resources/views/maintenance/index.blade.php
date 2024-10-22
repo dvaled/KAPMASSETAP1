@@ -118,15 +118,18 @@
                     @csrf
                     @method('PUT') <!-- Use PUT method for updates -->
   
-                    <!-- Input fields for master data -->
                     <div class="mb-4">
-                        <label for="maintenanceid" class="block text-sm font-semibold">Master ID</label>
+                        <label for="maintenanceid" class="block text-sm font-semibold">Maintenance ID</label>
                         <input type="text" id="maintenanceid" name="maintenanceid" class="w-full p-2 border rounded" readonly>
                     </div>
                     
                     <div class="mb-4">
-                        <label for="picadded" class="block text-sm font-semibold">picadded</label>
-                        <input type="text" id="picadded" name="picadded" class="w-full p-2 border rounded" required>
+                        <label for="picadded" class="block text-sm font-semibold">PIC</label>
+                        <select id="pic" name="pic" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            @foreach ($userData as $user)
+                                <option value="{{ $user['name'] }}">{{ $user['name'] }}</option>
+                            @endforeach
+                        </select> 
                     </div>
   
                     <div class="mb-4">
@@ -139,7 +142,11 @@
                   </div>
                   <div class="mb-4">
                       <label for="assetcode" class="block text-sm font-semibold"> Asset Code </label>
-                      <input type="text" id="assetcode" name="assetcode" class="w-full p-2 border rounded" required readonly>
+                      <select id="assetcode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        @foreach ($assetData as $assets)
+                            <option value="{{ $assets['assetcode'] }}">{{ $assets['assetcode'] }}</option>
+                        @endforeach
+                        </select>  
                   </div>                  
                     <!-- Add more fields as necessary -->
   

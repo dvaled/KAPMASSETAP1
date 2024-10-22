@@ -25,7 +25,7 @@
             <div class="mb-4">
                 <label for="assetcode" class="block text-sm font-semibold">Asset Code</label>
                 <select id="assetcode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    @foreach ($asset as $assets)
+                    @foreach ($assetData as $assets)
                         <option value="{{ $assets['assetcode'] }}">{{ $assets['assetcode'] }}</option>
                     @endforeach
                 </select>  
@@ -34,7 +34,7 @@
             <div class="mb-4">  
                 <label for="picadded" class="block text-sm font-semibold">PIC</label>
                 <select id="picadded" name="picadded" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    @foreach ($user as $assets)
+                    @foreach ($userData as $assets)
                         <option value="{{ $assets['name'] }}">{{ $assets['name'] }}</option>
                     @endforeach
                 </select>
@@ -58,4 +58,20 @@
         </form>
     </div>
 </div>
+
+<script>
+document.getElementById('editForm').addEventListener('submit', function (e) {
+    e.preventDefault(); // Prevent the default form submission
+
+    // Get the selected asset code value
+    var assetcode = document.getElementById('assetcode').value;
+
+    // Set the action URL with the asset code parameter
+    this.action = `/maintenance/store/${assetcode}`;
+
+    // Submit the form
+    this.submit();
+});
+
+</script>
 @endsection

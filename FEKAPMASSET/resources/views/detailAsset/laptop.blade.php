@@ -481,21 +481,19 @@
             </form>
         </div>
       </div>
+      {{-- modal for maintenance data --}}
       <div id="mtcModal" class="modal hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
         <div class="bg-white p-6 rounded-md w-96">
             <h2 class="text-xl font-bold mb-4">Maintenance Record</h2>
     
-            <form id="mtcForm" method="POST" {{ route('maintenance.store', ['assetcode' => $assetcode]) }}>
-                {{-- action="{{ route('maintenance.store') }}" --}}
-                @csrf <!-- CSRF protection -->
-    
-                <!-- Input fields for master data -->
+            <form id="mtcForm" action="{{ route('maintenance.store', ['assetcode' => $assetcode]) }}" method="POST">
+                @csrf
                 <div class="mb-4">
                     <label for="assetcode" class="block text-sm font-semibold">Asset Code</label>
-                    <input id="assetcode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{$assetcode}}"> {{$assetcode}}</input>
+                    <input id="assetcode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{$assetcode}}"></input>
                 </div>
                 
-                <div class="mb-4">  
+                <div class="mb-4">
                     <label for="picadded" class="block text-sm font-semibold">PIC</label>
                     <select id="picadded" name="picadded" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         @foreach ($userData as $user)
@@ -527,7 +525,7 @@
 
 <script>
 
-    function openMtcModal(mtc) {
+    function openMtcModal() {
         // Retrieve the asset code from the button's data-attribute
         // const assetcode = event.target.getAttribute('data-assetcode');
 
@@ -542,56 +540,23 @@
         document.getElementById('mtcModal').classList.add('hidden');
     }
 
-    // Function to open modal and pre-fill form
-//   function openSoftwareModal(masterData) {
-//     document.getElementById('masterid').value = masterData.masterid;
-//     document.getElementById('conditionModal').value = masterData.condition;
-//     document.getElementById('nosrModal').value = masterData.nosr;
-//     document.getElementById('descriptionModal').value = masterData.description;
-//     document.getElementById('valuegcmModal').value = masterData.valuegcm;
-//     document.getElementById('typegcmModal').value = masterData.typegcm;
-//     document.getElementById('activeModal').value = masterData.active;
-//       // Populate other form fields as necessary
-      
-//       document.getElementById('editModal').classList.remove('hidden');
-//   }
+    $('#mtcForm').on('submit', function(e) {
+    e.preventDefault();  // Prevent the default form submission
+    
+    $.ajax({
+        type: 'POST',  // Make sure this is POST
+        url: $(this).attr('action'),  // Use the form's action attribute
+        data: $(this).serialize(),  // Serialize the form data
+        success: function(response) {
+            // Handle success
+        },
+        error: function(error) {
+            // Handle error
+        }
+    });
+});
 
-//   // Function to close modal
-//   function closeSoftwareModal() {
-//       document.getElementById('editModal').classList.add('hidden');
-//   }
-
-//   // Handle form submission via AJAX
-//   document.getElementById('editForm').addEventListener('submit', function (event) {
-//       event.preventDefault();
-
-//       const masterid = document.getElementById('masterid').value;
-//       const formData = new FormData(this);
-
-//       fetch(`/master/${masterid}`, {
-//           method: 'POST',
-//           headers: {
-//               'X-CSRF-TOKEN': '{{ csrf_token() }}',
-//               'Accept': 'application/json',
-//           },
-//           body: formData
-//       })
-//       .then(response => {
-//           if (response.ok) {
-//               return response.json();
-//           } else {
-//               throw new Error('Failed to update record');
-//           }
-//       })
-//       .then(data => {
-//           alert('Master updated successfully');
-//           location.reload(); // Refresh the page to reflect the changes
-//       })
-//       .catch(error => {
-//           console.error('Error:', error);
-//           alert('Failed to update the record');
-//       });
-//   });
+    
 
 
 </script>

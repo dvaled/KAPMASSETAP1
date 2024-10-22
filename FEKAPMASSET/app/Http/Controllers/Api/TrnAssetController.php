@@ -117,6 +117,7 @@ class TRNAssetController extends Controller
             'userData' => $userData
         ]);
     }
+
     public function index($assetcode) {
         $client = new Client();
         $response = $client->request('GET', 'http://localhost:5252/api/Master');
