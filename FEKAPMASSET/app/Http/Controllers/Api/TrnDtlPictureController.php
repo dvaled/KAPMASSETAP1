@@ -15,6 +15,5 @@ class TrnDtlPictureController extends Controller
         $data = json_decode($content, true);
 
         return view('master.index', ['trnpictureData' => $data]); // Keep the view name consistent
-
     }
 }

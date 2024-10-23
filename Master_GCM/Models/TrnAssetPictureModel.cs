@@ -9,7 +9,9 @@ public class TRNASSETPICTUREMODEL{
     public DateOnly DATEADDED { get; set; }
     public string? PICUPDATED { get; set; }
     public DateOnly? DATEUPDATED { get; set; }
-    
+    [NotMapped]  // This ensures that the image data is not mapped directly to the database
+    public IFormFile ASSETIMG { get; set; }  // To handle image uploads from the form
+
     [ForeignKey("ASSETCODE")]
-    public required TRNASSETMODEL TRNASSET { get; set; }
-}
+    public TRNASSETMODEL? TRNASSET { get; set; }
+} 

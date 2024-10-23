@@ -108,13 +108,20 @@ class TRNAssetController extends Controller
         $contentPic = $responsePic->getBody()->getContents();
         $userData = json_decode($contentPic, true);  
 
+        //fetch image
+        $responseImg = $client->request('GET', "http://localhost:5252/api/TrnAssetDtlPicture/{$assetcode}");
+        $contentImg = $responseImg->getBody()->getContents();
+        $imgData = json_decode($contentImg, true);
+
+
         // Pass both assetData and assetSpecData to the view
         return view('detailAsset.Laptop', [
             'assetData' => $assetData,
             'assetSpecData' => $assetSpecData,
             'historyMaintenanceData' => $historyMaintenanceData,
             'detailSoftwareData' => $detailSoftwareData,
-            'userData' => $userData
+            'userData' => $userData,
+            'imgData' => $imgData,
         ]);
     }
 
