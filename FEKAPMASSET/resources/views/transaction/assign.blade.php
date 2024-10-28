@@ -5,19 +5,6 @@
     <div class="alert alert-danger">
         <strong>Whoops!</strong> There were some problems with your input.<br><br>
         <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>  
-            @endforeach
-        </ul>
-    </div>  
-@endif
-@extends('layouts.app')
-
-@section('content')
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-        <ul>
             @foreach($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
@@ -29,7 +16,7 @@
     <div class="bg-white p-6 rounded-md w-96">
         <h2 class="text-xl font-bold mb-4">Assign asset here</h2>
 
-        <form id="editForm" action="{{ route('Transaction.store') }}" method="POST">
+        <form id="editForm" action="{{ route('transaction.store') }}" method="POST">
             @csrf <!-- CSRF protection -->
             <!-- Input fields for master data -->
             <div class="mb-4">
@@ -42,45 +29,43 @@
             </div>
             <div class="mb-4">
                 <label for="BrandName" class="block text-sm font-semibold"> Brand Name </label>
-                <select id="description" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    @foreach ($masterData as $asset)
-                        <option value="{{ $asset['description'] }}">{{ $asset['description'] }}</option>
+                <select id="description" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" aria-readonly="true">
+                    @foreach ($assetData as $asset)
+                        <option value="{{ $asset['assetbrand'] }}" readonly>{{ $asset['assetbrand'] }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="mb-4">
                 <label for="Model" class="block text-sm font-semibold"> Model </label>
-                <select id="description" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    @foreach ($masterData as $asset)
-                        <option value="{{ $asset['description'] }}">{{ $asset['description'] }}</option>
+                <select id="Model" name="Model" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" aria-readonly="true">
+                    @foreach ($assetData as $asset)
+                        <option value="{{ $asset['assetmodel'] }}" readonly>{{ $asset['assetmodel'] }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="mb-4">
                 <label for="series" class="block text-sm font-semibold"> Series </label>
-                <select id="description" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    @foreach ($masterData as $asset)
-                        <option value="{{ $asset['description'] }}">{{ $asset['description'] }}</option>
-                    @endforeach
-                </select>
+                @foreach($assetData as $asset)
+                <input type="text" id="series" name="series" class="w-full p-2 border rounded" value="{{ $asset['assetseries'] }}" readonly>
+                @endforeach
             </div>  
             <div class="mb-4">
                 <label for="Serial Number" class="block text-sm font-semibold"> Serial Number </label>
-                <input type="text" id="Serial Number" name="Serial Number" class="w-full p-2 border rounded" required>
+                @foreach($assetData as $asset)
+                <input type="text" id="Serial Number" name="Serial Number" class="w-full p-2 border rounded" value="{{ $asset['assetserialnumber'] }}" readonly>
+                @endforeach
             </div>
             <div class="mb-4">
                 <label for="Active" class="block text-sm font-semibold"> Active </label>
-                <select id="active" name="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    @foreach ($masterData as $asset)
-                        <option value="{{ $asset['active'] }}">{{ $asset['active'] }}</option>
-                    @endforeach
-                </select>
+                @foreach($masterData as $asset)
+                <input type="text" id="Active" name="Active" class="w-full p-2 border rounded" value="{{ $asset['active'] }}" readonly>
+                @endforeach
             </div>
             <div class="mb-4">
                 <label for="Type" class="block text-sm font-semibold"> Type </label>
                 <select id="Type" name="Type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    @foreach ($masterData as $asset)
-                        <option value="{{ $asset['description'] }}">{{ $asset['description'] }}</option>
+                    @foreach ($assetData as $asset)
+                        <option value="{{ $asset['assettype'] }}">{{ $asset['assettype'] }}</option>
                     @endforeach
                 </select>
             </div>  

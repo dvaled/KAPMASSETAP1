@@ -37,7 +37,7 @@
             <!-- Remove class [ hidden ] and replace [ sm:flex ] with [ flex ] -->
             <div style="min-height: 100vh" class="w-72 fixed sm:relative bg-blue-700 shadow h-full flex-col justify-between hidden sm:flex overflow-y-auto">
               <div class="px-8">
-                  <div class="items-center h-20 w-full flex items-center"> 
+                  <div class="h-20 w-full flex items-center"> 
                       {{-- Place KAI SVG here --}}
                       <img class="h-16 items-center text-center" src="{{ asset('assets/logo/KAPM-logo.png') }}" alt="">
                   </div>

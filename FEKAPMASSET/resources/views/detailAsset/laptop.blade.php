@@ -420,7 +420,7 @@
                                     </td>
                                 @endforeach
                             @else
-                                <p class="mb-2 font-semibold leading-tight text-xl border-gray-300 mb-2">No data is available</p> <!-- Display Condition -->                                    
+                                <p class="mb-2 font-semibold leading-tight text-xl border-gray-300">No data is available</p> <!-- Display Condition -->                                    
                             @endif        
                             </tbody>
                         </table>
@@ -485,7 +485,7 @@
                             </tbody>
                             @endforeach
                             @else
-                            <p class="mb-2 font-semibold leading-tight text-xl border-gray-300 mb-2">No data is available</p> <!-- Display Condition -->                                    
+                            <p class="mb-2 font-semibold leading-tight text-xl border-gray-300">No data is available</p> <!-- Display Condition -->                                    
                             @endif
                         </table>
                     </div>
