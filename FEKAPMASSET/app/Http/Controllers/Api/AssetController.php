@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use OpenApi\Annotations\Get;
 
 class AssetController extends Controller
@@ -46,7 +47,7 @@ class AssetController extends Controller
     }
 
     public function store(Request $request){
-        $validatedData = $request-validate([
+        $validatedData = $request->validate([
             'assetcode' => 'required|string|max:255',
             'assettype' => 'required|string|max:255',
             'assetcategory' => 'required|string|max:255',
@@ -59,7 +60,7 @@ class AssetController extends Controller
 
         $client = new Client();
         try{
-            $response = $client->post('POST', 'http://localhost:5252/api/TrnAsset',[
+            $response = $client->post('http://localhost:5252/api/TrnAsset',[
                 'json'=> $validatedData,
             ]);
             $data = json_decode($response->getBody()->getContents(), true);

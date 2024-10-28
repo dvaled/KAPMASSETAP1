@@ -21,13 +21,13 @@ public class TrnAssetDtlPictureController : ControllerBase
     [HttpGet("{ASSETCODE}")]
     public async Task<ActionResult<List<TRNASSETPICTUREMODEL>>> GetTrnHardware(string assetcode)
     {
-        var trnassetcode = await _context.TRN_DTL_PICTURE.Where(e => e.ASSETCODE == assetcode).ToListAsync();
-    
-        if (trnassetcode == null || !trnassetcode.Any())
-        {
-            return NotFound();
-        }
+        var trnassetcode = await _context.TRN_DTL_PICTURE
+                                        .Where(e => e.ASSETCODE == assetcode)
+                                        .ToListAsync();
 
+        if(trnassetcode == null || !trnassetcode.Any()){
+            return NotFound();
+        }                                
         return Ok(trnassetcode);
     }
 
@@ -45,8 +45,8 @@ public class TrnAssetDtlPictureController : ControllerBase
                         if (file.Length > 0)
                         {
                             // Define folder where images will be saved
-                            var folderName = Path.Combine("Images", "Assets");
-                            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                            var folderName = Path.Combine("D:", "Assets");
+                            var pathToSave = folderName;                            
 
                             // Create directory if it doesn't exist
                             if (!Directory.Exists(pathToSave))
@@ -56,9 +56,14 @@ public class TrnAssetDtlPictureController : ControllerBase
                             var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                             var fullPath = Path.Combine(pathToSave, fileName);
 
+                            var relativePath = Path.Combine("Images", "Assets", fileName);
+
+
                             // Save the image to the folder
                             using (var stream = new FileStream(fullPath, FileMode.Create))
                             {
+                                // Add before creating the directory
+                                Console.WriteLine($"Saving file to: {fullPath}");
                                 await file.CopyToAsync(stream);
                             }
 
@@ -67,8 +72,8 @@ public class TrnAssetDtlPictureController : ControllerBase
                             {
                                 ASSETCODE = model.ASSETCODE,
                                 ACTIVE = model.ACTIVE,  
-                                ASSETPIC = fileName,  
-                                PICADDED = model.PICADDED,
+                                ASSETPIC = fullPath,  
+                                PICADDED = model.PICADDED,  
                                 DATEADDED = DateOnly.FromDateTime(DateTime.Now)  
                             };
 

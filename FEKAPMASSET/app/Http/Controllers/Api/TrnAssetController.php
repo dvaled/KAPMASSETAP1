@@ -108,6 +108,11 @@ class TRNAssetController extends Controller
         $contentPic = $responsePic->getBody()->getContents();
         $userData = json_decode($contentPic, true);  
 
+        //Fetch History Asset
+        $responseHist = $client->request('GET', "http://localhost:5252/api/AssetHistory/{$assetcode}");
+        $contentHist = $responseHist->getBody()->getContents();
+        $histData = json_decode($contentHist, true);  
+
         //fetch image
         $responseImg = $client->request('GET', "http://localhost:5252/api/TrnAssetDtlPicture/{$assetcode}");
         $contentImg = $responseImg->getBody()->getContents();
@@ -122,6 +127,7 @@ class TRNAssetController extends Controller
             'detailSoftwareData' => $detailSoftwareData,
             'userData' => $userData,
             'imgData' => $imgData,
+            'histData' => $histData,
         ]);
     }
 

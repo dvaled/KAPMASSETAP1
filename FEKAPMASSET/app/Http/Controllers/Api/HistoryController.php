@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\History;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class HistoryController extends Controller
 {
@@ -64,42 +65,25 @@ class HistoryController extends Controller
     }
 
     // Update an existing history record
-    public function update(Request $request, $id)
-    {
-        $historyRecord = History::find($id);
-
-        if (!$historyRecord) {
-            return response()->json(['message' => 'History record not found'], 404);
-        }
-
-        $validatedData = $request->validate([
-            'IdAssetHistory' => 'required',
-            'IdAsset' => 'required',
-            'NIPP' => 'required',
-            'Name' => 'required',
-            'Position' => 'required',
-            'Unit' => 'required',
-            'Department' => 'required',
-            'Directorate' => 'required',
-            'PICAdded' => 'required|integer',
-            'DateAdded' => 'required|date',
-            'DateUpdated' => 'required|date',
+    public function update(Request $request, $id){        
+        $validated = $request->validate([
+            'assetcode' => 'required|string|max:255',
         ]);
+        
+        $client = new Client();
 
-        $historyRecord->update($validatedData);
-        return response()->json(['message' => 'History record updated successfully', 'data' => $historyRecord], 200);
-    }
-
-    // Delete a history record
-    public function destroy($id)
-    {
-        $historyRecord = History::find($id);
-
-        if (!$historyRecord) {
-            return response()->json(['message' => 'History record not found'], 404);
-        }
-
-        $historyRecord->delete();
-        return response()->json(['message' => 'History record deleted successfully'], 200);
+        try {
+            $response = $client->post('http://localhost:5252/api/TrnAsset',[
+                'json'=> $validated,
+            ]);
+            $data = json_decode($response->getBody()->getContents(), true);
+            Log::info('API Response:', $data);  // Log the API response for inspection
+            return redirect('/dashboard')->with('success', 'Data submitted successfully!');
+        }catch (\GuzzleHttp\Exception\RequestException $e) {
+            $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;
+            Log::error('API Error: ' . $e->getMessage() . ' - Response Body: ' . $responseBody);
+        
+            return redirect('/master/create')->withErrors(['error' => 'An error occurred while submitting the data.']);
+        }          
     }
 }

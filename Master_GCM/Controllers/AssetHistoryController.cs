@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ public class AssetHistoryController : ControllerBase{
         var assetcode = await _context.TRN_HIST_ASSET.Where(x => x.ASSETCODE == ASSETCODE).ToListAsync();
 
         if (assetcode == null || !assetcode.Any()){
-            return NotFound();
+            return Ok("No data available yet");
         }
         return Ok(assetcode);
     }

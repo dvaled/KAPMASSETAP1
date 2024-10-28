@@ -12,7 +12,7 @@ use App\Http\Controllers\API\MasterController;
 use App\Http\Controllers\API\TrnAssetController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\TrnAssetSpecController;
-
+use App\Http\Controllers\API\TrnDtlPictureController;
 
 //Authentication
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login'); //view login page
@@ -53,7 +53,14 @@ Route::prefix('Log')->name('Log.')->group(function(){
 Route::prefix('detailAsset')->name('detailAsset.')->group(function(){
     Route::get('Laptop/{assetcode}', [TrnAssetController::class, 'show'])->name('laptop'); //return view with all of the data.
     // Route::get('Laptop/{assetcode}', [MaintenanceController::class, 'sidebar'])->name('laptop'); //return view with all of the data.
-    // Route::post('Laptop/{assetcode}/store', [MaintenanceController::class, 'store'])->name('laptop.store');
+
+    //Post Image
+    Route::get('/Laptop/{assetcode}/Image', [TrnDtlPictureController::class, 'index'])->name('image'); //get image form
+    Route::post('Laptop/Image/store', [TrnDtlPictureController::class, 'store'])->name('image.store'); //submit image data 
+
+    Route::get('/Laptop/{assetcode}/Software', [SoftwareController::class, 'create'])->name('software');
+    Route::post('/Laptop/{assetcode}/Software', [SoftwareController::class, 'store'])->name('software.store');
+
 
 });
 

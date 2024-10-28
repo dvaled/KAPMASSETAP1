@@ -12,6 +12,7 @@
     $assetcategory = isset($assets['assetcategory']) ? $assets['assetcategory'] : 'N/A';
     $assetcode = isset($assets['assetcode']) ? $assets['assetcode'] : 'N/A';
     $assetserialnumber = isset($assets['assetserialnumber']) ? $assets['assetserialnumber'] : 'N/A';
+
     // Employee Information
     $employeeNIPP = isset($assets['employee']['nipp']) ? $assets['employee']['nipp'] : 'N/A';
     $employeeName = isset($assets['employee']['name']) ? $assets['employee']['name'] : 'N/A';
@@ -23,7 +24,7 @@
 @endphp 
 @endforeach
 
-<div class="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-lg bg-clip-border">
+<div class="relative flex flex-col w-full min-w-0 mb-2 break-words bg-white border-0 border-transparent border-solid shadow-    -xl rounded-lg bg-clip-border">
     <div class="flex-auto px-0 pt-0 pb-2">
         <div class="p-0 overflow-x-auto">
             <div class="flex flex-wrap justify-evenly gap-4 p-4 bg-white">
@@ -245,7 +246,7 @@
                         </a>
                         <!-- Right Aligned Buttons -->
                         <div class="flex space-x-4">
-                            <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" >
+                            <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" onclick="window.location.href='{{ route('detailAsset.software', ['assetcode' => $assetcode]) }}'">
                                 {{-- onclick="window.location.href='{{ route('software.create' --}}
                                 Add Software
                             </button>
@@ -253,36 +254,46 @@
                     </div>
                     <!-- Dynamic Table-like Section with Headers as Rows -->
                         <div class="relative overflow-x-auto">
-                            @foreach ($detailSoftwareData as $software)
                             <table class="p-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
                                 <thead class="align-bottom">
                                     <tr>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">ID</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Type</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Category</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Description</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Date Added</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Action</th>
+                                        <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">ID</th>
+                                        <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Type</th>
+                                        <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Category</th>
+                                        <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Description</th>
+                                        <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Date Added</th>
+                                        <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Action</th>
+                                    </tr>
                                 </thead>
+                            @if(!empty($detailSoftwareData))
+                                @foreach ($detailSoftwareData as $software)
                                 <tbody>
-                                    <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <p class="text-center mb-0 font-semibold leading-tight text-xs">{{ $software['idassetsoftware'] }}</p> <!-- Display Condition -->
+                                    <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
+                                        <p class="text-center mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $software['idassetsoftware'] }}</p> <!-- Display Condition -->
                                     </td>
-                                    <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $software['softwaretype'] }}</p> <!-- Display Condition -->
+                                    <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
+                                        <p class="mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $software['softwaretype'] }}</p> <!-- Display Condition -->
                                     </td>
-                                    <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $software['softwarecategory'] }}</p> <!-- Display Condition -->
+                                    <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
+                                        <p class="mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $software['softwarecategory'] }}</p> <!-- Display Condition -->
                                     </td>
-                                    <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $software['softwarename'] }} - {{ $software['softwarelicense'] }}</p> <!-- Display Condition -->
+                                    <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
+                                        <p class="mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $software['softwarename'] }} - {{ $software['softwarelicense'] }}</p> <!-- Display Condition -->
                                     </td>
-                                    <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <p class="mb-0 font-semibold leading-tight text-xs">{{ $software['dateadded'] }}</p> <!-- Display Condition -->
+                                    <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
+                                        <p class="mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $software['dateadded'] }}</p> <!-- Display Condition -->
                                     </td>
+                                    @auth    
+                                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <button class="bg-blue-500 text-white px-4 py-2 rounded items-center"> Delete </button>
+                                    </td>
+                                    @endauth
                                 </tbody>
+                                @endforeach
+                                @else
+                                <p class=" font-semibold leading-tight text-xl border-gray-300 mb-2">No data is available</p> <!-- Display Condition -->                                    
+                            @endif
                             </table>
-                            @endforeach
                         </div>    
                     </div>
                 </div>
@@ -302,35 +313,50 @@
                         </a>
                         <!-- Right Aligned Buttons -->
                         <div class="flex space-x-4">
-                            <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" onclick="openImgModal()">
+                            <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" onclick="window.location.href='{{ route('detailAsset.image', ['assetcode' => $assetcode]) }}'">
                                 Add Image
                             </button>
                         </div>
                     </div>
                     <!-- Dynamic Table-like Section with Headers as Rows -->
                         <div class="relative overflow-x-auto">
-                            @foreach ($imgData as $img)
                             <table class="p-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
-                                <thead class="align-bottom">
+                                <thead>
                                     <tr>
-                                    <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Overview</th>
-                                    <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Front-View</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Under-View</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Action</th>
+                                        <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">ID</th>
+                                        <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Top View</th>
+                                        <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Front View</th>
+                                        <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Bottom View</th>
+                                        <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Action</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <p class="text-center mb-0 font-semibold leading-tight text-xs">{{ $img['assetpic'] }}</p> <!-- Display Condition -->
-                                    </td>
+                                    <tr>
+                                        @foreach ($imgData as $img)
+                                        <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-gray-300">
+                                            <p class="mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $img['assetcode'] }}</p> <!-- Display Condition -->
+                                        </td>
+                                        @endforeach
+                                        @foreach ($imgData as $img)
+                                        <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-gray-300">
+                                            <img src="{{ $img['assetpic'] }}" alt="Asset Image">
+                                        </td>
+                                        @endforeach
+                                        @auth   
+                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                            <button class="bg-blue-500 text-white px-4 py-2 rounded items-center">Detail</button>
+                                        </td>
+                                        @endauth
+                                    </tr>
                                 </tbody>
                             </table>
-                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @auth
     <div class="flex-auto px-0 pt-0 pb-2">
         <div class="p-0 overflow-x-auto">
             <div class="flex flex-wrap justify-evenly gap-4 p-4 bg-white">
@@ -360,13 +386,51 @@
                                 <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Date Updated</th>
                                 <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Asset Code</th>
                                 <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Action</th>
+                                </tr>
                             </thead>
+                            <tbody>
+                            @if(!empty($histData))
+                                @foreach ($histData as $histData)
+                                    <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
+                                        <p class="mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $histData['idassethistory'] }}</p> <!-- Display Condition -->
+                                    </td>
+                                    <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
+                                        <p class="mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $histData['assetcode'] }}</p> <!-- Display Condition -->                                    
+                                    </td>
+                                    <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
+                                        <p class="mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $histData['nipp'] }}</p> <!-- Display Condition -->                                    
+                                    </td>
+                                    <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
+                                        <p class="mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $histData['name'] }}</p> <!-- Display Condition -->                                    
+                                    </td>
+                                    <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
+                                        <p class="mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $histData['position'] }}</p> <!-- Display Condition -->                                    
+                                    </td>
+                                    <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
+                                        <p class="mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $histData['unit'] }}</p> <!-- Display Condition -->                                    
+                                    </td>
+                                    <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
+                                        <p class="mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $histData['department'] }}</p> <!-- Display Condition -->                                    
+                                    </td>
+                                    <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
+                                        <p class="mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $histData['directorate'] }}</p> <!-- Display Condition -->                                    
+                                    </td>
+                                    <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
+                                        <p class="mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $histData['picadded'] }}</p> <!-- Display Condition -->                                    
+                                    </td>
+                                @endforeach
+                            @else
+                                <p class="mb-2 font-semibold leading-tight text-xl border-gray-300 mb-2">No data is available</p> <!-- Display Condition -->                                    
+                            @endif        
+                            </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+        
     <div class="flex-auto px-0 pt-0 pb-2">
         <div class="p-0 overflow-x-auto">
             <div class="flex flex-wrap justify-evenly gap-4 p-4 bg-white">
@@ -388,7 +452,6 @@
                     </div>
                     <!-- Dynamic Table-like Section with Headers as Rows -->
                     <div class="relative overflow-x-auto">
-                        @foreach ($historyMaintenanceData as $history)
                         <table class="p-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
                             <thead class="align-bottom">
                                 <tr>
@@ -399,31 +462,38 @@
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Action</th>
                                 </tr>
                             </thead>
+                        @if(!empty($historyMaintenanceData))
+                            @foreach ($historyMaintenanceData as $history)
                             <tbody>
                                 <tr>
                                     <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <p class="text-center mb-0 font-semibold leading-tight text-xs">{{ $history['maintenanceid'] }}</p> <!-- Display Condition -->
+                                        <p class="text-center mb-2 font-semibold leading-tight text-xs">{{ $history['maintenanceid'] }}</p> <!-- Display Condition -->
                                     </td>
                                     <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <p class="text-center mb-0 font-semibold leading-tight text-xs">{{ $history['picadded'] }}</p> <!-- Display Condition -->
+                                        <p class="text-center mb-2 font-semibold leading-tight text-xs">{{ $history['picadded'] }}</p> <!-- Display Condition -->
                                     </td>
                                     <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <p class="text-center mb-0 font-semibold leading-tight text-xs">{{ $history['dateadded'] }}</p> <!-- Display Condition -->
+                                        <p class="text-center mb-2 font-semibold leading-tight text-xs">{{ $history['dateadded'] }}</p> <!-- Display Condition -->
                                     </td>
                                     <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <p class="text-center mb-0 font-semibold leading-tight text-xs">{{ $history['notes'] }}</p> <!-- Display Condition -->
+                                        <p class="text-center mb-2 font-semibold leading-tight text-xs">{{ $history['notes'] }}</p> <!-- Display Condition -->
                                     </td>
                                     <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                         <button class="bg-blue-500 text-white px-4 py-2 rounded items-center">Detail</button>
+                                    </td>
                                 </tr>
                             </tbody>
+                            @endforeach
+                            @else
+                            <p class="mb-2 font-semibold leading-tight text-xl border-gray-300 mb-2">No data is available</p> <!-- Display Condition -->                                    
+                            @endif
                         </table>
-                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @endauth
 
     {{-- Modal for all of the tables --}}
     <!-- Software Modal -->
@@ -488,21 +558,23 @@
             </form>
         </div>
       </div>
-      {{-- modal for submitting picture --}}
+
+      {{-- Add picture modal --}}
       <div id="imgModal" class="modal hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
         <div class="bg-white p-6 rounded-md w-96">
             <h2 class="text-xl font-bold mb-4">Asset Image</h2>
-    
-            <form id="imgForm">
+            
+            <form action="{{ route('detailAsset.image', ['assetcode' => $assetcode]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                {{-- assetcode --}}
                 <div class="mb-4">
                     <label for="assetcode" class="block text-sm font-semibold">Asset Code</label>
                     <input id="assetcode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{$assetcode}}"></input>
                 </div>
 
                 <div class="mb-4">
-                    <label for="assetcode" class="block text-sm font-semibold">Asset Image</label>
-                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file">
+                    <label for="imageAsset" class="block text-sm font-semibold">Asset Image</label>
+                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="asset image" id="imageAsset" type="file">
                 </div>
 
                 <div class="mb-4">
@@ -535,18 +607,20 @@
             </form>
         </div>
     </div>
-      {{-- modal for maintenance data --}}
-      <div id="mtcModal" class="modal hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+    {{-- modal for maintenance data --}}
+    <div id="mtcModal" class="modal hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
         <div class="bg-white p-6 rounded-md w-96">
             <h2 class="text-xl font-bold mb-4">Maintenance Record</h2>
     
             <form id="mtcForm">
                 @csrf
+                {{-- asset code --}}
                 <div class="mb-4">
                     <label for="assetcode" class="block text-sm font-semibold">Asset Code</label>
                     <input id="assetcode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{$assetcode}}"></input>
                 </div>
                 
+                {{-- PIC Addded --}}
                 <div class="mb-4">
                     <label for="picadded" class="block text-sm font-semibold">PIC</label>
                     <select id="picadded" name="picadded" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
@@ -556,11 +630,13 @@
                     </select>
                 </div>
                 
+                {{-- Notes --}}
                 <div class="mb-4">  
                     <label for="notes" class="block text-sm font-semibold">Notes</label>
                     <input type="text" id="notes" name="notes" class="w-full p-2 border rounded" required>
                 </div>
     
+                {{-- Date  --}}
                 <div class="mb-4">
                     <label for="dateadded" class="block text-sm font-semibold">Date</label>
                     <input type="date" id="dateadded" name="dateadded" class="w-full p-2 border rounded" required>
@@ -583,6 +659,7 @@
         document.getElementById('imgModal').classList.remove('hidden');
     }
 
+    // function to open maintenance modal
     function openMtcModal() {
         // Retrieve the asset code from the button's data-attribute
         // const assetcode = event.target.getAttribute('data-assetcode');
@@ -594,12 +671,14 @@
         document.getElementById('assetcode').value = $assetcode;
     }
 
+    // function to close the maintenance modal
     function closeMtc(){
-        document.getElementById('mtcModal').classList.add('hidden');
+        document.getElementById('mtcModal').classList.add('hidden'); // set the modal class to hidden
     }
     
+    // function to close the image modal
     function closeImg(){
-        document.getElementById('imgModal').classList.add('hidden');
+        document.getElementById('imgModal').classList.add('hidden'); // set the modal class to hidden
 
     }
 
