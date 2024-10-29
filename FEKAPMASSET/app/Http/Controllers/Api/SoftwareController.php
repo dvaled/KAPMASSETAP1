@@ -73,7 +73,7 @@ class SoftwareController extends Controller
         $client = new Client();
         
         try {
-            $response = $client->post('http://localhost:5252/api/TrnSoftware', [
+            $response = $client->post("http://localhost:5252/api/TrnSoftware", [
                 'json' => $validated,  // Use the validated data
             ]);
 
@@ -106,7 +106,7 @@ class SoftwareController extends Controller
         $client = new Client();
         
         try {
-            $response = $client->post('http://localhost:5252/api/TrnSoftware/{$id}', [
+            $response = $client->post("http://localhost:5252/api/TrnSoftware/{$id}", [
                 'json' => $validated,  // Use the validated data
             ]);
         
@@ -120,5 +120,35 @@ class SoftwareController extends Controller
         
             return redirect()->back()->withErrors(['error' => 'An error occurred while updating the data.']);
         }   
+    }
+
+    public function delete(Request $request, $id){
+        $validated = $request->validate([
+            'active' => 'required',
+        ]);
+
+        $client = new Client();
+        try {
+            $response = $client->put("http://localhost:5252/api/TrnSoftware/{$id}", [
+                'json' => $validated,
+            ]);
+            
+            // Log success response
+            Log::info('Successfully updated software status', [
+                'id' => $id,
+                'response' => json_decode($response->getBody(), true)
+            ]);
+            
+            return response()->json(['message' => 'Successfully updated software status'], 200);
+
+        } catch (\Throwable $th) {
+            // Log error response
+            Log::error('Failed to update software status', [
+                'id' => $id,
+                'error' => $th->getMessage()
+            ]);
+
+            return response()->json(['error' => 'Failed to update software status'], 500);
+        }
     }
 }

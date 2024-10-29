@@ -74,6 +74,7 @@ Route::prefix('maintenance')->name('maintenance.')->group(function(){
 Route::prefix('software')->name('software.')->group(function(){
     Route::get('/', [SoftwareController::class, 'index'])->name('index');
     Route::get('/store', [SoftwareController::class, 'create'])->name('create');
+    Route::put('/{id}', [SoftwareController::class, 'delete'])->name('delete');
 
 });
 

@@ -24,6 +24,18 @@
 @endphp 
 @endforeach
 
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
 <div class="relative flex flex-col w-full min-w-0 mb-2 break-words bg-white border-0 border-transparent border-solid shadow-    -xl rounded-lg bg-clip-border">
     <div class="flex-auto px-0 pt-0 pb-2">
         <div class="p-0 overflow-x-auto">
@@ -55,9 +67,11 @@
                             </a>    
                             <!-- Right Aligned Buttons -->
                             <div class="flex space-x-4">
+                                {{-- @auth --}}
                                 <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300">
                                     Unassign This Asset
                                 </button>
+                                {{-- @endauth --}}
                             </div>
                             @endif
                         </div>
@@ -83,6 +97,7 @@
                                 </h4>
                             </a>
                             <!-- Right Aligned Buttons -->
+                            {{-- @auth --}}
                             <div class="flex space-x-4">
                                 <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                                     Print QR
@@ -91,6 +106,7 @@
                                     Update Asset
                                 </button>
                             </div>
+                            {{-- @endauth --}}
                         </div>
                         <div class="relative overflow-x-auto">
                             @foreach ($assetSpecData as $assetspecs)
@@ -246,10 +262,12 @@
                         </a>
                         <!-- Right Aligned Buttons -->
                         <div class="flex space-x-4">
+                            {{-- @auth --}}
                             <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" onclick="window.location.href='{{ route('detailAsset.software', ['assetcode' => $assetcode]) }}'">
                                 {{-- onclick="window.location.href='{{ route('software.create' --}}
                                 Add Software
                             </button>
+                            {{-- @endauth --}}
                         </div>
                     </div>
                     <!-- Dynamic Table-like Section with Headers as Rows -->
@@ -283,11 +301,27 @@
                                     <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
                                         <p class="mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $software['dateadded'] }}</p> <!-- Display Condition -->
                                     </td>
-                                    @auth    
+                                    {{-- @auth     --}}
                                     <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <button class="bg-blue-500 text-white px-4 py-2 rounded items-center"> Delete </button>
+                                        <form action="{{ route('software.delete', ['id' => $software['idassetsoftware']]) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            
+                                            <label class="inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" 
+                                                       name="active" 
+                                                       value="Y" 
+                                                       class="sr-only peer" 
+                                                       onchange="this.form.submit()"
+                                                       {{ $software['active'] == 'Y' ? 'checked' : '' }}>
+                                                       
+                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                            </label>
+                                    
+                                            <input type="hidden" name="active" value="{{ $software['active'] == 'Y' ? 'N' : 'Y' }}">
+                                        </form>
                                     </td>
-                                    @endauth
+                                    {{-- @endauth --}}
                                 </tbody>
                                 @endforeach
                                 @else
@@ -304,6 +338,7 @@
         <div class="p-0 overflow-x-auto">
             <div class="flex flex-wrap justify-evenly gap-4 p-4 bg-white">
                 <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow">
+                    {{-- @auth    --}}
                     <div class="flex justify-between items-center pb-4 mb-4">
                         <!-- Left Aligned Heading -->
                         <a href="#">
@@ -318,6 +353,7 @@
                             </button>
                         </div>
                     </div>
+                    {{-- @endauth --}}
                     <!-- Dynamic Table-like Section with Headers as Rows -->
                         <div class="relative overflow-x-auto">
                             <table class="p-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
@@ -342,11 +378,11 @@
                                             <img src="{{ $img['assetpic'] }}" alt="Asset Image">
                                         </td>
                                         @endforeach
-                                        @auth   
+                                        {{-- @auth    --}}
                                         <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                             <button class="bg-blue-500 text-white px-4 py-2 rounded items-center">Detail</button>
                                         </td>
-                                        @endauth
+                                        {{-- @endauth --}}
                                     </tr>
                                 </tbody>
                             </table>
@@ -356,7 +392,7 @@
             </div>
         </div>
     </div>
-    @auth
+    {{-- @auth --}}
     <div class="flex-auto px-0 pt-0 pb-2">
         <div class="p-0 overflow-x-auto">
             <div class="flex flex-wrap justify-evenly gap-4 p-4 bg-white">
@@ -493,7 +529,7 @@
             </div>
         </div>
     </div>
-    @endauth
+    {{-- @endauth --}}
 
     {{-- Modal for all of the tables --}}
     <!-- Software Modal -->
@@ -653,7 +689,7 @@
 </div>
 
 
-<script>
+{{-- <script>
 
     function openImgModal(){
         document.getElementById('imgModal').classList.remove('hidden');
@@ -686,7 +722,7 @@
     
 
 
-</script>
+</script> --}}
 
 
 @endsection
