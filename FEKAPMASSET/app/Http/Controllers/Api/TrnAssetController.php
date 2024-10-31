@@ -282,38 +282,43 @@ class TRNAssetController extends Controller
     public function unassignAsset(Request $request, $assetcode){
         // Validate the incoming data
         $validatedData = $request->validate([
-            'NIPP' => 'required|integer',   
+            'NIPP' => 'required|integer',            
         ]);
 
-        // Prepare data to send to the API
+        // Prepare data to send to the API for unassignment (setting NIPP to null)
         $data = [
-            'NIPP' => $validatedData['NIPP'],            
+            'NIPP' => null, // Unassigning by setting NIPP to null
         ];
 
-        // 1. Send POST request to assign the asset to an employee
+        // 1. Send PUT request to unassign the asset (set NIPP to null)
         $response = Http::put("http://localhost:5252/api/TrnAsset/{$assetcode}", $data);
+        Log::info('Validated Data:', $validatedData);
 
-        // Check if the asset assignment was successful before logging history
+        // Check if the unassignment was successful before logging history
         if ($response->successful()) {
-            // 2. If successful, log the assignment in the asset history API
+            // 2. If successful, log the unassignment in the asset history API
             $historyResponse = Http::post('http://localhost:5252/api/AssetHistory', [
-                'asset_code' => $validatedData['ASSETCODE'],
+                'asset_code' => $assetcode,
                 'user_id' => $validatedData['NIPP'],
-                'status' => 'assigned',
+                'status' => 'unassigned', // Status for unassignment
                 'timestamp' => now(),
             ]);
+            Log::info('Validated Data:', $validatedData);
 
             // Log success or error based on the history logging response
             if ($historyResponse->successful()) {
-                return redirect()->route('asset.index')->with('success', 'Asset assigned and logged successfully!');
+                Log::info('Validated Data:', $validatedData);
+                return redirect()->route('transaction.index')->with('success', 'Asset unassigned and logged successfully!');
             } else {
-                return back()->withErrors(['message' => 'Asset assigned, but failed to log in history.'])->withInput();
+                Log::info('Validated Data:', $validatedData);
+                return back()->withErrors(['message' => 'Asset unassigned, but failed to log in history.'])->withInput();
             }
         } else {
-            // Handle error response from the assignment API
-            return back()->withErrors(['message' => 'Failed to assign asset. Please try again.'])->withInput();
+            // Handle error response from the unassignment API
+            Log::info('Validated Data:', $validatedData);
+            return back()->withErrors(['message' => 'Failed to unassign asset. Please try again.'])->withInput();
         }
-    } 
+    }
 
 
 }

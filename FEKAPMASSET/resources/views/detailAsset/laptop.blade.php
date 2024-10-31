@@ -44,7 +44,7 @@
                     <div class="p-5">
                         <div class="flex justify-between items-center pb-4 mb-4">
                             <!-- Left Aligned Heading -->
-                            @if (empty($employeeNIPP) || $employeeNIPP === 'N/A')
+                            @if (empty($employeeNIPP) || $employeeNIPP === 'Null')
                             <a href="#">
                                 <h4 class="text-2xl font-bold tracking-tight text-gray-900">
                                     This asset is available and ready to be assigned
@@ -68,9 +68,11 @@
                             <!-- Right Aligned Buttons -->
                             <div class="flex space-x-4">
                                 {{-- @auth --}}
-                                <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300">
+                                <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300"
+                                        onclick="unassignAsset('{{ route('transaction.unassign', ['assetcode' => $assetcode]) }}')">
                                     Unassign This Asset
                                 </button>
+
                                 {{-- @endauth --}}
                             </div>
                             @endif
@@ -689,40 +691,59 @@
 </div>
 
 
-{{-- <script>
+<script>
 
-    function openImgModal(){
-        document.getElementById('imgModal').classList.remove('hidden');
-    }
+    // function openImgModal(){
+    //     document.getElementById('imgModal').classList.remove('hidden');
+    // }
 
-    // function to open maintenance modal
-    function openMtcModal() {
-        // Retrieve the asset code from the button's data-attribute
-        // const assetcode = event.target.getAttribute('data-assetcode');
+    // // function to open maintenance modal
+    // function openMtcModal() {
+    //     // Retrieve the asset code from the button's data-attribute
+    //     // const assetcode = event.target.getAttribute('data-assetcode');
 
-        // Open the modal
-        document.getElementById('mtcModal').classList.remove('hidden');
+    //     // Open the modal
+    //     document.getElementById('mtcModal').classList.remove('hidden');
 
-        // Set the asset code value in the modal input field
-        document.getElementById('assetcode').value = $assetcode;
-    }
+    //     // Set the asset code value in the modal input field
+    //     document.getElementById('assetcode').value = $assetcode;
+    // }
 
-    // function to close the maintenance modal
-    function closeMtc(){
-        document.getElementById('mtcModal').classList.add('hidden'); // set the modal class to hidden
-    }
+    // // function to close the maintenance modal
+    // function closeMtc(){
+    //     document.getElementById('mtcModal').classList.add('hidden'); // set the modal class to hidden
+    // }
     
-    // function to close the image modal
-    function closeImg(){
-        document.getElementById('imgModal').classList.add('hidden'); // set the modal class to hidden
+    // // function to close the image modal
+    // function closeImg(){
+    //     document.getElementById('imgModal').classList.add('hidden'); // set the modal class to hidden
 
+    // }
+
+    function unassignAsset(url) {
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Asset unassigned successfully!');
+                location.reload(); // Optional: reload page or redirect if needed
+            } else {
+                alert('Failed to unassign asset.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
     }
 
 
     
 
 
-</script> --}}
+</script>
 
 
 @endsection

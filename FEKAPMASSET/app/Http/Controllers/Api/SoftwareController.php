@@ -110,7 +110,7 @@ class SoftwareController extends Controller
                 'json' => $validated,  // Use the validated data
             ]);
         
-            $data = json_decode($response->getBody()->getContents(), true);
+            $data = json_decode($response->getBody()->getContents(),  true);
             Log::info('API Response:', $data);  // Log the API response for inspection
         
             return redirect('/detaiAsset/Laptop/{assetcode}')->with('success', 'Data Updated successfully!');

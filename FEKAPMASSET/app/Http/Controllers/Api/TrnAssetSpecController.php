@@ -16,5 +16,5 @@ class  TRNAssetSpecController extends Controller
     
         // Check if $data is indeed an array or a single asset object
         return view('detailAsset.Laptop', ['assetSpecData' => $data]); // Directly pass the asset data
-    }   
+    }
 }
