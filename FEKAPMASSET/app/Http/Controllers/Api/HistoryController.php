@@ -44,7 +44,7 @@ class HistoryController extends Controller
     }
 
     // Store a new history record
-    public function store(Request $request)
+    public function storesz(Request $request)
     {
         $validatedData = $request->validate([
             "IDASSETHISTORY" => "Required",
@@ -85,5 +85,25 @@ class HistoryController extends Controller
         
             return redirect('/master/create')->withErrors(['error' => 'An error occurred while submitting the data.']);
         }          
+    }
+
+    public function store (Request $request){
+        $validated = $request -> validate([
+            "IDASSETHISTORY"
+        ]);
+
+        $client = new Client();
+        try {
+            $response = $client -> post("http://localhost:5252/api/HistAsset", [
+                'json' => $validated,
+            ]);        
+            $data = json_decode($response -> getBody() -> getContents(), true);
+            Log::info("API Response: ", $data);
+        } catch (\GuzzleHttp\Exception\RequestException $e) {
+            $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;
+            Log::error('API Error: ' . $e->getMessage() . ' - Response Body: ' . $responseBody);
+        
+            return redirect()->back()->withErrors(['error' => 'An error occurred while submitting the data.']);
+        }
     }
 }

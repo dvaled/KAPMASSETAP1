@@ -20,7 +20,7 @@ public class TrnHistMaintenanceController : ControllerBase{
         var trngetmaintenancebyac = await _context.TRN_HIST_MAINTENANCE.Where(e => e.ASSETCODE == ASSETCODE).ToListAsync();
         if (trngetmaintenancebyac == null || !trngetmaintenancebyac.Any())
         {
-            return NotFound("Maintenance not found");
+            return Ok("Maintenance not found");
         }
 
         return Ok(trngetmaintenancebyac);
@@ -35,7 +35,7 @@ public class TrnHistMaintenanceController : ControllerBase{
         // If asset is not found, return a 404 error
         if (asset == null)
         {
-            return NotFound("Asset not found.");
+            return Ok("Asset not found.");
         }
 
         // Set the foreign key relationship

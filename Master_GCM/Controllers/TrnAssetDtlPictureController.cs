@@ -26,7 +26,7 @@ public class TrnAssetDtlPictureController : ControllerBase
                                         .ToListAsync();
 
         if(trnassetcode == null || !trnassetcode.Any()){
-            return NotFound();
+            return Ok("Not Found");
         }                                
         return Ok(trnassetcode);
     }
@@ -118,7 +118,7 @@ public class TrnAssetDtlPictureController : ControllerBase
         {
             if (!TrnPictureExists(IDASSETPIC))
             {
-                return NotFound();
+                return Ok("Asset not Found");
             }
             else
             {

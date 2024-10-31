@@ -16,7 +16,7 @@ public class TrnAssetSpecController : ControllerBase{
         var trngetspec = await _context.TRN_DTL_SPEC.Where(x => x.ASSETCODE == ASSETCODE).ToListAsync();
 
         if (trngetspec == null || !trngetspec.Any()){
-            return NotFound();
+            return Ok();
         }
         return Ok(trngetspec);
     }
@@ -42,7 +42,7 @@ public class TrnAssetSpecController : ControllerBase{
         }
         catch (DbUpdateConcurrencyException){
             if (!AssetSpecExists(IDASSETSPEC)){
-                return NotFound();
+                return Ok();
             }
             else{
                 throw;

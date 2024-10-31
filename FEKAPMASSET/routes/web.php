@@ -58,8 +58,14 @@ Route::prefix('detailAsset')->name('detailAsset.')->group(function(){
     Route::get('/Laptop/{assetcode}/Image', [TrnDtlPictureController::class, 'index'])->name('image'); //get image form
     Route::post('Laptop/Image/store', [TrnDtlPictureController::class, 'store'])->name('image.store'); //submit image data 
 
+    //Post Software
     Route::get('/Laptop/{assetcode}/Software', [SoftwareController::class, 'create'])->name('software');
     Route::post('/Laptop/{assetcode}/Software', [SoftwareController::class, 'store'])->name('software.store');
+
+    //Post History User
+    Route:
+
+
 
 
 });

@@ -24,7 +24,7 @@ public class TrnAssetController : ControllerBase
 
         if (trndtlAsset == null)
         {
-            return NotFound("Asset not found");
+            return Ok("Asset not found");
         }
 
         return Ok(trndtlAsset);
@@ -64,7 +64,7 @@ public class TrnAssetController : ControllerBase
         var transHardware = await _context.TRN_ASSET.ToListAsync();
         if (transHardware == null || !transHardware.Any())
         {
-            return NotFound("List is empty");
+            return Ok("List is empty");
         }
         return Ok(transHardware);
     }
