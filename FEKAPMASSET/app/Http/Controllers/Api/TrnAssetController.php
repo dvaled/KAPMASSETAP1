@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class TRNAssetController extends Controller
 {
@@ -46,15 +47,26 @@ class TRNAssetController extends Controller
 
 
     //Create new asset view
-    public function newAssetView(){
+    // public function newAssetView(){
+    //     $client = new Client();
+    //     $response = $client->request('GET', 'http://localhost:5252/api/Master');
+    //     $body = $response->getBody();
+    //     $content = $body->getContents();
+    //     $data = json_decode($content, true);
+
+    //     // Pass the masterData to the view so that the sidebar can consume it
+    //     return view('Transaction.create', ['sidebarData' => $data]);
+    // }
+
+    public function msttrnasset() {
         $client = new Client();
         $response = $client->request('GET', 'http://localhost:5252/api/Master');
         $body = $response->getBody();
         $content = $body->getContents();
         $data = json_decode($content, true);
 
-        // Pass the masterData to the view so that the sidebar can consume it
-        return view('Transaction.create', ['sidebarData' => $data]);
+        return view('transaction.asset', [
+            'optionData' => $data]); // Keep the view name consistent
     }
 
     public function updateData($id, $newData)
@@ -106,7 +118,7 @@ class TRNAssetController extends Controller
             'assetData' => $assetData,
             'assetSpecData' => $assetSpecData,
             'historyMaintenanceData' => $historyMaintenanceData,
-            'detailSoftwareData' => $detailSoftwareData
+            'detailSoftwareData' => $detailSoftwareData,
         ]);
     }
     public function index($assetcode) {
@@ -126,63 +138,71 @@ class TRNAssetController extends Controller
         ]); // Keep the view name consistent
     }
 
-    //Store new asset
-    public function store(Request $request){
-        // Validate the incoming data
-        $validatedData = $request->validate([
-            'ASSETCATEGORY' => 'required|string|max:255',
-            'ASSETTYPE' => 'required|string|max:255',
-            'ASSETBRAND' => 'required|string|max:255',
-            'ASSETMODEL' => 'required|string|max:255',
-            'ASSETSERIES' => 'required|string|max:255',
-            'ASSETSERIALNUMBER' => 'required|string|max:255',
-            'ADDEDDATE' => 'required|date',
-            'ACTIVE' => 'required|string|in:YES,NO',
-            'NIPP' => 'nullable|integer',
-            'ASSETCODE' => 'nullable|integer',
+    public function store(Request $request)
+    {
+        // Validate the incoming request data
+        $validated = $request->validate([
+            'assettype' => 'required|string|max:255',
+            'assetcategory' => 'required|string|max:255',
+            'assetbrand' => 'required|string|max:255',
+            'assetmodel' => 'required|string|max:255',
+            'assetseries' => 'required|string|max:255',
+            'assetserialnumber' => 'required|string|max:255',
+            'picadded' => 'required|string|max:255',
         ]);
 
-        // Prepare data for initial API request (without ASSETCODE)
-        $data = [
-            'ASSETCATEGORY' => $validatedData['ASSETCATEGORY'],
-            'ASSETTYPE' => $validatedData['ASSETTYPE'],
-            'ASSETBRAND' => $validatedData['ASSETBRAND'],
-            'ASSETMODEL' => $validatedData['ASSETMODEL'],
-            'ASSETSERIES' => $validatedData['ASSETSERIES'],
-            'ASSETSERIALNUMBER' => $validatedData['ASSETSERIALNUMBER'],
-            'ADDEDDATE' => Carbon::parse($validatedData['ADDEDDATE'])->toDateString(),
-            'ACTIVE' => $validatedData['ACTIVE'],
-            'NIPP' => $validatedData['NIPP'] ?? null,
-        ];
+        // Initialize the HTTP client for making requests
+        $client = new \GuzzleHttp\Client();
 
-        // Send POST request to the external API to create asset (without ASSETCODE)
-        $response = Http::post('http://localhost:5252/api/TrnAsset', $data);
+        try {
+            // Send POST request directly using the validated data
+            $response = $client->post("http://localhost:5252/api/TrnAsset", [
+                'json' => [
+                    'idasset' => '0',
+                    'assetcode' => 'assetcode',
+                    'assettype' => $validated['assettype'],
+                    'assetcategory' => $validated['assetcategory'],
+                    'assetbrand' => $validated['assetbrand'],
+                    'assetmodel' => $validated['assetmodel'],
+                    'assetseries' => $validated['assetseries'],
+                    'assetserialnumber' => $validated['assetserialnumber'],
+                    'picadded' => $validated['picadded'],
+                    'condition' => 'GREAT',
+                    'active' => 'Y',
+                    'nipp' => null,
+                    'picupdated' => null,
+                ]
+            ]);
 
-        // Check if the API request was successful
-        if ($response->successful()) {
-            // Get the newly created asset's ID from the API response
-            $assetId = $response->json('id');  // Assuming the API returns the new ID in the response
+            // Retrieve the response data and log for debugging
+            $responseData = json_decode($response->getBody()->getContents(), true);
+            Log::info('API Response:', $responseData);
 
-            // Generate the ASSETCODE using ASSETCATEGORY, ASSETTYPE, ADDEDDATE, and IDASSET
-            $addedDate = Carbon::parse($validatedData['ADDEDDATE'])->format('Ymd');
-            $assetCode = $validatedData['ASSETCATEGORY'] . $validatedData['ASSETTYPE'] . $addedDate . str_pad($assetId, 4, '0', STR_PAD_LEFT);
+            // Get the assetcode from the response
+            $assetcode = $responseData['assetcode'];
+            $category = $responseData['assetcategory'];
 
-            // Prepare data to update the asset with the generated ASSETCODE
-            $updateData = ['ASSETCODE' => $assetCode];
-
-            // Send PATCH request to update the asset with the new ASSETCODE
-            $updateResponse = Http::patch("http://localhost:5252/api/TrnAsset/{$assetId}", $updateData);
-
-            if ($updateResponse->successful()) {
-                return redirect()->route('trnasset.index')->with('success', 'Asset created successfully!');
+            // Check if the API response was successful and redirect accordingly
+            if ($category == 'LAPTOP') {
+                return redirect()->route('transaction.trnlaptop', ['assetcategory' => $category, 'assetcode' => $assetcode])
+                                 ->with('success', 'Asset created successfully!');
+            } else if ($category == 'MOBILE') {
+                return redirect()->route('transaction.mobile', ['assetcategory' => $category, 'assetcode' => $assetcode])
+                                 ->with('success', 'Asset created successfully!');
             } else {
-                return back()->withErrors(['message' => 'Failed to update asset with ASSETCODE.'])->withInput();
+                return redirect()->route('transaction.others', ['assetcategory' => $category, 'assetcode' => $assetcode])
+                                 ->with('success', 'Asset created successfully!');
             }
-        } else {
-            // Handle error response from the initial POST request
-            return back()->withErrors(['message' => 'Failed to create asset.'])->withInput();
+            
+        } catch (\GuzzleHttp\Exception\RequestException $e) {
+            // Handle error response, log the error message, and show the error to the user
+            $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;
+            Log::error('API Error: ' . $e->getMessage() . ' - Response Body: ' . $responseBody);
+
+            return back()->withErrors(['error' => 'Failed to create asset. Please try again.'])->withInput();
         }
     }
+
 
     public function assignAsset(Request $request){
     // Validate the incoming data
