@@ -149,15 +149,21 @@ class MasterController extends Controller
 
     public function update(Request $request, $id) {
         // Validate the incoming request data
-        $validated = $request->validate([
-            'idmaster' => 'required|integer',
-            'condition' => 'required|string|max:255',
-            'nosr' => 'required|string|max:255',
-            'description' => 'required|string',
-            'valuegcm' => 'required|numeric',
-            'typegcm' => 'nullable|string|max:255', 
-            'active' => 'required|string', 
-        ]);
+        try {
+            $validated = $request->validate([
+                'masterid' => 'required|integer',
+                'sbarcondition' => 'nullable|string',
+                'condition' => 'required|string|max:255',
+                'nosr' => 'required|string|max:255',
+                'description' => 'required|string',
+                'valuegcm' => 'required|numeric',
+                'typegcm' => 'nullable|string|max:255', 
+                'active' => 'required|string',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::error('Validation errors:', $e->errors());
+            return response()->json(['errors' => $e->errors()], 422);
+        }
         
         $client = new Client();     
         
@@ -168,7 +174,8 @@ class MasterController extends Controller
             ]);                                 
     
             $data = json_decode($response->getBody()->getContents(), true);
-            Log::info('API Response:', $data);  // Log the API response for inspection
+            // Ensure $data is logged as an array
+            Log::info('API Response:', $data ?? []); // Use an empty array if $data is null
         
             return redirect('/master')->with('success', 'Data submitted successfully!');
         } catch (\GuzzleHttp\Exception\RequestException $e) {

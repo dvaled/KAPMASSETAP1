@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class TRNAssetController extends Controller
 {
@@ -60,7 +61,7 @@ class TRNAssetController extends Controller
         $response = $client->request('GET', 'http://localhost:5252/api/Master');
         $body = $response->getBody();
         $content = $body->getContents();
-        $sidebarData = json_decode($content, true);
+        $data = json_decode($content, true);
 
         return view('transaction.asset', [
             'optionData' => $data]); // Keep the view name consistent
@@ -123,7 +124,7 @@ class TRNAssetController extends Controller
         //fetch image
         $responseImg = $client->request('GET', "http://localhost:5252/api/TrnAssetDtlPicture/{$assetcode}");
         $contentImg = $responseImg->getBody()->getContents();
-        $imgData = json_decode($contentImg, true);
+        $imgData = json_decode($contentImg, true);  
 
         // Pass both assetData and assetSpecData to the view
         return view('detailAsset.Laptop', [
@@ -131,6 +132,9 @@ class TRNAssetController extends Controller
             'assetSpecData' => $assetSpecData,
             'historyMaintenanceData' => $historyMaintenanceData,
             'detailSoftwareData' => $detailSoftwareData,
+            'userData' => $userData,
+            'histData' => $histData,
+            'imgData' => $imgData
         ]);
     }
     public function index($assetcode) {

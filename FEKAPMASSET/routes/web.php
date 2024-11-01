@@ -29,6 +29,7 @@ Route::prefix('master')->name('master.')->group(function() {
     Route::get('/create/{condition}', [MasterController::class, 'create'])->name('create'); // return master view with all of the master data
     Route::post('/store/{condition}', [MasterController::class, 'store'])->name('store');//send a post request to the API for master_gcm table
     Route::get('/show/{condition}', [MasterController::class, 'show'])->name('show');//return master view with all of the master data
+    
     Route::put('/update/{masterid}', [MasterController::class, 'update'])->name('update');//send a post request to the API for master_gcm table
     Route::put('destroy/{masterid}', [MasterController::class, 'destroy'])->name('destroy'); // make flag active -> N
     Route::get('/log', [LogController::class, 'index'])->name('log.index');//return log view with all of the log data
@@ -40,9 +41,10 @@ Route::prefix('transaction')->name('transaction.')->group(function(){
     Route::get('/detailAssetL/{assetcode}', [TrnAssetController::class, 'show'])-> name('detailAsset.laptop');
     Route::get('/asset', [TrnAssetController::class, 'msttrnasset'])-> name('asset'); //View
     Route::get('/trnlaptop/{assetcategory}/{assetcode}', [TrnAssetSpecController::class, 'msttrnassetspec'])-> name('trnlaptop'); //Retrieve transaction.create view along with all the data 
-    // Route::get('/asset/assign', [TrnAssetController::class, 'AssignView'])-> name('transaction.assign'); //Retrieve transaction.assing view along with all the data
     Route::Post('/storespec/{assetcode}', [TrnAssetSpecController::class, 'store'])-> name('storespec');
     Route::Post('/store', [TrnAssetController::class, 'store'])-> name('store');
+    Route::Put('/unassign/{assetcode}', [TrnAssetController::class, 'unassignAsset'])->name('unassign');
+    // Route::get('/asset/assign', [TrnAssetController::class, 'AssignView'])-> name('transaction.assign'); //Retrieve transaction.assing view along with all the data
     // Route::Post('/asset/assign   /store', [TrnAssetController::class, 'assign'])-> name('assign');
 });
 
@@ -53,7 +55,7 @@ Route::prefix('Log')->name('Log.')->group(function(){
 
 //Detail Asset
 Route::prefix('detailAsset')->name('detailAsset.')->group(function(){
-    Route::get('/laptop/{assetcode}', [TrnAssetController::class, 'show'])->name('laptop');
+    Route::get('/Laptop/{assetcode}', [TrnAssetController::class, 'show'])->name('laptop');
     Route::get('/mobile/{assetcode}', [TrnAssetController::class, 'show'])->name('mobile');
     Route::get('/others/{assetcode}', [TrnAssetController::class, 'show'])->name('others');
     // Route::get('Laptop/{assetcode}', [MaintenanceController::class, 'sidebar'])->name('laptop'); //return view with all of the data.
@@ -86,18 +88,5 @@ Route::prefix('software')->name('software.')->group(function(){
 
 Route::get('/software/create', [SoftwareController::class, 'store'])->name('software.create');
 
-
-
-// Route::view('/detailAssetM', 'detailAsset    .mobile');
-// Route::view('/detailAssetP', 'detailAsset.others');
-
-//Hardware 
+//Hardware
 Route::get('hardware/', [HardwareController::class, 'store']); // Get a specific hardware
-
-// //Master
-// Route::get('/master', [MasterController::class, 'index'])->name('master.index'); //display the master tables
-
-// //Sidebar Master
-// Route::get('/', [MasterController::class, 'sidebar'])->name('sidebar');
-
-//Employee

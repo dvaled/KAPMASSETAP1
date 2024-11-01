@@ -114,52 +114,57 @@
           <div class="bg-white p-6 rounded-md w-96">
               <h2 class="text-xl font-bold mb-4">Edit Master</h2>
 
-              <form id="editForm">
-                  @csrf
-                  @method('PUT') <!-- Use PUT method for updates -->
-
-                  <!-- Input fields for master data -->
-                  <div class="mb-4">
-                      <label for="masterid" class="block text-sm font-semibold">Master ID</label>
-                      <input type="number" id="masterid" name="masterid" class="w-full p-2 border rounded" readonly>
-                  </div>
-                  
-                  <div class="mb-4">
-                      <label for="condition" class="block text-sm font-semibold">Condition</label>
-                      <input type="text" id="condition" name="condition" class="w-full p-2 border rounded" required>
-                  </div>
-
-                  <div class="mb-4">
-                      <label for="nosr" class="block text-sm font-semibold">NOSR</label>
-                      <input type="number" id="nosr" name="nosr" class="w-full p-2 border rounded" required>
-                  </div>
-                  <div class="mb-4">
-                    <label for="description" class="block text-sm font-semibold"> Description </label>
+              <form action="{{ route('master.update', ['masterid' => $masters['masterid']]) }}" method="POST">
+                @csrf
+                @method('PUT') <!-- Override to use PUT method -->
+            
+                <!-- Input fields for master data -->
+                <div class="mb-4">
+                    <label for="idmaster" class="block text-sm font-semibold">Master ID</label>
+                    <input type="number" id="masterid" name="masterid" class="w-full p-2 border rounded" readonly>
+                </div>
+            
+                <div class="mb-4">
+                    <label for="condition" class="block text-sm font-semibold">Condition</label>
+                    <input type="text" id="condition" name="condition" class="w-full p-2 border rounded" required>
+                </div>
+                <div class="mb-4">
+                    <label for="sbarcondition" class="block text-sm font-semibold">SbarCondition</label>
+                    <input type="text" id="sbarcondition" name="sbarcondition" class="w-full p-2 border rounded">
+                </div>
+            
+                <div class="mb-4">
+                    <label for="nosr" class="block text-sm font-semibold">NOSR</label>
+                    <input type="text" id="nosr" name="nosr" class="w-full p-2 border rounded" required>
+                </div>
+            
+                <div class="mb-4">
+                    <label for="description" class="block text-sm font-semibold">Description</label>
                     <input type="text" id="description" name="description" class="w-full p-2 border rounded" required>
                 </div>
+            
                 <div class="mb-4">
-                    <label for="valuegcm" class="block text-sm font-semibold"> Value </label>
+                    <label for="valuegcm" class="block text-sm font-semibold">Value</label>
                     <input type="number" id="valuegcm" name="valuegcm" class="w-full p-2 border rounded" required>
                 </div>
+            
                 <div class="mb-4">
-                    <label for="typegcm" class="block text-sm font-semibold"> Type </label>
-                    <input type="text" id="typegcm" name="typegcm" class="w-full p-2 border rounded" required>
+                    <label for="typegcm" class="block text-sm font-semibold">Type</label>
+                    <input type="text" id="typegcm" name="typegcm" class="w-full p-2 border rounded">
                 </div>
+            
                 <div class="mb-4">
                     <label for="active" class="block text-sm font-semibold">Active</label>
-                    <select id="active" name="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                        <option value="Y">Y</option>  <!-- Represents true -->
-                        <option value="N">N</option>  <!-- Represents false -->
+                    <select id="active" name="active" class="w-full p-2 border rounded" required>
+                        <option value="Y">Y</option> <!-- Represents true -->
+                        <option value="N">N</option> <!-- Represents false -->
                     </select>
-                </div>    
-
-                  <!-- Add more fields as necessary -->
-
-                  <div class="flex justify-end">
-                      <button type="button" onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
-                      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
-                  </div>
-              </form>
+                </div>
+            
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
+                </div>
+            </form>
           </div>
         </div>
         {{-- Delete Modal --}}
@@ -210,6 +215,8 @@
     document.getElementById('valuegcm').value = masterData.valuegcm;
     document.getElementById('typegcm').value = masterData.typegcm;
     document.getElementById('active').value = masterData.active;
+    document.getElementById('sbarcondition').value = masterData.sbarcondition;
+
       // Populate other form fields as necessary
       
       document.getElementById('editModal').classList.remove('hidden');

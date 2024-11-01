@@ -604,14 +604,10 @@ namespace Master_GCM.Migrations
                     b.HasOne("TRNASSETMODEL", "TRNASSET")
                         .WithMany()
                         .HasForeignKey("ASSETCODE")
-<<<<<<< HEAD
-                        .HasPrincipalKey("ASSETCODE");
-=======
                         .HasPrincipalKey("ASSETCODE")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
->>>>>>> bc25928e01ca25ff03117de2abb3296a8a77743f
-
+                        
                     b.Navigation("TRNASSET");
                 });
 
