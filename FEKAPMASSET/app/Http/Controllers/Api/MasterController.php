@@ -132,7 +132,7 @@ class MasterController extends Controller
 
         try {
             // Send the PUT request to the API to update the master data
-            $response = $client->post('PUT', "http://localhost:5252/api/Master/{$masterid}", [
+            $response = $client->put("http://localhost:5252/api/Master/{$masterid}", [
                 'json' => $validated // Send the validated data as JSON
             ]);                                 
     
@@ -164,7 +164,7 @@ class MasterController extends Controller
         
         try {
             // Send the PUT request to the API to update the master data
-            $response = $client->post('PUT', "http://localhost:5252/api/Master/{$id}", [
+            $response = $client->put("http://localhost:5252/api/Master/{$id}", [
                 'json' => $validated // Send the validated data as JSON
             ]);                                 
     

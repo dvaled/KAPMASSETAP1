@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 public class TRNSOFTWAREMODEL{
     public int IDASSETSOFTWARE { get; set; }

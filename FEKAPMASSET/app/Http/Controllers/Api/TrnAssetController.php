@@ -7,9 +7,28 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Log;
 
 class TRNAssetController extends Controller
 {
+
+    public function index($assetcode) {
+        $client = new Client();
+        $response = $client->request('GET', 'http://localhost:5252/api/Master');
+        $body = $response->getBody();
+        $content = $body->getContents();
+        $masterData = json_decode($content, true);
+
+        $responseAsset = $client->request('GET', "http://localhost:5252/api/TrnAssetSpec/{$assetcode}");
+        $contentAsset = $responseAsset->getBody()->getContents();
+        $assetData = json_decode($contentAsset, true);
+
+        return view('detailAsset.Laptop', [
+            'masterData' => $masterData,
+            'assetData' => $assetData
+        ]); // Keep the view name consistent
+    }
+
     public function AssignView($assetCode){
         //new guzzle http client
         $client = new Client();
@@ -34,12 +53,10 @@ class TRNAssetController extends Controller
         $contentEmployee = $responseEmployee->getBody()->getContents();
         $employeeData = json_decode($contentEmployee, true);
 
-    
-
         // Pass both assetData and assetSpecData to the view
         return view('transaction.assign', [
-            // 'assetData' => $assetData,
-            // 'assetSpecData' => $assetSpecData,
+            'assetData' => $assetData,
+            'assetSpecData' => $assetSpecData,
             'masterData' => $masterData,
             'employeeData' => $employeeData,
         ]);
@@ -63,7 +80,7 @@ class TRNAssetController extends Controller
         $response = $client->request('GET', 'http://localhost:5252/api/Master');
         $body = $response->getBody();
         $content = $body->getContents();
-        $data = json_decode($content, true);
+        $sidebarData = json_decode($content, true);
 
         return view('transaction.asset', [
             'optionData' => $data]); // Keep the view name consistent
@@ -89,8 +106,6 @@ class TRNAssetController extends Controller
         }
     }
 
-    
-
     public function show($assetcode){
         // Create a new HTTP client instance
         $client = new Client();
@@ -105,13 +120,30 @@ class TRNAssetController extends Controller
         $contentAssetSpec = $responseAssetSpec->getBody()->getContents();
         $assetSpecData = json_decode($contentAssetSpec, true);
 
+        // Fetch History Maintenance
         $resposeHistoryMaintenance = $client->request('GET', "http://localhost:5252/api/TrnHistMaintenance/{$assetcode}");
         $contentHistoryMaintenance = $resposeHistoryMaintenance->getBody()->getContents();
         $historyMaintenanceData = json_decode($contentHistoryMaintenance, true);
 
+        // Fetch Software Installed
         $responseDetailSoftware = $client->request('GET', "http://localhost:5252/api/TrnSoftware/{$assetcode}");
         $contentDetailSoftware = $responseDetailSoftware->getBody()->getContents();
         $detailSoftwareData = json_decode($contentDetailSoftware, true);
+
+        //Fetch PIC
+        $responsePic = $client->request('GET', "http://localhost:5252/api/User");
+        $contentPic = $responsePic->getBody()->getContents();
+        $userData = json_decode($contentPic, true);  
+
+        //Fetch History Asset
+        $responseHist = $client->request('GET', "http://localhost:5252/api/AssetHistory/{$assetcode}");
+        $contentHist = $responseHist->getBody()->getContents();
+        $histData = json_decode($contentHist, true);  
+
+        //fetch image
+        $responseImg = $client->request('GET', "http://localhost:5252/api/TrnAssetDtlPicture/{$assetcode}");
+        $contentImg = $responseImg->getBody()->getContents();
+        $imgData = json_decode($contentImg, true);
 
         // Pass both assetData and assetSpecData to the view
         return view('detailAsset.Laptop', [
@@ -205,31 +237,83 @@ class TRNAssetController extends Controller
 
 
     public function assignAsset(Request $request){
-    // Validate the incoming data
-    $validatedData = $request->validate([
-        'NIPP' => 'required|integer',
-        'ASSETCODE' => 'required|string', // Assuming you are assigning an asset based on its code
-    ]);
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'NIPP' => 'required|integer',
+            'ASSETCODE' => 'required|string', // Assuming you are assigning an asset based on its code
+        ]);
 
-    // Prepare data to send to the API 
-    $data = [
-        'NIPP' => $validatedData['NIPP'],
-        'ASSETCODE' => $validatedData['ASSETCODE'], // Include asset code in the request
-    ];
+        // Prepare data to send to the API
+        $data = [
+            'NIPP' => $validatedData['NIPP'],
+            'ASSETCODE' => $validatedData['ASSETCODE'], // Include asset code in the request
+        ];
 
-    // Send POST request to the external API to assign the asset to an employee
-    $response = Http::post('http://localhost:5252/api/AssignAsset', $data); 
+        // 1. Send POST request to assign the asset to an employee
+        $response = Http::post('http://localhost:5252/api/AssignAsset', $data);
 
+        // Check if the asset assignment was successful before logging history
+        if ($response->successful()) {
+            // 2. If successful, log the assignment in the asset history API
+            $historyResponse = Http::post('http://localhost:5252/api/AssetHistory', [
+                'asset_code' => $validatedData['ASSETCODE'],
+                'user_id' => $validatedData['NIPP'],
+                'status' => 'assigned',
+                'timestamp' => now(),
+            ]);
 
+            // Log success or error based on the history logging response
+            if ($historyResponse->successful()) {
+                return redirect()->route('asset.index')->with('success', 'Asset assigned and logged successfully!');
+            } else {
+                return back()->withErrors(['message' => 'Asset assigned, but failed to log in history.'])->withInput();
+            }
+        } else {
+            // Handle error response from the assignment API
+            return back()->withErrors(['message' => 'Failed to assign asset. Please try again.'])->withInput();
+        }
+    } 
 
-    // Check if the API request was successful
-    if ($response->successful()) {
-        return redirect()->route('asset.index')->with('success', 'Asset assigned successfully!');
-    } else {
-        // Handle error response from the API
-        return back()->withErrors(['message' => 'Failed to assign asset. Please try again.'])->withInput();
+    public function unassignAsset(Request $request, $assetcode){
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'NIPP' => 'required|integer',            
+        ]);
+
+        // Prepare data to send to the API for unassignment (setting NIPP to null)
+        $data = [
+            'NIPP' => null, // Unassigning by setting NIPP to null
+        ];
+
+        // 1. Send PUT request to unassign the asset (set NIPP to null)
+        $response = Http::put("http://localhost:5252/api/TrnAsset/{$assetcode}", $data);
+        Log::info('Validated Data:', $validatedData);
+
+        // Check if the unassignment was successful before logging history
+        if ($response->successful()) {
+            // 2. If successful, log the unassignment in the asset history API
+            $historyResponse = Http::post('http://localhost:5252/api/AssetHistory', [
+                'asset_code' => $assetcode,
+                'user_id' => $validatedData['NIPP'],
+                'status' => 'unassigned', // Status for unassignment
+                'timestamp' => now(),
+            ]);
+            Log::info('Validated Data:', $validatedData);
+
+            // Log success or error based on the history logging response
+            if ($historyResponse->successful()) {
+                Log::info('Validated Data:', $validatedData);
+                return redirect()->route('transaction.index')->with('success', 'Asset unassigned and logged successfully!');
+            } else {
+                Log::info('Validated Data:', $validatedData);
+                return back()->withErrors(['message' => 'Asset unassigned, but failed to log in history.'])->withInput();
+            }
+        } else {
+            // Handle error response from the unassignment API
+            Log::info('Validated Data:', $validatedData);
+            return back()->withErrors(['message' => 'Failed to unassign asset. Please try again.'])->withInput();
+        }
     }
-}
 
 
 }

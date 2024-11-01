@@ -41,7 +41,7 @@ public class UserController : ControllerBase
         {
             if (!UserExists(nipp))
             {
-                return NotFound();
+                return Ok();
             }
             else
             {

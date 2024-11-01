@@ -12,7 +12,7 @@ use App\Http\Controllers\API\MasterController;
 use App\Http\Controllers\API\TrnAssetController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\TrnAssetSpecController;
-
+use App\Http\Controllers\API\TrnDtlPictureController;
 
 //Authentication
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login'); //view login page
@@ -26,7 +26,7 @@ Route::get('/dashboard', [AssetController::class, 'create'])->name('dashboard');
 //Master
 Route::prefix('master')->name('master.')->group(function() {
     Route::get('/', [MasterController::class, 'index'])->name('index');//return master view with all of the master data
-    Route::get('/create/{condition}', [MasterController::class, 'create'])->name('create');//return master view with all of the master data}
+    Route::get('/create/{condition}', [MasterController::class, 'create'])->name('create'); // return master view with all of the master data
     Route::post('/store/{condition}', [MasterController::class, 'store'])->name('store');//send a post request to the API for master_gcm table
     Route::get('/show/{condition}', [MasterController::class, 'show'])->name('show');//return master view with all of the master data
     Route::put('/update/{masterid}', [MasterController::class, 'update'])->name('update');//send a post request to the API for master_gcm table
@@ -46,25 +46,48 @@ Route::prefix('transaction')->name('transaction.')->group(function(){
     // Route::Post('/asset/assign/store', [TrnAssetController::class, 'assign'])-> name('assign');
 });
 
-Route::prefix('detailAsset')->name('detailAsset.')->group(function(){
-    Route::get('/laptop/{assetcode}', [TrnAssetController::class, 'show'])->name('laptop');
-    Route::get('/mobile/{assetcode}', [TrnAssetController::class, 'show'])->name('mobile');
-    Route::get('/others/{assetcode}', [TrnAssetController::class, 'show'])->name('others');
-});
-
 //Log
 Route::prefix('Log')->name('Log.')->group(function(){
     Route::get('/', [LogController::class, 'index'])->name('index');
 });
 
 
-Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('maintenance.index');
+//Detail Asset
+Route::prefix('detailAsset')->name('detailAsset.')->group(function(){
+    Route::get('/laptop/{assetcode}', [TrnAssetController::class, 'show'])->name('laptop');
+    Route::get('/mobile/{assetcode}', [TrnAssetController::class, 'show'])->name('mobile');
+    Route::get('/others/{assetcode}', [TrnAssetController::class, 'show'])->name('others');
+    // Route::get('Laptop/{assetcode}', [MaintenanceController::class, 'sidebar'])->name('laptop'); //return view with all of the data.
+
+    //Post Image
+    Route::get('/Laptop/{assetcode}/Image', [TrnDtlPictureController::class, 'index'])->name('image'); //get image form
+    Route::post('Laptop/Image/store', [TrnDtlPictureController::class, 'store'])->name('image.store'); //submit image data 
+
+    //Post Software
+    Route::get('/Laptop/{assetcode}/Software', [SoftwareController::class, 'create'])->name('software');
+    Route::post('/Laptop/{assetcode}/Software', [SoftwareController::class, 'store'])->name('software.store');
+
+});
+
+//Maintenance
+Route::prefix('maintenance')->name('maintenance.')->group(function(){
+    Route::get('/', [MaintenanceController::class, 'index'])->name('index');
+    Route::get('/create', [MaintenanceController::class, 'sidebar'])->name('create');
+    Route::post('/store/{assetcode}', [MaintenanceController::class, 'store'])->name('store');
+});
+
+Route::prefix('software')->name('software.')->group(function(){
+    Route::get('/', [SoftwareController::class, 'index'])->name('index');
+    Route::get('/store', [SoftwareController::class, 'create'])->name('create');
+    Route::put('/{id}', [SoftwareController::class, 'delete'])->name('delete');
+
+});
 
 Route::get('/software/create', [SoftwareController::class, 'store'])->name('software.create');
 
 
 
-// Route::view('/detailAssetM', 'detailAsset.mobile');
+// Route::view('/detailAssetM', 'detailAsset    .mobile');
 // Route::view('/detailAssetP', 'detailAsset.others');
 
 //Hardware 

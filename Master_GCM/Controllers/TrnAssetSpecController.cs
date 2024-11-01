@@ -54,7 +54,7 @@ public class TrnAssetSpecController : ControllerBase{
         }
         catch (DbUpdateConcurrencyException){
             if (!AssetSpecExists(IDASSETSPEC)){
-                return NotFound();
+                return Ok();
             }
             else{
                 throw;

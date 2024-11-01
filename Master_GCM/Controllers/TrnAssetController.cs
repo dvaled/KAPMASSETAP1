@@ -25,7 +25,7 @@ public class TrnAssetController : ControllerBase
 
         if (trndtlAsset == null)
         {
-            return NotFound("Asset not found");
+            return Ok("Asset not found");
         }
 
         return Ok(trndtlAsset);

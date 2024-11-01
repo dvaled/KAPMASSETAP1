@@ -59,7 +59,7 @@ public class TrnSoftwareController : ControllerBase{
         catch (DbUpdateConcurrencyException)
         {
              if (!SoftwarerExists(IDASSETSOFTWARE)){
-                return NotFound();
+                return Ok();
             }
             else{throw;}
         }

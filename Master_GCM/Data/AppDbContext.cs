@@ -29,6 +29,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<TRNMAINTENANCEMODEL>().HasKey(e => e.MAINTENANCEID);
         modelBuilder.Entity<TRNASSETHISTORYMODEL>().HasKey(e => e.IDASSETHISTORY);
         modelBuilder.Entity<TRNASSETPICTUREMODEL>().HasKey(e =>  e.IDASSETPIC);
+        
+        
         modelBuilder.Entity<TRNASSETMODEL>()
             .HasOne(h => h.EMPLOYEE) // Navigation property
             .WithMany()
@@ -59,6 +61,7 @@ public class AppDbContext : DbContext
             .WithOne()
             .HasForeignKey<TRNASSETSPECMODEL>(h => h.ASSETCODE) // Foreign key relationship
             .HasPrincipalKey<TRNASSETMODEL>(a => a.ASSETCODE); // Link to the alternate key
+
         modelBuilder.Entity<TRNSOFTWAREMODEL>()
             .HasOne(s => s.TRNASSET)
             .WithMany() // One-to-one relationship

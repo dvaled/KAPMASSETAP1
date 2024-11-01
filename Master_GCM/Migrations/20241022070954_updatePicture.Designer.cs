@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Master_GCM.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241022070954_updatePicture")]
+    partial class updatePicture
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,7 +52,8 @@ namespace Master_GCM.Migrations
 
                     b.HasKey("LOGID");
 
-                    b.HasIndex("ASSETCODE");
+                    b.HasIndex("ASSETCODE")
+                        .IsUnique();
 
                     b.ToTable("TRN_LOG");
                 });
@@ -77,7 +81,12 @@ namespace Master_GCM.Migrations
                     b.Property<int>("NOSR")
                         .HasColumnType("integer");
 
+                    b.Property<string>("SBARCONDITION")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("TYPEGCM")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("VALUEGCM")
@@ -169,7 +178,8 @@ namespace Master_GCM.Migrations
 
                     b.HasKey("IDASSETHISTORY");
 
-                    b.HasIndex("ASSETCODE");
+                    b.HasIndex("ASSETCODE")
+                        .IsUnique();
 
                     b.HasIndex("NIPP");
 
@@ -204,12 +214,15 @@ namespace Master_GCM.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("ASSETMODEL")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ASSETSERIALNUMBER")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ASSETSERIES")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ASSETTYPE")
@@ -220,18 +233,8 @@ namespace Master_GCM.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateOnly?>("DATEUPDATED")
-                        .HasColumnType("date");
-
                     b.Property<int?>("NIPP")
                         .HasColumnType("integer");
-
-                    b.Property<string>("PICADDED")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PICUPDATED")
-                        .HasColumnType("text");
 
                     b.HasKey("IDASSET");
 
@@ -452,11 +455,11 @@ namespace Master_GCM.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("DATEADDED")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly>("DATEADDED")
+                        .HasColumnType("date");
 
-                    b.Property<DateTime?>("DATEUPDATED")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly?>("DATEUPDATED")
+                        .HasColumnType("date");
 
                     b.Property<string>("PICADDED")
                         .IsRequired()
@@ -487,7 +490,8 @@ namespace Master_GCM.Migrations
 
                     b.HasKey("IDASSETSOFTWARE");
 
-                    b.HasIndex("ASSETCODE");
+                    b.HasIndex("ASSETCODE")
+                        .IsUnique();
 
                     b.ToTable("TRN_DTL_SOFTWARE");
                 });
@@ -541,9 +545,9 @@ namespace Master_GCM.Migrations
             modelBuilder.Entity("LOGMODEL", b =>
                 {
                     b.HasOne("TRNASSETMODEL", "TRNASSET")
-                        .WithMany()
-                        .HasForeignKey("ASSETCODE")
-                        .HasPrincipalKey("ASSETCODE");
+                        .WithOne()
+                        .HasForeignKey("LOGMODEL", "ASSETCODE")
+                        .HasPrincipalKey("TRNASSETMODEL", "ASSETCODE");
 
                     b.Navigation("TRNASSET");
                 });
@@ -551,15 +555,17 @@ namespace Master_GCM.Migrations
             modelBuilder.Entity("TRNASSETHISTORYMODEL", b =>
                 {
                     b.HasOne("TRNASSETMODEL", "TRNASSET")
-                        .WithMany()
-                        .HasForeignKey("ASSETCODE")
-                        .HasPrincipalKey("ASSETCODE")
+                        .WithOne()
+                        .HasForeignKey("TRNASSETHISTORYMODEL", "ASSETCODE")
+                        .HasPrincipalKey("TRNASSETMODEL", "ASSETCODE")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MSTEMPLOYEEMODEL", "EMPLOYEE")
                         .WithMany()
-                        .HasForeignKey("NIPP");
+                        .HasForeignKey("NIPP")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("EMPLOYEE");
 
@@ -604,13 +610,9 @@ namespace Master_GCM.Migrations
                     b.HasOne("TRNASSETMODEL", "TRNASSET")
                         .WithMany()
                         .HasForeignKey("ASSETCODE")
-<<<<<<< HEAD
-                        .HasPrincipalKey("ASSETCODE");
-=======
                         .HasPrincipalKey("ASSETCODE")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
->>>>>>> bc25928e01ca25ff03117de2abb3296a8a77743f
 
                     b.Navigation("TRNASSET");
                 });
@@ -618,9 +620,9 @@ namespace Master_GCM.Migrations
             modelBuilder.Entity("TRNSOFTWAREMODEL", b =>
                 {
                     b.HasOne("TRNASSETMODEL", "TRNASSET")
-                        .WithMany()
-                        .HasForeignKey("ASSETCODE")
-                        .HasPrincipalKey("ASSETCODE")
+                        .WithOne()
+                        .HasForeignKey("TRNSOFTWAREMODEL", "ASSETCODE")
+                        .HasPrincipalKey("TRNASSETMODEL", "ASSETCODE")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

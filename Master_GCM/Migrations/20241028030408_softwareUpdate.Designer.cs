@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Master_GCM.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241028030408_softwareUpdate")]
+    partial class softwareUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,7 +80,12 @@ namespace Master_GCM.Migrations
                     b.Property<int>("NOSR")
                         .HasColumnType("integer");
 
+                    b.Property<string>("SBARCONDITION")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("TYPEGCM")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("VALUEGCM")
@@ -204,12 +212,15 @@ namespace Master_GCM.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("ASSETMODEL")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ASSETSERIALNUMBER")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ASSETSERIES")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ASSETTYPE")
@@ -220,18 +231,8 @@ namespace Master_GCM.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateOnly?>("DATEUPDATED")
-                        .HasColumnType("date");
-
                     b.Property<int?>("NIPP")
                         .HasColumnType("integer");
-
-                    b.Property<string>("PICADDED")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PICUPDATED")
-                        .HasColumnType("text");
 
                     b.HasKey("IDASSET");
 
@@ -559,7 +560,9 @@ namespace Master_GCM.Migrations
 
                     b.HasOne("MSTEMPLOYEEMODEL", "EMPLOYEE")
                         .WithMany()
-                        .HasForeignKey("NIPP");
+                        .HasForeignKey("NIPP")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("EMPLOYEE");
 
@@ -604,13 +607,9 @@ namespace Master_GCM.Migrations
                     b.HasOne("TRNASSETMODEL", "TRNASSET")
                         .WithMany()
                         .HasForeignKey("ASSETCODE")
-<<<<<<< HEAD
-                        .HasPrincipalKey("ASSETCODE");
-=======
                         .HasPrincipalKey("ASSETCODE")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
->>>>>>> bc25928e01ca25ff03117de2abb3296a8a77743f
 
                     b.Navigation("TRNASSET");
                 });
