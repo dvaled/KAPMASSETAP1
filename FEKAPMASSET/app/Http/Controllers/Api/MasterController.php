@@ -23,8 +23,8 @@ class MasterController extends Controller
 
         return view('master.index', ['masterData' => $data]); // Keep the view name consistent
     }
-
-    public function show($condition){
+    
+    public function show($condition) {
         // Create a new HTTP client instance
         $client = new Client();
 
@@ -33,23 +33,13 @@ class MasterController extends Controller
         $contentMaster = $responseMaster->getBody()->getContents();
         $mastersData = json_decode($contentMaster, true);
 
-
         // Pass both assetData and assetSpecData to the view
-        return view('master.index', [
+        return view('master.show', [
             'masterData' => $mastersData,
+            'currentCondition' => $condition
         ]);
     }
 
-    public function sidebar(){
-        $client = new Client();
-        $response = $client->request('GET', 'http://localhost:5252/api/Master');
-        $body = $response->getBody();
-        $content = $body->getContents();
-        $data = json_decode($content, true);
-    
-        // Pass the masterData to the view so that the sidebar can consume it
-        return view('master.create', ['sidebarData' => $data]);
-    }
 
     public function boot()
     {
@@ -65,37 +55,60 @@ class MasterController extends Controller
         });
     }
 
-    public function store(Request $request)
+    public function create($condition)
+    {
+        $client = new Client();
+
+        // Fetch the condition data from the API
+        $response = $client->request('GET', "http://localhost:5252/api/Master");
+        $body = $response->getBody()->getContents();
+        $masterData = json_decode($body, true);
+
+
+        // Pass the condition to the view for use in the form
+        return view('master.create', [
+            'condition' => $condition,
+            'masterData' => $masterData]);
+    }
+
+    public function store(Request $request, $condition)
     {
         // Validate the incoming request data
         $validated = $request->validate([
             'condition' => 'required|string|max:255',
-            'nosr' => 'required|numeric',
             'description' => 'required|string',
             'valuegcm' => 'required|numeric',
             'typegcm' => 'nullable|string|max:255', // Use 'nullable' if this field can be optional
-            'active' => 'required|string',
-            'sbarcondition' => 'required|string|max:255',
         ]);
 
         $client = new Client();
 
         try {
-            $response = $client->post('http://localhost:5252/api/master', [
-                'json' => $validated,  // Use the validated data
+            // Correct the URL by using double quotes and properly interpolating $condition
+            $response = $client->post("http://localhost:5252/api/Master/{$condition}", [
+                'json' => [
+                    'masterid' => '0',
+                    'condition' => $validated['condition'],
+                    'nosr' => '0',
+                    'description' => $validated['description'],
+                    'valuegcm' => $validated['valuegcm'],
+                    'typegcm' => $validated['typegcm'],
+                    'active' => 'y',
+                ],
             ]);
         
             $data = json_decode($response->getBody()->getContents(), true);
             Log::info('API Response:', $data);  // Log the API response for inspection
         
-            return redirect('/master')->with('success', 'Data submitted successfully!');
+            return redirect("/master/show/{$condition}")->with('success', 'Data submitted successfully!');
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;
             Log::error('API Error: ' . $e->getMessage() . ' - Response Body: ' . $responseBody);
         
-            return redirect('/master/create')->withErrors(['error' => 'An error occurred while submitting the data.']);
+            return redirect("master/create/{$condition}")->withErrors(['error' => 'An error occurred while submitting the data.']);
         }    
     }
+
 
     // Edit method to show the form for editing the record
     public function edit($id) {
