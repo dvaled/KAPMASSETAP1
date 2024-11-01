@@ -1,34 +1,14 @@
 <?php
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Log;
 
 class TRNAssetController extends Controller
 {
-
-    public function index($assetcode) {
-        $client = new Client();
-        $response = $client->request('GET', 'http://localhost:5252/api/Master');
-        $body = $response->getBody();
-        $content = $body->getContents();
-        $masterData = json_decode($content, true);
-
-        $responseAsset = $client->request('GET', "http://localhost:5252/api/TrnAssetSpec/{$assetcode}");
-        $contentAsset = $responseAsset->getBody()->getContents();
-        $assetData = json_decode($contentAsset, true);
-
-        return view('detailAsset.Laptop', [
-            'masterData' => $masterData,
-            'assetData' => $assetData
-        ]); // Keep the view name consistent
-    }
-
     public function AssignView($assetCode){
         //new guzzle http client
         $client = new Client();
