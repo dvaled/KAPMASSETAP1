@@ -16,17 +16,29 @@ public class TrnAssetSpecController : ControllerBase{
         var trngetspec = await _context.TRN_DTL_SPEC.Where(x => x.ASSETCODE == ASSETCODE).ToListAsync();
 
         if (trngetspec == null || !trngetspec.Any()){
-            return Ok();
+            return Ok("No Asset Specification Data Available");
         }
         return Ok(trngetspec);
     }
 
-    [HttpPost]
-    public async Task<ActionResult<TRNASSETSPECMODEL>> PostAssetSpec(TRNASSETSPECMODEL assetSpec){
+    [HttpPost("{ASSETCODE}")]
+    public async Task<ActionResult<TRNASSETSPECMODEL>> PostAssetSpec(string assetcode,TRNASSETSPECMODEL assetSpec)
+    {
+        assetSpec.ASSETCODE = assetcode;
+
+        // Auto-increment MasterID by finding the maximum value for the same CONDITION
+        var maxID = await _context.TRN_DTL_SPEC
+            .MaxAsync(e => (int?)e.IDASSETSPEC) ?? 0;
+
+        assetSpec.IDASSETSPEC = maxID + 1;
+        assetSpec.DATEADDED = DateOnly.FromDateTime(DateTime.Now);
+        assetSpec.DATEUPDATED = null;
+        assetSpec.TRNASSET = null;
+
         _context.TRN_DTL_SPEC.Add(assetSpec);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetAssetSpec", new { id = assetSpec.IDASSETSPEC }, assetSpec);
+        return CreatedAtAction("GetAssetSpec", new { ASSETCODE = assetSpec.ASSETCODE }, assetSpec);
     }
 
     [HttpPut("{IDASSETSPEC}")]

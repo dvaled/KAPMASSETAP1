@@ -34,48 +34,43 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<TRNASSETMODEL>()
             .HasOne(h => h.EMPLOYEE) // Navigation property
             .WithMany()
-            .HasForeignKey(h => h.NIPP); // Foreign key relationship
-
+            .HasForeignKey(h => h.NIPP) // Foreign key relationship
+            .IsRequired(false);
         modelBuilder.Entity<TRNASSETHISTORYMODEL>()
             .HasOne(h => h.EMPLOYEE) // Navigation property
             .WithMany()
-            .HasForeignKey(h => h.NIPP); // Foreign key relationship
-
+            .HasForeignKey(h => h.NIPP) // Foreign key relationship
+            .IsRequired(false);
         modelBuilder.Entity<LOGMODEL>()
             .HasOne(h => h.TRNASSET) // Navigation property
             .WithMany()
             .HasForeignKey(h => h.ASSETCODE) // Foreign key relationship
             .HasPrincipalKey(a => a.ASSETCODE); // Link to the alternate key
-
         modelBuilder.Entity<TRNMAINTENANCEMODEL>()
             .HasOne(h => h.TRNASSET) // Navigation property
-            .WithMany() // Assuming there is no navigation property on TRNASSET for maintenance
+            .WithMany()
             .HasForeignKey(h => h.ASSETCODE) // Foreign key relationship
             .HasPrincipalKey(a => a.ASSETCODE); // Link to the alternate key
-
         modelBuilder.Entity<TRNASSETPICTUREMODEL>()
             .HasOne(h => h.TRNASSET) // Navigation property
             .WithMany()
             .HasForeignKey(h => h.ASSETCODE) // Foreign key relationship
             .HasPrincipalKey(a => a.ASSETCODE); // Link to the alternate key
-
         modelBuilder.Entity<TRNASSETSPECMODEL>()
-            .HasOne(s => s.TRNASSET) // Navigation property
+            .HasOne(h => h.TRNASSET) // Navigation property
             .WithOne()
-            .HasForeignKey<TRNASSETSPECMODEL>(s => s.ASSETCODE) // Foreign key relationship
+            .HasForeignKey<TRNASSETSPECMODEL>(h => h.ASSETCODE) // Foreign key relationship
             .HasPrincipalKey<TRNASSETMODEL>(a => a.ASSETCODE); // Link to the alternate key
 
         modelBuilder.Entity<TRNSOFTWAREMODEL>()
             .HasOne(s => s.TRNASSET)
-            .WithMany() // One-to-many relationship
+            .WithMany() // One-to-one relationship
             .HasForeignKey(s => s.ASSETCODE) // Use ASSETCODE as the foreign key
             .HasPrincipalKey(a => a.ASSETCODE); // Link to the alternate key
-
         modelBuilder.Entity<TRNASSETHISTORYMODEL>()
             .HasOne(h => h.TRNASSET) // Navigation property
             .WithMany()
             .HasForeignKey(h => h.ASSETCODE) // Foreign key relationship
             .HasPrincipalKey(a => a.ASSETCODE); // Link to the alternate key
-            
     }
 }

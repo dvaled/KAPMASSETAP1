@@ -11,5 +11,5 @@ public class TRNMAINTENANCEMODEL{
     public DateOnly DATEADDED { get; set; }
 
     [ForeignKey("ASSETCODE")]
-    public required TRNASSETMODEL TRNASSET { get; set; }
+    public TRNASSETMODEL? TRNASSET { get; set; }
 }

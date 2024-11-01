@@ -13,8 +13,8 @@ public class TRNASSETHISTORYMODEL{
     public DateOnly DATEADDED { get; set; }
 
     [ForeignKey("NIPP")]
-    public required MSTEMPLOYEEMODEL EMPLOYEE { get; set; }
+    public MSTEMPLOYEEMODEL? EMPLOYEE { get; set; }
 
     [ForeignKey("ASSETCODE")]
-    public required TRNASSETMODEL TRNASSET { get; set; }
+    public TRNASSETMODEL? TRNASSET { get; set; }
 }

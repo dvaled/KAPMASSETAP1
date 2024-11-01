@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Master_GCM.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241031022653_UpdateTrnAssetModels")]
+    partial class UpdateTrnAssetModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -415,7 +418,6 @@ namespace Master_GCM.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MAINTENANCEID"));
 
                     b.Property<string>("ASSETCODE")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateOnly>("DATEADDED")
@@ -452,11 +454,11 @@ namespace Master_GCM.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("DATEADDED")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly>("DATEADDED")
+                        .HasColumnType("date");
 
-                    b.Property<DateTime?>("DATEUPDATED")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly?>("DATEUPDATED")
+                        .HasColumnType("date");
 
                     b.Property<string>("PICADDED")
                         .IsRequired()
@@ -604,13 +606,7 @@ namespace Master_GCM.Migrations
                     b.HasOne("TRNASSETMODEL", "TRNASSET")
                         .WithMany()
                         .HasForeignKey("ASSETCODE")
-<<<<<<< HEAD
                         .HasPrincipalKey("ASSETCODE");
-=======
-                        .HasPrincipalKey("ASSETCODE")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
->>>>>>> bc25928e01ca25ff03117de2abb3296a8a77743f
 
                     b.Navigation("TRNASSET");
                 });

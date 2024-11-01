@@ -82,10 +82,10 @@
                             <!-- Dropdown content for inner masters -->
                                 <ul class="dropdown-hidden inner-masters-list">
                                     @foreach ($masterData as $innerMasters)
-                                        @if($innerMasters['sbarcondition'] == 'FIELD_VALUE' && $innerMasters['typegcm'] == $description)
+                                        @if($innerMasters['condition'] == 'FIELD_VALUE' && $innerMasters['typegcm'] == $description)
                                             @php
                                                 // Assign the description value
-                                                $href = url('master/' . $innerMasters['condition']);
+                                                $href = url('master/show/' . $innerMasters['description']);
                                             @endphp
                                             <li class="p-0.5">
                                                 <div class="p-3 leading-normal text-base" style="background-color: rgba(0, 0, 0, 0.1);">
@@ -122,7 +122,7 @@
                                 <li class="p-0.5">
                                     <div class="p-3 leading-normal text-base" style="background-color: rgba(0, 0, 0, 0.1);">
                                         <span class="text-base ml-2 text-white" style="opacity: 0.9;">
-                                            <a href="{{url('transaction/register-asset')}}">Laptop / PC</a>
+                                            <a href="{{url('transaction/asset')}}">Laptop / PC</a>
                                         </span>
                                     </div>
                                 </li>

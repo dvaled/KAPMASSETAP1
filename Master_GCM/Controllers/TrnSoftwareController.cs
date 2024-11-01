@@ -15,8 +15,8 @@ public class TrnSoftwareController : ControllerBase{
     public async Task<ActionResult<List<TRNSOFTWAREMODEL>>> GetTrnSoftware(string ASSETCODE){
         var trnSoftware = await _context.TRN_DTL_SOFTWARE.Where(e => e.ASSETCODE == ASSETCODE).ToListAsync();
 
-        if (trnSoftware == null || !trnSoftware.Any()){
-            return Ok();
+        if (trnSoftware == null){
+            return Ok("No Software Data Available");
         }
 
         return Ok(trnSoftware);
@@ -24,10 +24,22 @@ public class TrnSoftwareController : ControllerBase{
 
     [HttpPost]
     public async Task<ActionResult<TRNSOFTWAREMODEL>> PostTrnSoftware(TRNSOFTWAREMODEL trnSoftware){
+        //Auto increment MaxIdAsset 
+        var maxIDSoftware = await _context.TRN_DTL_SOFTWARE
+            .MaxAsync(e => (int?)e.IDASSETSOFTWARE) ?? 0;
+        trnSoftware.IDASSETSOFTWARE = maxIDSoftware + 1;
+
+
+        trnSoftware.ACTIVE = "y";
+        trnSoftware.DATEADDED = DateOnly.FromDateTime(DateTime.Now);
+        trnSoftware.DATEUPDATED = null;
+        trnSoftware.PICUPDATED = null;
+        trnSoftware.TRNASSET = null;
+
         _context.TRN_DTL_SOFTWARE.Add(trnSoftware);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetTrnSoftware", new { id = trnSoftware.IDASSETSOFTWARE }, trnSoftware);
+        return CreatedAtAction("GetTrnSoftware", new { assetcode = trnSoftware.ASSETCODE }, trnSoftware);
     }
 
     [HttpPut("{IDASSETSOFTWARE:int}")]

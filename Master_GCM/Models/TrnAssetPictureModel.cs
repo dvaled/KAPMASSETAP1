@@ -14,4 +14,4 @@ public class TRNASSETPICTUREMODEL{
 
     [ForeignKey("ASSETCODE")]
     public TRNASSETMODEL? TRNASSET { get; set; }
-} 
+}

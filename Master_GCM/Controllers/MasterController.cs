@@ -14,39 +14,61 @@ public class MasterController : ControllerBase
 //Get value from db
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MASTERMODEL>>> GetMaster(){
-    return await _context.MST_GCM.ToListAsync();
+    return await _context.MST_GCM.OrderBy(e => e.MASTERID).ToListAsync();
     }
 
     [HttpGet("{CONDITION}")]
     public async Task<ActionResult<List<MASTERMODEL>>> GetMasterByCondition(string CONDITION){
-        var mstsbarcondition = await _context.MST_GCM
+        var mstcondition = await _context.MST_GCM
             .Where(e =>  e.CONDITION == CONDITION) // Adjust condition based on your model
             .ToListAsync(); // Retrieve a list
-        if (mstsbarcondition == null){
+        if (mstcondition == null){
             return NotFound();
         }
 
-        return Ok(mstsbarcondition);
+        return Ok(mstcondition);
     }
 
 //Post master value to db
-    [HttpPost]
-    public async Task<ActionResult<MASTERMODEL>> PostMaster(MASTERMODEL master){
+    [HttpPost("{CONDITION}")]
+    public async Task<ActionResult<MASTERMODEL>> PostMaster(string CONDITION, MASTERMODEL master)
+    {
+       // Set the CONDITION field of the master model to the route parameter value
+        master.CONDITION = CONDITION;
+        master.ACTIVE = "Y";
 
-        //Check if value is exist
-        if (await _context.MST_GCM.AnyAsync(e => e.MASTERID == master.MASTERID)){
+        // Auto-increment MasterID by finding the maximum value for the same CONDITION
+        var maxMstID = await _context.MST_GCM
+            .MaxAsync(e => (int?)e.MASTERID) ?? 0;
+        master.MASTERID = maxMstID + 1;
+
+        // Check if the MasterID already exists
+        if (await _context.MST_GCM.AnyAsync(e => e.MASTERID == master.MASTERID))
+        {
             return Conflict("This MasterID already exists");
         }
 
-        else if (await _context.MST_GCM.AnyAsync(e => e.CONDITION == master.CONDITION && e.NOSR == master.NOSR)){
-        return Conflict("This NoSr already exists");
+        // Auto-increment NoSr by finding the maximum value for the same CONDITION
+        var maxNoSr = await _context.MST_GCM
+            .Where(e => e.CONDITION == master.CONDITION)
+            .MaxAsync(e => (int?)e.NOSR) ?? 0;
+
+        master.NOSR = maxNoSr + 1;
+        
+        // Check if a record with the same CONDITION and NoSr already exists
+        if (await _context.MST_GCM.AnyAsync(e => e.CONDITION == master.CONDITION && e.NOSR == master.NOSR))
+        {
+            return Conflict("This NoSr already exists");
         }
 
+        // Add the new record to the database
         _context.MST_GCM.Add(master);
         await _context.SaveChangesAsync();
 
+        // Return the created response with a link to the new resource
         return CreatedAtAction("GetMaster", new { id = master.MASTERID }, master);
     }
+
 
 //Update value master to db    
     [HttpPut("{MASTERID:int}")]
