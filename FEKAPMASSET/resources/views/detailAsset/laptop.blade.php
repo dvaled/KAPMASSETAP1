@@ -103,7 +103,10 @@
                                 <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                                     Print QR
                                 </button>
-                                <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" onclick="window.location.href='{{ route('transaction.laptop',[
+                                    'assetcategory' => $assetcategory, 
+                                    'assetcode' => $assetcode,
+                                    ])}}'">
                                     Update Asset
                                 </button>
                             </div>
@@ -715,7 +718,7 @@
 
     function unassignAsset(url) {
         fetch(url, {
-            method: 'PUT',
+            method: 'PATCH',
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
                 'Content-Type': 'application/json'

@@ -29,7 +29,7 @@ Route::prefix('master')->name('master.')->group(function() {
     Route::get('/create/{condition}', [MasterController::class, 'create'])->name('create'); // return master view with all of the master data
     Route::post('/store/{condition}', [MasterController::class, 'store'])->name('store');//send a post request to the API for master_gcm table
     Route::get('/show/{condition}', [MasterController::class, 'show'])->name('show');//return master view with all of the master data
-    
+
     Route::put('/update/{masterid}', [MasterController::class, 'update'])->name('update');//send a post request to the API for master_gcm table
     Route::put('destroy/{masterid}', [MasterController::class, 'destroy'])->name('destroy'); // make flag active -> N
     Route::get('/log', [LogController::class, 'index'])->name('log.index');//return log view with all of the log data
@@ -40,7 +40,7 @@ Route::prefix('transaction')->name('transaction.')->group(function(){
     // Route::get('/asset', [TrnAssetController::class, 'index'])->name('view'); //return view with all of the data.
     Route::get('/detailAssetL/{assetcode}', [TrnAssetController::class, 'show'])-> name('detailAsset.laptop');
     Route::get('/asset', [TrnAssetController::class, 'msttrnasset'])-> name('asset'); //View
-    Route::get('/trnlaptop/{assetcategory}/{assetcode}', [TrnAssetSpecController::class, 'msttrnassetspec'])-> name('trnlaptop'); //Retrieve transaction.create view along with all the data 
+    Route::get('/trnlaptop/{assetcategory}/{assetcode}', [TrnAssetSpecController::class, 'msttrnassetspec'])-> name('laptop'); //Retrieve transaction.create view along with all the data 
     Route::Post('/storespec/{assetcode}', [TrnAssetSpecController::class, 'store'])-> name('storespec');
     Route::Post('/store', [TrnAssetController::class, 'store'])-> name('store');
     Route::Put('/unassign/{assetcode}', [TrnAssetController::class, 'unassignAsset'])->name('unassign');
@@ -60,7 +60,7 @@ Route::prefix('detailAsset')->name('detailAsset.')->group(function(){
     Route::get('/others/{assetcode}', [TrnAssetController::class, 'show'])->name('others');
     // Route::get('Laptop/{assetcode}', [MaintenanceController::class, 'sidebar'])->name('laptop'); //return view with all of the data.
  
-    //Post Image
+    //Post Image 
     Route::get('/Laptop/{assetcode}/Image', [TrnDtlPictureController::class, 'index'])->name('image'); //get image form
     Route::get('/Laptop/{assetcode}/Image/Update', [TrnDtlPictureController::class, 'indexUpdate'])->name('update.image'); //get image form
     Route::post('Laptop/Image/store', [TrnDtlPictureController::class, 'store'])->name('image.store'); //submit image data 

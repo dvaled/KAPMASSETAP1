@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class TRNAssetController extends Controller
 {
@@ -259,42 +260,54 @@ class TRNAssetController extends Controller
     } 
 
     public function unassignAsset(Request $request, $assetcode){
-        // Validate the incoming data
-        $validatedData = $request->validate([
-            'NIPP' => 'required|integer',            
-        ]);
+        try {
+            // Enhanced validation for 'NIPP' field
+            $validatedData = $request->validate([
+                'NIPP' => 'nullable|integer',
+            ]);
+        } catch (ValidationException $e) {
+            // Log validation errors and return a JSON response
+            Log::error('Validation errors:', $e->errors());
+            return response()->json(['errors' => $e->errors()], 422);
+        }
 
         // Prepare data to send to the API for unassignment (setting NIPP to null)
         $data = [
             'NIPP' => null, // Unassigning by setting NIPP to null
         ];
 
-        // 1. Send PUT request to unassign the asset (set NIPP to null)
-        $response = Http::put("http://localhost:5252/api/TrnAsset/{$assetcode}", $data);
-        Log::info('Validated Data:', $validatedData);
+        // Send PUT request to unassign the asset (set NIPP to null)
+        $response = Http::patch("http://localhost:5252/api/TrnAsset/{$assetcode}", $data);
+        Log::info('Data sent for unassignment:', ['assetcode' => $assetcode, 'data' => $data]);
 
         // Check if the unassignment was successful before logging history
         if ($response->successful()) {
-            // 2. If successful, log the unassignment in the asset history API
-            $historyResponse = Http::post('http://localhost:5252/api/AssetHistory', [
+            // Log the unassignment in the asset history API if successful
+            $historyData = [
                 'asset_code' => $assetcode,
                 'user_id' => $validatedData['NIPP'],
                 'status' => 'unassigned', // Status for unassignment
                 'timestamp' => now(),
-            ]);
-            Log::info('Validated Data:', $validatedData);
+            ];
 
-            // Log success or error based on the history logging response
+            $historyResponse = Http::post('http://localhost:5252/api/AssetHistory', $historyData);
+            Log::info('Data sent to history log:', $historyData);
+
             if ($historyResponse->successful()) {
-                Log::info('Validated Data:', $validatedData);
+                Log::info('Asset unassigned and history logged successfully.', ['assetcode' => $assetcode]);
                 return redirect()->route('transaction.index')->with('success', 'Asset unassigned and logged successfully!');
             } else {
-                Log::info('Validated Data:', $validatedData);
+                Log::error('Failed to log history for unassigned asset.', ['assetcode' => $assetcode, 'response' => $historyResponse->body()]);
                 return back()->withErrors(['message' => 'Asset unassigned, but failed to log in history.'])->withInput();
             }
         } else {
-            // Handle error response from the unassignment API
-            Log::info('Validated Data:', $validatedData);
+            // Log any errors that occurred during unassignment
+            Log::error('Failed to unassign asset.', [
+                'assetcode' => $assetcode,
+                'response_status' => $response->status(),
+                'response_body' => $response->body(),
+                'request_data' => $data,
+            ]);
             return back()->withErrors(['message' => 'Failed to unassign asset. Please try again.'])->withInput();
         }
     }

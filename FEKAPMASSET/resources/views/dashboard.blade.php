@@ -77,18 +77,7 @@
                   </td>
                   <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                     <!-- Edit Icon -->
-                    <a href="javascript:void(0);" class="text-blue-500 text-sm font-bold mr-2" onclick="openEditModal()">
-                       <i class="fas fa-edit"></i>
-                    </a>
-
-                    <!-- Delete Icon (using a form for DELETE) -->
-                    <form {{-- action="{{ route('masters.destroy', $masters['masterid']) }}"--}} method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-500 text-sm font-bold" onclick="openDeleteModal()">
-                            <i class="fas fa-trash"></i> <!-- Font Awesome Trash Icon -->
-                        </button>
-                    </form>
+                    <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" onclick="window.location.href='{{ route('detailAsset.laptop', ['assetcode' => $log['assetcode']]) }}'">Detail</button>
                   </td>
               </tr>
               @endforeach
