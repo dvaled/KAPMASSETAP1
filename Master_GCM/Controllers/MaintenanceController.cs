@@ -19,7 +19,7 @@ public class TrnHistMaintenanceController : ControllerBase{
     public async Task<ActionResult<List<TRNMAINTENANCEMODEL>>> GetMaintenanceDataByAssetCode(string ASSETCODE){
         var trngetmaintenancebyac = await _context.TRN_HIST_MAINTENANCE.Where(e => e.ASSETCODE == ASSETCODE).ToListAsync();
         if (trngetmaintenancebyac == null || !trngetmaintenancebyac.Any())
-        {
+        {  
             return Ok("Maintenance not found");
         }
 

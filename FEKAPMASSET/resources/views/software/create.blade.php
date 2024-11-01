@@ -47,7 +47,7 @@
                 <label for="softwarename" class="block text-sm font-semibold">Name</label>
                 <select id="softwarename" name="softwarename" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     @foreach ($mstData as $user)
-                        <option value="{{ $user['condition'] }}">{{ $user['condition'] }}</option>
+                    <option value="{{ $user['condition'] }}">{{ $user['condition'] }}</option>
                     @endforeach
                 </select>
             </div>  
@@ -55,11 +55,19 @@
                 <label for="softwarelicense" class="block text-sm font-semibold">License</label>
                 <select id="softwarelicense" name="softwarelicense" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     @foreach ($mstData as $user)
-                        <option value="{{ $user['condition'] }}">{{ $user['condition'] }}</option>
+                    <option value="{{ $user['condition'] }}">{{ $user['condition'] }}</option>
                     @endforeach
                 </select>
             </div>  
-
+            
+            <div class="mb-4">
+                <label for="softwareperiod" class="block text-sm font-semibold">Software Period</label>
+                <select id="softwareperiod" name="softwareperiod" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    @foreach ($userData as $user)
+                        <option value="{{ $user['name'] }}">{{ $user['name'] }}</option>
+                    @endforeach
+                </select>
+            </div>   
 
             <div class="mb-4">
                 <label for="active" class="block text-sm font-semibold">Active</label>
@@ -67,7 +75,7 @@
                     <option value="Y">Y</option>  <!-- Represents true -->
                     <option value="N">N</option>  <!-- Represents false -->
                 </select>
-            </div>    
+            </div>
 
             <div class="mb-4">
                 <label for="picadded" class="block text-sm font-semibold">PIC</label>
@@ -80,7 +88,7 @@
 
             <!-- Buttons -->
             <div class="flex justify-end">
-                <button type="button" onclick="closeImg()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Back</button>
+                <button type="button" onclick="window.location.href='{{ route('detailAsset.laptop', ['assetcode' => $assetcode]) }}'" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Back</button>
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
             </div>
         </form>

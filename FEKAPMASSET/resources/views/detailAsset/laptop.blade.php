@@ -72,7 +72,6 @@
                                         onclick="unassignAsset('{{ route('transaction.unassign', ['assetcode' => $assetcode]) }}')">
                                     Unassign This Asset
                                 </button>
-
                                 {{-- @endauth --}}
                             </div>
                             @endif
@@ -358,36 +357,15 @@
                     {{-- @endauth --}}
                     <!-- Dynamic Table-like Section with Headers as Rows -->
                         <div class="relative overflow-x-auto">
-                            <table class="p-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
-                                <thead>
-                                    <tr>
-                                        <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">ID</th>
-                                        <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Top View</th>
-                                        <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Front View</th>
-                                        <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Bottom View</th>
-                                        <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        @foreach ($imgData as $img)
-                                        <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-gray-300">
-                                            <p class="mb-2 font-semibold leading-tight text-xs border-gray-300">{{ $img['assetcode'] }}</p> <!-- Display Condition -->
-                                        </td>
-                                        @endforeach
-                                        @foreach ($imgData as $img)
-                                        <td class="text-center p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent border-gray-300">
-                                            <img src="{{ $img['assetpic'] }}" alt="Asset Image">
-                                        </td>
-                                        @endforeach
-                                        {{-- @auth    --}}
-                                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                            <button class="bg-blue-500 text-white px-4 py-2 rounded items-center">Detail</button>
-                                        </td>
-                                        {{-- @endauth --}}
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                @foreach ($imgData as $img)
+                                    <div>
+                                        <a href="{{ route('detailAsset.update.image', ['assetcode' => $img['assetcode']]) }}">
+                                            <img class="h-auto max-w-full rounded-lg" src="{{ $img['assetpic'] }}" alt="Asset Image">
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -482,8 +460,7 @@
                         </a>
                         <!-- Right Aligned Buttons -->
                         <div class="flex space-x-4">
-                            <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" onclick="openMtcModal()"
-                                data-assetcode="{{$assetcode}}">
+                            <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" onclick="window.location.href='{{ route('maintenance.create', ['assetcode' => $assetcode]) }}'"">
                                     Add Record
                             </button>
                         </div>
@@ -746,4 +723,4 @@
 </script>
 
 
-@endsection
+@endsection 

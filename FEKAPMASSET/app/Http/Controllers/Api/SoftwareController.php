@@ -141,7 +141,6 @@ class SoftwareController extends Controller
             
             return response()->json(['message' => 'Successfully updated software status'], 200);
             
-
         } catch (\Throwable $th) {
             // Log error response
             Log::error('Failed to update software status', [

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 class MaintenanceController extends Controller
 {
     // Get all maintenance records
-    public function index() {
+    public function indexz() {
         $client = new Client();
         $response = $client->request('GET', 'http://localhost:5252/api/TrnHistMaintenance');
         $body = $response->getBody();
@@ -48,12 +48,12 @@ class MaintenanceController extends Controller
         ]); // Keep the view name consistent
     }
 
-    public function sidebar(){
+    public function index($assetcode){
         //new guzzle http client
         $client = new Client();
 
         // First API call to fetch asset data (TrnAsset)
-        $responseAsset = $client->request('GET', "http://localhost:5252/api/TrnHistMaintenance");
+        $responseAsset = $client->request('GET', "http://localhost:5252/api/TrnHistMaintenance/{$assetcode}");
         $contentAsset = $responseAsset->getBody()->getContents();
         $mtc = json_decode($contentAsset, true);
 
@@ -63,13 +63,14 @@ class MaintenanceController extends Controller
         $user = json_decode($contentAssetSpec, true);
 
         //Third API call to fetch sidebar data (master)
-        $responseMaster = $client->request('GET', "http://localhost:5252/api/TrnAsset");
+        $responseMaster = $client->request('GET', "http://localhost:5252/api/master");
         $contentMaster = $responseMaster->getBody()->getContents();
         $asset = json_decode($contentMaster, true);
 
         // Pass both assetData and assetSpecData to the view
         return view('maintenance.create', [
             // 'assetData' => $assetData,
+            'assetcode' => $assetcode,
             'asset' => $asset,
             'mtc' => $mtc,
             'user' => $user,
@@ -101,20 +102,18 @@ class MaintenanceController extends Controller
 
         try {
             $response = $client->post("http://localhost:5252/api/TrnHistMaintenance/{$assetcode}", [
-                'json' => [
-                  $validatedData
-                ],
+                'json' => $validatedData,
             ]);
 
             $data = json_decode($response->getBody()->getContents(), true);
             Log::info("API Response: ", $data);
-            return redirect('/maintenance')->with('Success', 'success add device to maintenance' );
+            return redirect("/detailAsset/Laptop/{$assetcode}")->with('Success', 'success add device to maintenance' );
 
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;
             Log::error('API Error: ' . $e->getMessage() . ' - Response Body: ' . $responseBody);
         
-            return redirect('/maintenance/create')->withErrors(['error' => 'An error occurred while submitting the data.']);
+            return redirect("/maintenance/create/{$assetcode}")->withErrors(['error' => 'An error occurred while submitting the data.']);
         }
     }
 

@@ -16,7 +16,7 @@ public class TrnSoftwareController : ControllerBase{
         var trnSoftware = await _context.TRN_DTL_SOFTWARE.Where(e => e.ASSETCODE == ASSETCODE).ToListAsync();
 
         if (trnSoftware == null || !trnSoftware.Any()){
-            return NotFound();
+            return Ok();
         }
 
         return Ok(trnSoftware);

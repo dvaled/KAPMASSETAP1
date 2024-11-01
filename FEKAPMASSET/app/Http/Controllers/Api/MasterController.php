@@ -105,7 +105,6 @@ class MasterController extends Controller
         return view('master.edit', compact('master'));
     }
 
-
     // Destroy method to delete a record
     public function destroy($masterid, Request $request) {
 

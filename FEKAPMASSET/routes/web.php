@@ -41,7 +41,7 @@ Route::prefix('transaction')->name('transaction.')->group(function(){
     Route::get('/asset/create', [TrnAssetController::class, 'newAssetView'])-> name('create'); //View 
     Route::get('/asset/assign/{assetcode}', [TrnAssetController::class, 'AssignView'])-> name('assign'); //Retrieve transaction.assign view along with all the data
     Route::Post('/asset/create/store', [TrnAssetController::class, 'store'])-> name('store');
-    Route::Put('/unassign/{assetcode}', [TrnAssetController::class, 'unassignAsset']) -> name ('unassign');
+    Route::Put('/unassign   /{assetcode}', [TrnAssetController::class, 'unassignAsset']) -> name ('unassign');
     });
 
 //Log
@@ -49,32 +49,26 @@ Route::prefix('Log')->name('Log.')->group(function(){
     Route::get('/', [LogController::class, 'index'])->name('index');
 });
 
-
 //Detail Asset
 Route::prefix('detailAsset')->name('detailAsset.')->group(function(){
     Route::get('Laptop/{assetcode}', [TrnAssetController::class, 'show'])->name('laptop'); //return view with all of the data.
     // Route::get('Laptop/{assetcode}', [MaintenanceController::class, 'sidebar'])->name('laptop'); //return view with all of the data.
-
+ 
     //Post Image
     Route::get('/Laptop/{assetcode}/Image', [TrnDtlPictureController::class, 'index'])->name('image'); //get image form
+    Route::get('/Laptop/{assetcode}/Image/Update', [TrnDtlPictureController::class, 'indexUpdate'])->name('update.image'); //get image form
     Route::post('Laptop/Image/store', [TrnDtlPictureController::class, 'store'])->name('image.store'); //submit image data 
+    Route::put('Laptop/Image/update/{assetcode}', [TrnDtlPictureController::class, 'update'])->name('image.update'); //submit image data 
 
     //Post Software
     Route::get('/Laptop/{assetcode}/Software', [SoftwareController::class, 'create'])->name('software');
     Route::post('/Laptop/{assetcode}/Software', [SoftwareController::class, 'store'])->name('software.store');
-
-    //Post History User
-    Route:
-
-
-
-
 });
 
 //Maintenance
 Route::prefix('maintenance')->name('maintenance.')->group(function(){
-    Route::get('/', [MaintenanceController::class, 'index'])->name('index');
-    Route::get('/create', [MaintenanceController::class, 'sidebar'])->name('create');
+    Route::get('/', [MaintenanceController::class, 'indexz'])->name('index');
+    Route::get('/create/{assetcode}', [MaintenanceController::class, 'index'])->name('create');
     Route::post('/store/{assetcode}', [MaintenanceController::class, 'store'])->name('store');
 });
 

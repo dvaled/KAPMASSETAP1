@@ -58,7 +58,6 @@ public class TrnAssetDtlPictureController : ControllerBase
 
                             var relativePath = Path.Combine("Images", "Assets", fileName);
 
-
                             // Save the image to the folder
                             using (var stream = new FileStream(fullPath, FileMode.Create))
                             {
