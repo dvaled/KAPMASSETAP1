@@ -20,9 +20,9 @@ public class TrnHistMaintenanceController : ControllerBase{
     [HttpGet("{ASSETCODE}")]
     public async Task<ActionResult<List<TRNMAINTENANCEMODEL>>> GetMaintenanceDataByAssetCode(string ASSETCODE){
         var trngetmaintenancebyac = await _context.TRN_HIST_MAINTENANCE.Where(e => e.ASSETCODE == ASSETCODE).ToListAsync();
-        if (trngetmaintenancebyac == null || !trngetmaintenancebyac.Any())
+        if (trngetmaintenancebyac == null)
         {
-            return NotFound("Maintenance not found");
+            return Ok("No Maintenance Data Available");
         }
 
         return Ok(trngetmaintenancebyac);
@@ -30,14 +30,10 @@ public class TrnHistMaintenanceController : ControllerBase{
 
     // Post value to db
     [HttpPost]
-    public async Task<ActionResult<List<TRNMAINTENANCEMODEL>>> PostMaintenance(TRNMAINTENANCEMODEL maintenance){
-
-        // Check if value exists
-        if (await _context.TRN_HIST_MAINTENANCE.AnyAsync(e => e.MAINTENANCEID == maintenance.MAINTENANCEID)){
-            return Conflict("This Device is already in maintenance");
-        }
+    public async Task<ActionResult<TRNMAINTENANCEMODEL>> PostMaintenanceData(TRNMAINTENANCEMODEL maintenance){
         _context.TRN_HIST_MAINTENANCE.Add(maintenance);
         await _context.SaveChangesAsync();
-        return CreatedAtAction("Now is under Maintenance", new { id = maintenance.MAINTENANCEID }, maintenance); 
+
+        return CreatedAtAction("GetMaintenanceData", new { id = maintenance.MAINTENANCEID }, maintenance);
     }
 }
