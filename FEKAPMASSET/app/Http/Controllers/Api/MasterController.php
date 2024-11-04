@@ -121,14 +121,19 @@ class MasterController extends Controller
 
     // Destroy method to delete a record
     public function destroy($masterid, Request $request) {
-
-        /// Validate the incoming request data
-        $validated = $request->validate([ 
-            'active' => 'required|string', 
-        ]);
+        // Validate the incoming request data
+        try {
+            $validated = $request->validate([
+                'masterid' => 'required|integer',
+                'active' => 'required|string',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::error('Validation errors:', $e->errors());
+            return response()->json(['errors' => $e->errors()], 422);
+        }
         
         $client = new Client();     
-
+        
         try {
             // Send the PUT request to the API to update the master data
             $response = $client->put("http://localhost:5252/api/Master/{$masterid}", [
@@ -136,7 +141,8 @@ class MasterController extends Controller
             ]);                                 
     
             $data = json_decode($response->getBody()->getContents(), true);
-            Log::info('API Response:', $data);  // Log the API response for inspection
+            // Ensure $data is logged as an array
+            Log::info('API Response:', $data ?? []); // Use an empty array if $data is null 
         
             return redirect('/master')->with('success', 'Data submitted successfully!');
         } catch (\GuzzleHttp\Exception\RequestException $e) {

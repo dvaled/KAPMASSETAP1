@@ -91,7 +91,7 @@ public class MasterController : ControllerBase
         }
 
         return NoContent();
-    }
+    } 
 
     private bool MasterExists(int masterID){
         return _context.MST_GCM.Any(e => e.MASTERID == masterID);

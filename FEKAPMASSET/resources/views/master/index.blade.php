@@ -120,7 +120,7 @@
             
                 <!-- Input fields for master data -->
                 <div class="mb-4">
-                    <label for="idmaster" class="block text-sm font-semibold">Master ID</label>
+                    <label for="masterid" class="block text-sm font-semibold">Master ID</label>
                     <input type="number" id="masterid" name="masterid" class="w-full p-2 border rounded" readonly>
                 </div>
             
@@ -163,6 +163,7 @@
             
                 <div class="flex justify-end">
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
+                    <button type="button" onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
                 </div>
             </form>
           </div>
@@ -172,14 +173,15 @@
           <div class="bg-white p-6 rounded-md w-96">
               <h2 class="text-xl font-bold mb-4">Delete Master</h2>
 
-              <form id="deleteForm" method="POST">
+              <form action="{{ route('master.destroy', ['masterid' => $masters['masterid']]) }}" method="POST">
                   @csrf
                   @method('PUT') <!-- Use Delete method for deleting -->
 
                   <div class="mb-4">
-                      <label for="idmaster" class="block text-sm font-semibold">Master ID</label>
-                      <input type="text" id="idmaster" name="idmaster" class="w-full p-2 border rounded" readonly>
+                      <label for="masterid" class="block text-sm font-semibold">Master ID</label>
+                      <input type="text" id="masterid" name="masterid" value = "{{ $masters['masterid'] }}" class="w-full p-2 border rounded" readonly>
                   </div>
+                  
                   <div class="mb-4">
                     <label for="active" class="block text-sm font-semibold">Active</label>
                     <select id="active" name="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
@@ -268,15 +270,13 @@ document.getElementById('editForm').addEventListener('submit', function (event) 
 
 // Function to open modal and pre-fill form
     function openDeleteModal(masterData) {
-        document.getElementById('idmaster').value = masterData.masterid;
+        document.getElementById('masterid').value = masterData.masterid;
         document.getElementById('active').value = masterData.active;
 
-        // Set the form action dynamically for the delete request
-        document.getElementById('deleteForm').action = `/master/${masterData.idmaster}`;
-
+        // Populate other form fields as necessary
         
         document.getElementById('deleteModal').classList.remove('hidden');
-    }
+  }
 
     document.getElementById('deleteForm').addEventListener('submit', function(event){
         event.preventDefault();

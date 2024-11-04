@@ -328,7 +328,7 @@
                                     </td>
                                     <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
                                         <!-- Edit Icon -->
-                                        <a href="javascript:void(0);" class="text-blue-500 text-sm font-bold mr-2" onclick="window.location.href='{{ route('detailAsset.software.edit', ['assetcode' => $assetcode,'id' => $software['idassetsoftware']) }}'">
+                                        <a class="text-blue-500 text-sm font-bold mr-2" href="{{ route('detailAsset.software.edit', ['assetcode' => $assetcode, 'id' => $software['idassetsoftware']]) }}">
                                            <i class="fas fa-edit"></i>
                                         </a>
                                         {{-- <a href="javascript:void(0);" class="text-red-500 text-sm font-bold mr-2" onclick="openDeleteModal({{json_encode($detailSoftwareData)}})">
