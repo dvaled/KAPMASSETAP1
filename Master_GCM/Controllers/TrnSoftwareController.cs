@@ -20,7 +20,7 @@ public class TrnSoftwareController : ControllerBase{
         }
 
         return Ok(trnSoftware);
-    }
+    }   
 
     [HttpPost]
     public async Task<ActionResult<TRNSOFTWAREMODEL>> PostTrnSoftware(TRNSOFTWAREMODEL trnSoftware){

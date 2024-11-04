@@ -23,8 +23,8 @@
             @csrf
             {{-- assetcode --}}
             <div class="mb-4">
-                <label for="idasset" class="block text-sm font-semibold">Asset Code</label>
-                <input id="idasset" name="idasset" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{ $assetcode }}"></input>
+                <label for="assetcode" class="block text-sm font-semibold">Asset Code</label>
+                <input id="assetcode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{ $assetcode }}"></input>
             </div>
 
             <div class="mb-4">

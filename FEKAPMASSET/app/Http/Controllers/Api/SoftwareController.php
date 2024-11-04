@@ -22,6 +22,41 @@ class SoftwareController extends Controller
         return view('detailAsset.Laptop', ['softwareData' => $data]); // Keep the view name consistent
     }
 
+    public function edit($assetcode){
+         // Create a new HTTP client instance
+         $client = new Client();
+
+         // First API call to fetch asset data (TrnAsset)
+         $responseAsset = $client->request('GET', "http://localhost:5252/api/TrnAsset/{$assetcode}");
+         $contentAsset = $responseAsset->getBody()->getContents();
+         $assetData = json_decode($contentAsset, true);
+ 
+         //Fetch PIC
+         $responsePic = $client->request('GET', "http://localhost:5252/api/User");
+         $contentPic = $responsePic->getBody()->getContents();
+         $userData = json_decode($contentPic, true);  
+
+         //Fetch Master
+         $responseMst = $client->get("http://localhost:5252/api/master");
+         $contentMst = $responseMst->getBody()->getContents();
+         $mstData = json_decode($contentMst, true);
+
+         //Fetch software
+        //  $responseSoftware = $client -> request('GET', 'http://localhost:5252/api/TrnSoftware/{$assetcode}');
+        //  $contentSoftware = $responseSoftware ->getBody()->getContents();
+        //  $softwareData = json_decode($contentSoftware, true);
+ 
+         // Pass both assetData and assetSpecData to the view
+         return view('software.edit', [
+             'assetcode' => $assetcode,
+             'assetData' => $assetData,
+             'userData' => $userData,
+             'mstData' => $mstData,
+            //  'softwareData' => $softwareData
+         ]);
+
+    }
+
     public function create($assetcode){
          // Create a new HTTP client instance
          $client = new Client();
@@ -56,18 +91,20 @@ class SoftwareController extends Controller
          ]);
     }
 
-    public function store(Request $request  ){
+    public function store(Request $request){
         $validated = $request -> validate([
-            'idasset' => 'required',
+            'assetcode' => 'required',
             'softwaretype' => 'required',   
             'softwarecategory' => 'required',
             'softwarename' => 'required',
             'softwarelicense' => 'required',
+            'softwareperiod'=> 'required',
             'active' => 'required',
             'picadded' => 'required',
             'dateadded' => 'nullable',
             'picupdated' => 'nullable',
             'dateupdated' => 'nullable',
+            'trnasset' => 'nullable'
             ]);
 
         $client = new Client();
@@ -84,7 +121,6 @@ class SoftwareController extends Controller
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;
             Log::error('API Error: ' . $e->getMessage() . ' - Response Body: ' . $responseBody);
-        
             return redirect()->back()->withErrors(['error' => 'An error occurred while submitting the data.']);
         }   
     }   
@@ -106,7 +142,7 @@ class SoftwareController extends Controller
         $client = new Client();
         
         try {
-            $response = $client->post("http://localhost:5252/api/TrnSoftware/{$id}", [
+            $response = $client->put("http://localhost:5252/api/TrnSoftware/{$id}", [
                 'json' => $validated,  // Use the validated data
             ]);
         
@@ -124,28 +160,31 @@ class SoftwareController extends Controller
 
     public function delete(Request $request, $id){
         $validated = $request->validate([
-            'active' => 'required',
+            'active' => 'required|string|in:Y,N',  // Ensure active is either 'Y' or 'N'
         ]);
 
         $client = new Client();
+
         try {
             $response = $client->put("http://localhost:5252/api/TrnSoftware/{$id}", [
                 'json' => $validated,
             ]);
-            
-            // Log success response
+
+            // Log the success response
             Log::info('Successfully updated software status', [
                 'id' => $id,
-                'response' => json_decode($response->getBody(), true)
+                'response_status' => $response->getStatusCode(),
+                'response_body' => json_decode($response->getBody(), true),
             ]);
-            
+
             return response()->json(['message' => 'Successfully updated software status'], 200);
-            
+
         } catch (\Throwable $th) {
-            // Log error response
+            // Log detailed error response
             Log::error('Failed to update software status', [
                 'id' => $id,
-                'error' => $th->getMessage()
+                'error_message' => $th->getMessage(),
+                'error_code' => $th->getCode(),
             ]);
 
             return response()->json(['error' => 'Failed to update software status'], 500);

@@ -69,6 +69,8 @@ Route::prefix('detailAsset')->name('detailAsset.')->group(function(){
     //Post Software
     Route::get('/Laptop/{assetcode}/Software', [SoftwareController::class, 'create'])->name('software');
     Route::post('/Laptop/{assetcode}/Software', [SoftwareController::class, 'store'])->name('software.store');
+    Route::get('/Laptop/{assetcode}/Software/edit/{idasset}', [SoftwareController::class, 'edit'])->name('software.edit');
+    Route::put('/Laptop/{assetcode}/Software/update', [SoftwareController::class, 'update'])->name('software.update');
 
 });
 
@@ -80,8 +82,6 @@ Route::prefix('maintenance')->name('maintenance.')->group(function(){
 });
 
 Route::prefix('software')->name('software.')->group(function(){
-    Route::get('/', [SoftwareController::class, 'index'])->name('index');
-    Route::get('/store', [SoftwareController::class, 'create'])->name('create');
     Route::put('/{id}', [SoftwareController::class, 'delete'])->name('delete');
 
 });
