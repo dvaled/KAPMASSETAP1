@@ -22,7 +22,7 @@
     <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css" rel="stylesheet" />        
 </head>
 <body class="bg-gray-100">
-    <div class="min-h-screen grid grid-cols-12">
+    <div class="min-h-screen grid grid-cols-12 lg:grid grid-rows-1  ">
         <!-- Sidebar (1st Column) -->
         <aside class="col-span-2 text-white h-screen sticky top-0 overflow-auto z-50">
             @include('layouts.sections.sidebar')

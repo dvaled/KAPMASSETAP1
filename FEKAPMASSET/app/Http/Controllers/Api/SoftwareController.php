@@ -108,6 +108,7 @@ class SoftwareController extends Controller
             ]);
 
         $client = new Client();
+        $assetCodes = $validated['assetcode'];
         
         try {
             $response = $client->post("http://localhost:5252/api/TrnSoftware", [
@@ -117,7 +118,7 @@ class SoftwareController extends Controller
             $data = json_decode($response->getBody()->getContents(), true);
             Log::info('API Response:', $data);  // Log the API response for inspection
         
-            return redirect('/detaiAsset/Laptop/{assetcode}')->with('success', 'Data submitted successfully!');
+            return redirect("/detailAsset/Laptop/$assetCodes")->with("success", "Data has been added successfully");
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;
             Log::error('API Error: ' . $e->getMessage() . ' - Response Body: ' . $responseBody);
@@ -127,7 +128,8 @@ class SoftwareController extends Controller
 
     public function update(Request $request, $id){
         $validated = $request -> validate([
-            'idasset' => 'required',
+            'idassetsoftware' => 'required',
+            'assetcode' => 'required',
             'softwaretype' => 'required',   
             'softwarecategory' => 'required',
             'softwarename' => 'required',

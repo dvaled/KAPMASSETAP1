@@ -328,14 +328,20 @@
                                     </td>
                                     <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
                                         <!-- Edit Icon -->
-                                        <a class="text-blue-500 text-sm font-bold mr-2" href="{{ route('detailAsset.software.edit', ['assetcode' => $assetcode, 'id' => $software['idassetsoftware']]) }}">
-                                           <i class="fas fa-edit"></i>
-                                        </a>
+                                        <a href="javascript:void(0);" class="text-blue-500 text-sm font-bold mr-2" onclick="openSoftwareModal({{ json_encode($software) }})">
+                                            <i class="fas fa-edit"></i>
+                                         </a>
+
+                                        {{-- href="{{ route('detailAsset.software.edit', ['assetcode' => $assetcode, 'id' => $software['idassetsoftware']]) }}" --}}
+
+                                        
+
+
                                         {{-- <a href="javascript:void(0);" class="text-red-500 text-sm font-bold mr-2" onclick="openDeleteModal({{json_encode($detailSoftwareData)}})">
                                            <i class="fas fa-trash"></i>
                                         </a> --}}
                                       
-                                      </td>
+                                    </td>
                                     {{-- @endauth --}}
                                 </tbody>
                                 @endforeach
@@ -535,90 +541,71 @@
         <div class="bg-white p-6 rounded-md w-96">
             <h2 class="text-xl font-bold mb-4">Edit Software</h2>
 
-            <form id="editFormSoftware"">
+            <form id="updateFormSoftware" action="{{ route('detailAsset.software.update', ['assetcode' => $assetcode]) }}" method="POST">
+                {{-- 'idasset' => $idassetsoftware --}}
                 @csrf
                 @method('PUT') <!-- Use PUT method for updates -->
 
                 <!-- Input fields for master data -->
                 <div class="mb-4">
-                    <label for="masterid" class="block text-sm font-semibold">ID</label>
-                    <input type="text" id="masterid" name="masterid" class="w-full p-2 border rounded" readonly>
+                    <label for="softwareid" class="block text-sm font-semibold">Software ID</label>
+                    <input id="softwareid" name="softwareid" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly></input>
                 </div>
-                
-                <div class="mb-4">
-                    <label for="condition" class="block text-sm font-semibold">Type</label>
-                    <input type="text" id="conditionModal" name="condition" class="w-full p-2 border rounded" required>
-                </div>
-
-                <div class="mb-4">
-                    <label for="nosrModal" class="block text-sm font-semibold">Category</label>
-                    <input type="text" id="nosrModal" name="nosrModal" class="w-full p-2 border rounded" required>
-                </div>
-                <div class="mb-4">
-                  <label for="description" class="block text-sm font-semibold"> Name </label>
-                  <input type="text" id="descriptionModal" name="description" class="w-full p-2 border rounded" required>
-              </div>
-              <div class="mb-4">
-                  <label for="valuegcm" class="block text-sm font-semibold"> Lincense </label>
-                  <input type="text" id="valuegcmModal" name="valuegcm" class="w-full p-2 border rounded" required>
-              </div>
-              <div class="mb-4">
-                  <label for="typegcm" class="block text-sm font-semibold"> Active </label>
-                  <input type="text" id="typegcmModal" name="typegcm" class="w-full p-2 border rounded" required>
-              </div>
-              <div class="mb-4">
-                  <label for="active" class="block text-sm font-semibold"> PIC Added </label>
-                  <input type="text" id="activeModal" name="active" class="w-full p-2 border rounded" required>
-              </div>
-              <div class="mb-4">
-                  <label for="active" class="block text-sm font-semibold"> Date Added </label>
-                  <input type="text" id="activeModal" name="active" class="w-full p-2 border rounded" required>
-              </div>
-              <div class="mb-4">
-                  <label for="active" class="block text-sm font-semibold"> Date Updated </label>
-                  <input type="text" id="activeModal" name="active" class="w-full p-2 border rounded" required>
-              </div>
-              <div class="mb-4">
-                  <label for="active" class="block text-sm font-semibold"> Asset Code </label>
-                  <input type="text" id="activeModal" name="active" class="w-full p-2 border rounded" required>
-              </div>
-
-                <!-- Add more fields as necessary -->
-
-                <div class="flex justify-end">
-                    <button type="button" onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
-                </div>
-            </form>
-        </div>
-      </div>
-
-      {{-- Update Software   modal --}}
-      <div id="Lookism" class="modal hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-        <div class="bg-white p-6 rounded-md w-96">
-            <h2 class="text-xl font-bold mb-4">Asset Image</h2>
-            
-            <form action="{{ route('detailAsset.image', ['assetcode' => $assetcode]) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                {{-- assetcode --}}
                 <div class="mb-4">
                     <label for="assetcode" class="block text-sm font-semibold">Asset Code</label>
-                    <input id="assetcode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{$assetcode}}"></input>
+                    <input type="text" id="assetcode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly></input>
                 </div>
-
+    
                 <div class="mb-4">
-                    <label for="imageAsset" class="block text-sm font-semibold">Asset Image</label>
-                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="asset image" id="imageAsset" type="file">
+                    <label for="softwaretype" class="block text-sm font-semibold">Type</label>
+                    <select id="softwaretype" name="softwaretype" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        @foreach ($assetMaster as $master)
+                            <option value="{{ $master['condition'] }}">{{ $master['condition'] }}</option>
+                        @endforeach
+                    </select>
                 </div>
-
+                <div class="mb-4">
+                    <label for="softwarecategory" class="block text-sm font-semibold">Category</label>
+                    <select id="softwarecategory" name="softwarecategory" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        @foreach ($assetMaster as $master)
+                            <option value="{{ $master['condition'] }}">{{ $master['condition'] }}</option>
+                        @endforeach
+                    </select>
+                </div>  
+                <div class="mb-4">
+                    <label for="softwarename" class="block text-sm font-semibold">Name</label>
+                    <select id="softwarename" name="softwarename" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        @foreach ($assetMaster as $master)
+                        <option value="{{ $master['condition'] }}">{{ $master['condition'] }}</option>
+                        @endforeach
+                    </select>
+                </div>  
+                <div class="mb-4">
+                    <label for="softwarelicense" class="block text-sm font-semibold">License</label>
+                    <select id="softwarelicense" name="softwarelicense" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        @foreach ($assetMaster as $master)
+                        <option value="{{ $master['condition'] }}">{{ $master['condition'] }}</option>
+                        @endforeach
+                    </select>
+                </div>  
+                
+                <div class="mb-4">
+                    <label for="softwareperiod" class="block text-sm font-semibold">Software Period</label>
+                    <select id="softwareperiod" name="softwareperiod" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        @foreach ($userData as $master)
+                            <option value="{{ $master['name'] }}">{{ $master['name'] }}</option>
+                        @endforeach
+                    </select>
+                </div>   
+    
                 <div class="mb-4">
                     <label for="active" class="block text-sm font-semibold">Active</label>
                     <select id="active" name="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         <option value="Y">Y</option>  <!-- Represents true -->
                         <option value="N">N</option>  <!-- Represents false -->
                     </select>
-                </div>    
-
+                </div>
+    
                 <div class="mb-4">
                     <label for="picadded" class="block text-sm font-semibold">PIC</label>
                     <select id="picadded" name="picadded" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
@@ -626,21 +613,17 @@
                             <option value="{{ $user['name'] }}">{{ $user['name'] }}</option>
                         @endforeach
                     </select>
-                </div>
-
-                <div class="mb-4">
-                    <label for="dateadded" class="block text-sm font-semibold">Date</label>
-                    <input type="date" id="dateadded" name="dateadded" class="w-full p-2 border rounded" required>
-                </div>    
+                </div>   
     
                 <!-- Buttons -->
                 <div class="flex justify-end">
-                    <button type="button" onclick="closeImg()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Back</button>
+                    <button type="button" onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Back</button>
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
                 </div>
             </form>
         </div>
-    </div>
+      </div>
+      
     {{-- modal for maintenance data --}}
     <div id="mtcModal" class="modal hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
         <div class="bg-white p-6 rounded-md w-96">
@@ -689,36 +672,46 @@
 
 <script>
 
-    // function openImgModal(){
-    //     document.getElementById('imgModal').classList.remove('hidden');
-    // }
+    // Handle form edit submission via AJAX
+    document.getElementById('updateFormSoftware').addEventListener('submit', function (event) {
+    event.preventDefault();
 
-    // // function to open maintenance modal
-    // function openMtcModal() {
-    //     // Retrieve the asset code from the button's data-attribute
-    //     // const assetcode = event.target.getAttribute('data-assetcode');
+    const assetcode = document.getElementById('assetcode').value;
+    const idassetsoftware = document.getElementById('softwareid').value;
 
-    //     // Open the modal
-    //     document.getElementById('mtcModal').classList.remove('hidden');
+    // Update the form action with both assetcode and idassetsoftware
+    const formAction = `/detailAsset/Laptop/${assetcode}/Software/update`;
 
-    //     // Set the asset code value in the modal input field
-    //     document.getElementById('assetcode').value = $assetcode;
-    // }
+    const formData = new FormData(this);
 
-    // // function to close the maintenance modal
-    // function closeMtc(){
-    //     document.getElementById('mtcModal').classList.add('hidden'); // set the modal class to hidden
-    // }
-    
-    // // function to close the image modal
-    // function closeImg(){
-    //     document.getElementById('imgModal').classList.add('hidden'); // set the modal class to hidden
-
-    // }
+    fetch(formAction, {
+        method: 'POST', // Use POST with _method override if needed
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json',
+        },
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Failed to update record');
+        }
+    })
+    .then(data => {
+        alert('Master updated successfully');
+        location.reload();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to update the record');
+    });
+});
 
     function unassignAsset(url) {
         fetch(url, {
-            method: 'PATCH',
+            method: 'PUT',
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
                 'Content-Type': 'application/json'
@@ -737,23 +730,25 @@
 
 
     
-    function openEditModal(detailSoftwareData) {
-        document.getElementById('masterid').value = detailSoftwareData.masterid;
-        document.getElementById('condition').value = detailSoftwareData.condition;
-        document.getElementById('nosr').value = detailSoftwareData.nosr;
-        document.getElementById('description').value = detailSoftwareData.description;
-        document.getElementById('valuegcm').value = detailSoftwareData.valuegcm;
-        document.getElementById('typegcm').value = detailSoftwareData.typegcm;
-        document.getElementById('active').value = detailSoftwareData.active;
+    function openSoftwareModal(software) {
+        document.getElementById('softwareid').value = software.idassetsoftware;
+        document.getElementById('assetcode').value = software.assetcode;
+        document.getElementById('softwaretype').value = software.softwaretype;
+        document.getElementById('softwarecategory').value = software.softwarecategory;
+        document.getElementById('softwarename').value = software.softwarename;
+        document.getElementById('softwarelicense').value = software.softwarelicense;
+        document.getElementById('active').value = software.active;
+        document.getElementById('picadded').value = software.picadded;
+
         // Populate other form fields as necessary
       
-      document.getElementById('editModal').classList.remove('hidden');
+      document.getElementById('softwareModal').classList.remove('hidden');
   }
 
   // Function to close modal
   function closeModal() {
-      document.getElementById('editModal').classList.add('hidden');
-      document.getElementById('deleteModal').classList.add('hidden');
+      document.getElementById('softwareModal').classList.add('hidden');
+    //   document.getElementById('deleteModal').classList.add('hidden');
   }
 
 </script>

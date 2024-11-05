@@ -180,8 +180,8 @@
             
                 <!-- Input fields for master data -->
                 <div class="mb-4">
-                    <label for="masterid-delete" class="block text-sm font-semibold">Master ID</label>
-                    <input type="number" id="masterid-delete" name="masterid-delete" class="w-full p-2 border rounded" readonly>
+                    <label for="masterid-delete" class="block text-sm font-semibold hidden">Master ID</label>
+                    <input type="number" id="masterid-delete" name="masterid-delete" class="w-full p-2 border rounded" readonly hidden>
                 </div>
             
                 <div class="mb-4">

@@ -32,7 +32,7 @@
 
         <div class="d-block d-lg-none">
             <img src="{{ asset('assets/dist/images/logos/kai-esa-logo.svg') }}" class="dark-logo" height="40"
-                alt="" />
+                alt="" />s
             <img src="{{ asset('assets/dist/images/logos/kai-esa-logo.svg') }}" class="light-logo" height="40"
                 alt="" />
         </div>

@@ -160,7 +160,7 @@ class MasterController extends Controller
             $data = json_decode($response->getBody()->getContents(), true);
             // Ensure $data is logged as an array
             Log::info('API Response:', $data ?? []); // Use an empty array if $data is null 
-        
+            
             return redirect('/master')->with('success', 'Data submitted successfully!');
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;

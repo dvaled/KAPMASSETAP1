@@ -92,10 +92,16 @@ class TRNAssetController extends Controller
         // Create a new HTTP client instance
         $client = new Client();
 
+        $responseMaster = $client->request('GET', "http://localhost:5252/api/TrnAsset/{$assetcode}");
+        $contentMaster = $responseMaster->getBody()->getContents();
+        $assetMaster = json_decode($contentMaster, true);
+        
+
         // First API call to fetch asset data (TrnAsset)
         $responseAsset = $client->request('GET', "http://localhost:5252/api/TrnAsset/{$assetcode}");
         $contentAsset = $responseAsset->getBody()->getContents();
         $assetData = json_decode($contentAsset, true);
+        
 
         // Second API call to fetch asset spec data (TrnAssetSpec)
         $responseAssetSpec = $client->request('GET', "http://localhost:5252/api/TrnAssetSpec/{$assetcode}");
@@ -129,6 +135,7 @@ class TRNAssetController extends Controller
 
         // Pass both assetData and assetSpecData to the view
         return view('detailAsset.Laptop', [
+            'assetMaster' => $assetMaster,
             'assetData' => $assetData,
             'assetSpecData' => $assetSpecData,
             'historyMaintenanceData' => $historyMaintenanceData,

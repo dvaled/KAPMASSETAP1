@@ -45,19 +45,13 @@ public class TrnHistMaintenanceController : ControllerBase{
         if (await _context.TRN_HIST_MAINTENANCE.AnyAsync(e => e.MAINTENANCEID == maintenance.MAINTENANCEID))
         {
             return Conflict("This Device is already in maintenance.");
-        }
+        }   
 
-        // Add maintenance record
-    // Post value to db
-    [HttpPost]
-    public async Task<ActionResult<TRNMAINTENANCEMODEL>> PostMaintenanceData(TRNMAINTENANCEMODEL maintenance){
+         // Save the new maintenance record
         _context.TRN_HIST_MAINTENANCE.Add(maintenance);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(PostMaintenance), new { id = maintenance.MAINTENANCEID }, maintenance);
-
-        return CreatedAtAction("GetMaintenanceData", new { id = maintenance.MAINTENANCEID }, maintenance);
+        // Return success response
+        return CreatedAtAction(nameof(PostMaintenance), new { ASSETCODE = maintenance.ASSETCODE }, maintenance); 
     }
-
-
 }
