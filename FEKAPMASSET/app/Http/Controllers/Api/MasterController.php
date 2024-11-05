@@ -124,9 +124,26 @@ class MasterController extends Controller
         // Validate the incoming request data
         try {
             $validated = $request->validate([
-                'masterid' => 'required|integer',
-                'active' => 'required|string',
+                'masterid-delete' => 'required|integer',
+                'condition-delete' => 'required|string|max:255',
+                'nosr-delete' => 'required|string|max:255',
+                'description-delete' => 'required|string',
+                'valuegcm-delete' => 'required|numeric',
+                'typegcm-delete' => 'nullable|string|max:255', 
+                'active-delete' => 'required|string',
             ]);
+    
+            // Map validated data to match the API's expected field names
+            $apiData = [
+                'masterid' => $validated['masterid-delete'],
+                'condition' => $validated['condition-delete'],
+                'nosr' => $validated['nosr-delete'],
+                'description' => $validated['description-delete'],
+                'valuegcm' => $validated['valuegcm-delete'],
+                'typegcm' => $validated['typegcm-delete'] ?? null, // Nullable field
+                'active' => $validated['active-delete'],
+            ];
+
         } catch (\Illuminate\Validation\ValidationException $e) {
             Log::error('Validation errors:', $e->errors());
             return response()->json(['errors' => $e->errors()], 422);
@@ -137,7 +154,7 @@ class MasterController extends Controller
         try {
             // Send the PUT request to the API to update the master data
             $response = $client->put("http://localhost:5252/api/Master/{$masterid}", [
-                'json' => $validated // Send the validated data as JSON
+                'json' => $apiData // Send the validated data as JSON
             ]);                                 
     
             $data = json_decode($response->getBody()->getContents(), true);
