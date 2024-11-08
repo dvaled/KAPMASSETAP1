@@ -357,11 +357,10 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="flex-auto px-0 pt-0 pb-2">
-        <div class="p-0 overflow-x-auto">
-            <div class="flex flex-wrap justify-evenly gap-4 p-4 bg-white">
-                <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow">
+        <div class="flex-auto px-0 pt-0 pb-2">
+            <div class="p-0 overflow-x-auto">
+                <div class="flex flex-wrap justify-evenly gap-4 p-4 bg-white">
+                    <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow">
                     {{-- @auth    --}}
                     <div class="flex justify-between items-center pb-4 mb-4">
                         <!-- Left Aligned Heading -->
@@ -529,6 +528,7 @@
             </div>
         </div>
     </div>
+</div>
     {{-- @endauth --}}
 
     {{-- Modal for all of the tables --}}
@@ -550,7 +550,7 @@
                     <label for="assetcode" class="block text-sm font-semibold">Asset Code</label>
                     <input id="assetcode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{ $assetcode }}"></input>
                 </div>
-    
+                
                 <div class="mb-4">
                     <label for="softwaretype" class="block text-sm font-semibold">Type</label>
                     <select id="softwaretype" name="softwaretype" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">

@@ -6,15 +6,15 @@
         <div class="flex flex-wrap justify-between gap-4 p-6 bg-white">
             <div class="flex-1 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900"> Asset Available </h5>
-                <p class="font-normal text-xl text-gray-700">200</p>
+                <p class="font-normal text-xl text-gray-700">{{$countAsset}}</p>
             </div>
             <div class="flex-1 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900"> Destroyed Asset </h5>
-                <p class="font-normal text-xl text-gray-700">50</p>
+                <p class="font-normal text-xl text-gray-700">{{ $destroyedAsset }}</p>
             </div>
             <div class="flex-1 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900"> In Maintenance </h5>
-                <p class="font-normal text-xl text-gray-700">10</p>
+                <p class="font-normal text-xl text-gray-700">{{ $inMtc }}</p>
             </div>
         </div>
     </div>
@@ -25,16 +25,14 @@
             </button> --}}
         </div>   
       </div>
-    <div class="flex-auto px-0 pt-0 pb-2">
-      <div class="p-0 overflow-x-auto">
-        <table class="p-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
+      <div class="flex-auto px-0 pt-0 pb-2 space-x-5">
+        <div class="p-4 overflow-x-auto">
+          <table class="p-4 items-center w-full mb-8 align-top border-gray-200 text-slate-500">
             <thead class="align-bottom">
               <tr>
                 <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">ID Asset</th>
                 <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Assigned Employee</th>
                 <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Brand</th>
-                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Model</th>
-                <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Series</th>
                 <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Serial Number</th>
                 <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Active</th>
                 <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Category</th>
@@ -43,39 +41,44 @@
                 <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Action</th>
             </thead>
             <tbody class= "justify-center">
-              @foreach ($logData as $log)
+              @foreach ($assetData as $log)
+                @php
+                    $assetbrand = isset($log['assetbrand']) ? $log['assetbrand'] : ' ';
+                    $assetmodel = isset($log['assetmodel']) ? $log['assetmodel'] : ' ';
+                    $assetseries = isset($log['assetseries']) ? $log['assetseries'] : ' ';
+                    $asset = $assetbrand . ' ' . $assetmodel . ' ' . $assetseries;
+
+                    $employeeName = isset($log['employee']['name']) ? $log['employee']['name'] : 'N/A';
+
+
+                @endphp
+
               <tr>
-                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                  <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
                       <p class="mb-0 font-semibold leading-tight text-xs">{{ $log['idasset'] }}</p> <!-- Display Condition -->
                   </td>
-                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                      <p class="mb-0 font-semibold leading-tight text-xs">{{ $log['nipp'] }}</p> <!-- Display Condition -->
+                  <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
+                      <p class="mb-0 font-semibold leading-tight text-xs">{{ $employeeName }}</p> <!-- Display Condition -->
                   </td>
-                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                      <span class="font-semibold leading-tight text-xs text-black"> {{ $log['assetbrand'] }}</span> <!-- Display Description -->
+                  <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
+                      <span class="font-semibold leading-tight text-xs text-black"> {{ $asset }}</span> <!-- Display Description -->
                   </td>
-                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                      <span class="font-semibold leading-tight text-xs text-black">{{ $log['assetmodel'] }}</span> <!-- Display Value -->
-                  </td>
-                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                      <span class="font-semibold leading-tight text-xs text-black">{{ $log['assetseries'] }}<span> <!-- Display Type -->
-                  </td>
-                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                  <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
                       <span class="font-semibold leading-tight text-xs text-black">{{ $log['assetserialnumber'] }}<span> <!-- Display Type -->
                   </td>
-                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                  <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
                       <span class="font-semibold leading-tight text-xs text-black">{{ $log['active'] }}<span> <!-- Display Type -->
                   </td>
-                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                  <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
                       <span class="font-semibold leading-tight text-xs text-black">{{ $log['assetcategory'] }}<span> <!-- Display Type -->
                   </td>
-                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                  <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
                       <span class="font-semibold leading-tight text-xs text-black">{{ $log['assetcode'] }}<span> <!-- Display Type -->
                   </td>
-                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                  <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
                       <span class="font-semibold leading-tight text-xs text-black">{{ $log['assettype'] }}<span> <!-- Display Type -->
                   </td>
-                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                  <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent">
                     <!-- Edit Icon -->
                     <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" onclick="window.location.href='{{ route('detailAsset.laptop', ['assetcode' => $log['assetcode']]) }}'">Detail</button>
                   </td>
@@ -83,7 +86,57 @@
               @endforeach
           </tbody>
           </table>
-          </div>
+          <nav aria-label="Page navigation example">
+            <ul class="inline-flex -space-x-px text-sm">
+                <!-- Previous Page Link -->
+                @if ($assetData->onFirstPage())
+                    <li>
+                        <span class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-700 bg-gray-200 border border-gray-300 rounded-s-lg cursor-not-allowed">
+                            Previous
+                        </span>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ $assetData->previousPageUrl() }}" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-700 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-800">
+                            Previous
+                        </a>
+                    </li>
+                @endif
+        
+                <!-- Pagination Elements -->
+                @foreach ($assetData->links()->elements[0] as $page => $url)
+                    @if ($page == $assetData->currentPage())
+                        <li>
+                            <span class="flex items-center justify-center px-3 h-8 text-white border border-gray-300 bg-blue-600 hover:bg-blue-700 hover:text-white">
+                                {{ $page }}
+                            </span>
+                        </li>
+                    @else
+                        <li>
+                            <a href="{{ $url }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-800">
+                                {{ $page }}
+                            </a>
+                        </li>
+                    @endif
+                @endforeach
+        
+                <!-- Next Page Link -->
+                @if ($assetData->hasMorePages())
+                    <li>
+                        <a href="{{ $assetData->nextPageUrl() }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-800">
+                            Next
+                        </a>
+                    </li>
+                @else
+                    <li>
+                        <span class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-gray-200 border border-gray-300 rounded-e-lg cursor-not-allowed">
+                            Next
+                        </span>
+                    </li>
+                @endif
+            </ul>
+        </nav>  
+        </div>
           <div class="flex flex-wrap justify-evenly gap-2 p-2 bg-white">
             <div class="flex-1 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 m-4">
                 <a href="#">

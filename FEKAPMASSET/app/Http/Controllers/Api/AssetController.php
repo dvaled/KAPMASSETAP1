@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use OpenApi\Annotations\Get;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class AssetController extends Controller
 {
@@ -38,10 +39,37 @@ class AssetController extends Controller
         $client = new Client();
         $response = $client->request('GET', 'http://localhost:5252/api/TrnAsset');
         $body = $response->getBody()->getContents();
-        $logData = json_decode($body, true);
-        return view('dashboard', [
+        $assetData = json_decode($body, true);
+
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $perPage = 5;
+        $currentItems = array_slice($assetData, ($currentPage-1)*$perPage, $perPage);
+
+        $paginatedData = new LengthAwarePaginator(
+            $currentItems,
+            count($assetData), // Total items
+            $perPage, // Items per page
+            $currentPage, // Current page
+            ['path' => request()->url(), 'query' => request()->query()] // Maintain query parameters
+        );
+
+        $countAsset = count(array_filter($assetData, function($item) {
+            return is_null($item['nipp']); // Check if 'nipp' is null
+        }));
+
+        $destroyedAsset = count(array_filter($assetData, function($item) {
+            return $item['condition'] == "DESTROYED"; // Check if 'nipp' is null
+        }));
+        $inMtc = count(array_filter($assetData, function($item) {
+            return $item['condition'] == "MAINTENANCE"; // Check if 'nipp' is null
+        }));
+
+        return view('dashboard', [  
             'masterData' => $masterData,
-            'logData' => $logData
+            'assetData' => $paginatedData,
+            'countAsset' => $countAsset,
+            'destroyedAsset' => $destroyedAsset,
+            'inMtc' => $inMtc
         
         ]);
     }

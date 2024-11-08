@@ -45,7 +45,7 @@ public class TrnAssetDtlPictureController : ControllerBase
                         if (file.Length > 0)
                         {
                             // Define folder where images will be saved
-                            var folderName = Path.Combine("D:", "Assets");
+                            var folderName = Path.Combine("Assets", "Logo");
                             var pathToSave = folderName;                            
 
                             // Create directory if it doesn't exist
@@ -71,7 +71,7 @@ public class TrnAssetDtlPictureController : ControllerBase
                             {
                                 ASSETCODE = model.ASSETCODE,
                                 ACTIVE = model.ACTIVE,  
-                                ASSETPIC = fullPath,  
+                                ASSETPIC = relativePath,  
                                 PICADDED = model.PICADDED,  
                                 DATEADDED = DateOnly.FromDateTime(DateTime.Now)  
                             };

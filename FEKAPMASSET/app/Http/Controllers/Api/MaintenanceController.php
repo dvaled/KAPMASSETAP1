@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
 
-class MaintenanceController extends Controller
-{
+class MaintenanceController extends Controller{
     // Get all maintenance records
     public function indexz() {
         $client = new Client();
@@ -30,7 +29,7 @@ class MaintenanceController extends Controller
         $userData = json_decode($userContent, true);
         
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $perPage = 5;
+        $perPage = 7;
         $currentItems = array_slice($data, ($currentPage-1)*$perPage, $perPage);
 
         $paginatedData = new LengthAwarePaginator(

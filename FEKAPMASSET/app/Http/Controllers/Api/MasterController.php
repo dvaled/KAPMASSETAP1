@@ -7,6 +7,9 @@ use Exception;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Auth\Events\Validated;
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use PDO;
@@ -21,7 +24,19 @@ class MasterController extends Controller
         $content = $body->getContents();
         $data = json_decode($content, true);
 
-        return view('master.index', ['masterData' => $data]); // Keep the view name consistent
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $perPage = 5;
+        $currentItems = array_slice($data, ($currentPage-1)*$perPage, $perPage);
+
+        $paginatedData = new LengthAwarePaginator(
+            $currentItems,
+            count($data), // Total items
+            $perPage, // Items per page
+            $currentPage, // Current page
+            ['path' => request()->url(), 'query' => request()->query()] // Maintain query parameters
+        );
+
+        return view('master.index', ['masterData' => $paginatedData]); // Keep the view name consistent
     }
     
     public function show($condition) {
