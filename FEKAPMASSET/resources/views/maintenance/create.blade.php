@@ -56,20 +56,4 @@
         </form>
     </div>
 </div>
-
-<script>
-document.getElementById('editForm').addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevent the default form submission
-
-    // Get the selected asset code value
-    var assetcode = document.getElementById('assetcode').value;
-
-    // Set the action URL with the asset code parameter
-    this.action = `/maintenance/store/${assetcode}`;
-
-    // Submit the form
-    this.submit();
-});
-
-</script>
 @endsection

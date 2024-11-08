@@ -102,7 +102,7 @@ class MaintenanceController extends Controller
 
         try {
             $response = $client->post("http://localhost:5252/api/TrnHistMaintenance/{$assetcode}", [
-                'json' => $validatedData,
+                'query' => $validatedData,
             ]);
 
             $data = json_decode($response->getBody()->getContents(), true);

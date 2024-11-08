@@ -126,14 +126,18 @@ class SoftwareController extends Controller
         }   
     }   
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $assetcode, $idassetsoftware){
+        Log::info('Update method called with assetcode: ' . $assetcode . ' and idassetsoftware: ' . $idassetsoftware);
+        Log::info('Request Data:', $request->all());
+
         $validated = $request -> validate([
             'idassetsoftware' => 'required',
             'assetcode' => 'required',
             'softwaretype' => 'required',   
             'softwarecategory' => 'required',
-            'softwarename' => 'required',
+            'softwarename' => 'required',   
             'softwarelicense' => 'required',
+            'softwareperiod' => 'required',
             'active' => 'required',
             'picadded' => 'required',
             'dateadded' => 'nullable',
@@ -142,16 +146,17 @@ class SoftwareController extends Controller
             ]);
 
         $client = new Client();
+        $assetCodes = $validated['assetcode'];
         
         try {
-            $response = $client->put("http://localhost:5252/api/TrnSoftware/{$id}", [
+            $response = $client->put("http://localhost:5252/api/TrnSoftware/{$idassetsoftware}", [
                 'json' => $validated,  // Use the validated data
             ]);
         
             $data = json_decode($response->getBody()->getContents(),  true);
             Log::info('API Response:', $data);  // Log the API response for inspection
         
-            return redirect('/detaiAsset/Laptop/{assetcode}')->with('success', 'Data Updated successfully!');
+            return redirect()->back()->with("success", "Data has been updated successfully");
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;
             Log::error('API Error: ' . $e->getMessage() . ' - Response Body: ' . $responseBody);

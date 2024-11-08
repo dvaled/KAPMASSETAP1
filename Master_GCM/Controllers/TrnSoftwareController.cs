@@ -54,7 +54,6 @@ public class TrnSoftwareController : ControllerBase{
         try
         {
             await _context.SaveChangesAsync();
-
         }
         catch (DbUpdateConcurrencyException)
         {
@@ -63,7 +62,7 @@ public class TrnSoftwareController : ControllerBase{
             }
             else{throw;}
         }
-        return NoContent();
+        return Ok(trnSoftware);
     }
     private bool SoftwarerExists(int idAssetSoftware){
         return _context.TRN_DTL_SOFTWARE.Any(e => e.IDASSETSOFTWARE == idAssetSoftware);

@@ -70,7 +70,10 @@
                                 {{-- @auth --}}
                                 <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300"
                                         onclick="unassignAsset('{{ route('transaction.unassign', ['assetcode' => $assetcode]) }}')">
-                                    Unassign This Asset
+                                    Unassign
+                                </button>
+                                <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                    Print BAST
                                 </button>
                                 {{-- @endauth --}}
                             </div>
@@ -376,13 +379,13 @@
                     </div>
                     {{-- @endauth --}}
                     <!-- Dynamic Table-like Section with Headers as Rows -->
-                        <div class="relative overflow-x-auto">
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div class="relative overflow-y-auto max-h-[400px]">
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 overflow-auto">
                                 @foreach ($imgData as $img)
                                     <div>
-                                        <a href="{{ route('detailAsset.update.image', ['assetcode' => $img['assetcode']]) }}">
-                                            <img class="h-auto max-w-full rounded-lg" src="{{ $img['assetpic'] }}" alt="Asset Image">
-                                        </a>
+                                            <button onclick="openImgModal({{ json_encode($img) }})">
+                                                <img class="h-auto max-w-full rounded-lg" src="{{ $img['assetpic'] }}" alt="Asset Image">
+                                            </button >
                                     </div>
                                 @endforeach
                             </div>
@@ -479,11 +482,13 @@
                             </h5>
                         </a>
                         <!-- Right Aligned Buttons -->
+                        @if (empty($employeeNIPP) || $employeeNIPP === 'Null')
                         <div class="flex space-x-4">
                             <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" onclick="window.location.href='{{ route('maintenance.create', ['assetcode' => $assetcode]) }}'"">
                                     Add Record
                             </button>
                         </div>
+                        @endif
                     </div>
                     <!-- Dynamic Table-like Section with Headers as Rows -->
                     <div class="relative overflow-x-auto">
@@ -494,7 +499,6 @@
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">PIC Added</th>
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Date Added</th>
                                     <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70 border-r border-gray-300">Notes</th>
-                                    <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b  shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-black opacity-70">Action</th>
                                 </tr>
                             </thead>
                         @if(!empty($historyMaintenanceData))
@@ -513,14 +517,6 @@
                                     <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent"> 
                                         <p class="text-center mb-2 font-semibold leading-tight text-xs">{{ $history['notes'] }}</p> <!-- Display Condition -->
                                     </td>
-                                    <td class="text-center p-2 align-middle bg-transparent border-b border-r whitespace-nowrap shadow-transparent"> 
-                                        <a href="javascript:void(0);" class="text-blue-500 text-sm font-bold mr-2" onclick="openEditModal({{ json_encode($detailSoftwareData) }})">
-                                            <i class="fas fa-edit"></i>
-                                         </a>
-                                         <a href="javascript:void(0);" class="text-red-500 text-sm font-bold mr-2" onclick="openDeleteModal({{json_encode($detailSoftwareData)}})">
-                                            <i class="fas fa-trash"></i>
-                                         </a>
-                                    </td>
                                 </tr>
                             </tbody>
                             @endforeach
@@ -538,53 +534,52 @@
     {{-- Modal for all of the tables --}}
     <!-- Software Modal -->
     <div id="softwareModal" class="modal hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-        <div class="bg-white p-6 rounded-md w-96">
+        <div class="bg-white p-6 rounded-md w-96 overflow-y-auto max-h-[90vh]">
             <h2 class="text-xl font-bold mb-4">Edit Software</h2>
 
-            <form id="updateFormSoftware" action="{{ route('detailAsset.software.update', ['assetcode' => $assetcode]) }}" method="POST">
-                {{-- 'idasset' => $idassetsoftware --}}
+            <form id="updateFormSoftware" method="POST">
                 @csrf
                 @method('PUT') <!-- Use PUT method for updates -->
 
-                <!-- Input fields for master data -->
+                <!-- Input fields for assetMaster data -->
                 <div class="mb-4">
-                    <label for="softwareid" class="block text-sm font-semibold">Software ID</label>
-                    <input id="softwareid" name="softwareid" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly></input>
+                    <label for="idassetsoftware" class="block text-sm font-semibold">Software ID</label>
+                    <input id="idassetsoftware" name="idassetsoftware" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly></input>
                 </div>
                 <div class="mb-4">
                     <label for="assetcode" class="block text-sm font-semibold">Asset Code</label>
-                    <input type="text" id="assetcode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly></input>
+                    <input id="assetcode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{ $assetcode }}"></input>
                 </div>
     
                 <div class="mb-4">
                     <label for="softwaretype" class="block text-sm font-semibold">Type</label>
                     <select id="softwaretype" name="softwaretype" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                        @foreach ($assetMaster as $master)
-                            <option value="{{ $master['condition'] }}">{{ $master['condition'] }}</option>
+                        @foreach ($assetMaster as $user)
+                            <option value="{{ $user['condition'] }}">{{ $user['condition'] }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="mb-4">
                     <label for="softwarecategory" class="block text-sm font-semibold">Category</label>
                     <select id="softwarecategory" name="softwarecategory" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                        @foreach ($assetMaster as $master)
-                            <option value="{{ $master['condition'] }}">{{ $master['condition'] }}</option>
+                        @foreach ($assetMaster as $user)
+                            <option value="{{ $user['condition'] }}">{{ $user['condition'] }}</option>
                         @endforeach
                     </select>
                 </div>  
                 <div class="mb-4">
                     <label for="softwarename" class="block text-sm font-semibold">Name</label>
                     <select id="softwarename" name="softwarename" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                        @foreach ($assetMaster as $master)
-                        <option value="{{ $master['condition'] }}">{{ $master['condition'] }}</option>
+                        @foreach ($assetMaster as $user)
+                        <option value="{{ $user['condition'] }}">{{ $user['condition'] }}</option>
                         @endforeach
                     </select>
                 </div>  
                 <div class="mb-4">
                     <label for="softwarelicense" class="block text-sm font-semibold">License</label>
                     <select id="softwarelicense" name="softwarelicense" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                        @foreach ($assetMaster as $master)
-                        <option value="{{ $master['condition'] }}">{{ $master['condition'] }}</option>
+                        @foreach ($assetMaster as $user)
+                        <option value="{{ $user['condition'] }}">{{ $user['condition'] }}</option>
                         @endforeach
                     </select>
                 </div>  
@@ -592,8 +587,8 @@
                 <div class="mb-4">
                     <label for="softwareperiod" class="block text-sm font-semibold">Software Period</label>
                     <select id="softwareperiod" name="softwareperiod" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                        @foreach ($userData as $master)
-                            <option value="{{ $master['name'] }}">{{ $master['name'] }}</option>
+                        @foreach ($userData as $user)
+                            <option value="{{ $user['name'] }}">{{ $user['name'] }}</option>
                         @endforeach
                     </select>
                 </div>   
@@ -613,7 +608,7 @@
                             <option value="{{ $user['name'] }}">{{ $user['name'] }}</option>
                         @endforeach
                     </select>
-                </div>   
+                </div>     
     
                 <!-- Buttons -->
                 <div class="flex justify-end">
@@ -632,15 +627,21 @@
             <form id="mtcForm">
                 @csrf
                 {{-- asset code --}}
+
                 <div class="mb-4">
-                    <label for="assetcode" class="block text-sm font-semibold">Asset Code</label>
-                    <input id="assetcode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{$assetcode}}"></input>
+                    <label for="mtcId" class="block text-sm font-semibold">Maintenance ID</label>
+                    <input id="mtcId" name="mtcId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{$assetcode}}"></input>
+                </div>
+
+                <div class="mb-4">
+                    <label for="mtcAssetcode" class="block text-sm font-semibold">Asset Code</label>
+                    <input id="mtcAssetcode" name="mtcAssetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{$assetcode}}"></input>
                 </div>
                 
                 {{-- PIC Addded --}}
                 <div class="mb-4">
-                    <label for="picadded" class="block text-sm font-semibold">PIC</label>
-                    <select id="picadded" name="picadded" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    <label for="mtcPicadded" class="block text-sm font-semibold">PIC</label>
+                    <select id="mtcPicadded" name="mtcPicadded" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         @foreach ($userData as $user)
                             <option value="{{ $user['name'] }}">{{ $user['name'] }}</option>
                         @endforeach
@@ -649,19 +650,64 @@
                 
                 {{-- Notes --}}
                 <div class="mb-4">  
-                    <label for="notes" class="block text-sm font-semibold">Notes</label>
-                    <input type="text" id="notes" name="notes" class="w-full p-2 border rounded" required>
+                    <label for="mtcNotes" class="block text-sm font-semibold">Notes</label>
+                    <input type="text" id="mtcNotes" name="mtcNotes" class="w-full p-2 border rounded" required>
                 </div>
     
                 {{-- Date  --}}
                 <div class="mb-4">
-                    <label for="dateadded" class="block text-sm font-semibold">Date</label>
-                    <input type="date" id="dateadded" name="dateadded" class="w-full p-2 border rounded" required>
+                    <label for="mtcDateadded" class="block text-sm font-semibold">Date</label>
+                    <input type="date" id="mtcDateadded" name="mtcDateadded" class="w-full p-2 border rounded" required>
                 </div>    
     
                 <!-- Buttons -->
                 <div class="flex justify-end">
-                    <button type="button" onclick="closeMtc()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Back</button>
+                    <button type="button" onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Back</button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- modal for image data --}}
+    <div id="imgModal" class="modal hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-6 rounded-md w-96">
+            <h2 class="text-xl font-bold mb-4">Update picture</h2>
+    
+            <form id="imgForm" method="POST" enctype="multipart/form-data" action="{{ route('detailAsset.image.update', ['idassetpic' => $img['idassetpic'], 'assetcode' => $img['assetcode']]) }}">
+                @method('PUT')
+                @csrf
+                {{-- assetcode --}}
+                <div class="mb-4">
+                    <label for="idassetpic" class="block text-sm font-semibold">ID Picture</label>
+                    <input id="idassetpic" name="idassetpic" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{ $img['idassetpic'] }} ></input>
+                </div>
+                <div class="mb-4">
+                    <label for="imgAssetCode" class="block text-sm font-semibold">Asset Code</label>
+                    <input id="imgAssetCode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{ $assetcode }}"></input>
+                </div>
+                <div class="mb-4">
+                    <label for="assetpic" class="block text-sm font-semibold">Asset Image</label>
+                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="assetimage" id="assetpic" name="assetpic" type="file">
+                </div>
+                <div class="mb-4">
+                    <label for="active" class="block text-sm font-semibold">Active</label>
+                    <select id="active" name="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <option value="Y">Y</option>  <!-- Represents true -->
+                        <option value="N">N</option>  <!-- Represents false -->
+                    </select>
+                </div>    
+                <div class="mb-4">
+                    <label for="picadded" class="block text-sm font-semibold">PIC</label>
+                    <select id="picadded" name="picadded" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        @foreach ($userData as $user)
+                            <option value="{{ $user['name'] }}">{{ $user['name'] }}</option>
+                        @endforeach
+                    </select>
+                </div>   
+                <!-- Buttons -->
+                <div class="flex justify-end">
+                    <button type="button" onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Back</button>
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
                 </div>
             </form>
@@ -671,43 +717,6 @@
 
 
 <script>
-
-    // Handle form edit submission via AJAX
-    document.getElementById('updateFormSoftware').addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    const assetcode = document.getElementById('assetcode').value;
-    const idassetsoftware = document.getElementById('softwareid').value;
-
-    // Update the form action with both assetcode and idassetsoftware
-    const formAction = `/detailAsset/Laptop/${assetcode}/Software/update`;
-
-    const formData = new FormData(this);
-
-    fetch(formAction, {
-        method: 'POST', // Use POST with _method override if needed
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Accept': 'application/json',
-        },
-        body: formData
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Failed to update record');
-        }
-    })
-    .then(data => {
-        alert('Master updated successfully');
-        location.reload();
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Failed to update the record');
-    });
-});
 
     function unassignAsset(url) {
         fetch(url, {
@@ -728,10 +737,10 @@
         .catch(error => console.error('Error:', error));
     }
 
-
-    
     function openSoftwareModal(software) {
-        document.getElementById('softwareid').value = software.idassetsoftware;
+
+        //Passing data to the modal
+        document.getElementById('idassetsoftware').value = software.idassetsoftware;
         document.getElementById('assetcode').value = software.assetcode;
         document.getElementById('softwaretype').value = software.softwaretype;
         document.getElementById('softwarecategory').value = software.softwarecategory;
@@ -740,18 +749,68 @@
         document.getElementById('active').value = software.active;
         document.getElementById('picadded').value = software.picadded;
 
-        // Populate other form fields as necessary
-      
-      document.getElementById('softwareModal').classList.remove('hidden');
+        // Set the form action dynamically
+        const assetcode = "{{ $assetcode }}"; // Get the assetcode from Blade
+        const idassetsoftware = software.idassetsoftware; // Get the idassetsoftware from the software object
+        document.getElementById('updateFormSoftware').action = `{{ route('detailAsset.software.update', ['assetcode' => ':assetcode', 'idassetsoftware' => ':idassetsoftware']) }}`.replace(':assetcode', assetcode).replace(':idassetsoftware', idassetsoftware);
+
+        // Opening the modal    
+        document.getElementById('softwareModal').classList.remove('hidden');
+
+        console.log(document.getElementById('updateFormSoftware').action); // Log the action URL
+
+        // Add event listener for form submission
+    const form = document.getElementById('updateFormSoftware');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData(form); // Get the form data
+        const jsonData = Object.fromEntries(formData.entries()); // Convert FormData to a plain object
+
+        fetch(form.action, {
+            method: 'PUT',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json', // Set content type to JSON
+            },
+            body: JSON.stringify(jsonData) // Send the data as JSON
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Failed to update software.');
+                location.reload();
+            } else {
+                return response.text().then(text => {
+                    console.error('Response:', text); // Log the response body for debugging
+                    alert('Software updated successfully!');
+                    location.reload();
+                });
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
   }
 
   // Function to close modal
-  function closeModal() {
+  function closeModal() {   
       document.getElementById('softwareModal').classList.add('hidden');
+      document.getElementById('mtcModal').classList.add('hidden');
+      document.getElementById('imgModal').classList.add('hidden');
     //   document.getElementById('deleteModal').classList.add('hidden');
   }
+
+  function openImgModal(imgData) {        
+        // Set the value of the imgAssetCode if needed
+        
+        document.getElementById('idassetpic').value = imgData.idassetpic;
+        document.getElementById('imgAssetCode').value = imgData.assetcode; 
+        document.getElementById('active').value = imgData.active;
+        document.getElementById('picadded').value = imgData.picadded;
+        
+        document.getElementById('imgModal').classList.remove('hidden');
+    }
 
 </script>
 
 
-@endsection 
+@endsection     

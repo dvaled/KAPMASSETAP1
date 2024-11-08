@@ -12,7 +12,7 @@
 @endif
 <div id="createAsset" class="inset-0 bg-white flex justify-center items-center p-4">
     <div class="bg-white p-6 rounded-md w-96">
-        <h2 class="text-xl font-bold mb-4">Add {{ $assetcode }} Specification Detail </h2>
+        <h2 class="text-xl font-bold mb-4">Add {{ $asset    code }} Specification Detail </h2>
         <form id="editForm" action="{{ route('transaction.storespec', ['assetcode' => $assetcode]) }}" method="POST">
             @csrf <!-- CSRF protection -->
             

@@ -33,8 +33,7 @@ public class TrnHistMaintenanceController : ControllerBase{
         var asset = await _context.TRN_ASSET.FirstOrDefaultAsync(a => a.ASSETCODE == ASSETCODE);
 
         // If asset is not found, return a 404 error
-        if (asset == null)
-        {
+        if (asset == null){
             return Ok("Asset not found.");
         }
 
