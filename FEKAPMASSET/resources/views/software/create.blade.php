@@ -30,33 +30,29 @@
             <div class="mb-4">
                 <label for="softwaretype" class="block text-sm font-semibold">Type</label>
                 <select id="softwaretype" name="softwaretype" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    @foreach ($mstData as $user)
-                        <option value="{{ $user['condition'] }}">{{ $user['condition'] }}</option>
+                    @foreach ($mstData as $mst)
+                        @if ($mst['condition'] == 'ASSET_BRAND' )
+                            <option value="{{ $mst['description'] }}">{{ $mst['description'] }}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>
             <div class="mb-4">
                 <label for="softwarecategory" class="block text-sm font-semibold">Category</label>
                 <select id="softwarecategory" name="softwarecategory" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    @foreach ($mstData as $user)
-                        <option value="{{ $user['condition'] }}">{{ $user['condition'] }}</option>
-                    @endforeach
+                    <option value="Select Category">Select Category</option>
                 </select>
             </div>  
             <div class="mb-4">
                 <label for="softwarename" class="block text-sm font-semibold">Name</label>
                 <select id="softwarename" name="softwarename" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    @foreach ($mstData as $user)
-                    <option value="{{ $user['condition'] }}">{{ $user['condition'] }}</option>
-                    @endforeach
+                    <option value="Select Name">Select Name</option>
                 </select>
             </div>  
             <div class="mb-4">
                 <label for="softwarelicense" class="block text-sm font-semibold">License</label>
                 <select id="softwarelicense" name="softwarelicense" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    @foreach ($mstData as $user)
-                    <option value="{{ $user['condition'] }}">{{ $user['condition'] }}</option>
-                    @endforeach
+                    <option value="Select License">Select License</option>
                 </select>
             </div>  
             
@@ -94,4 +90,58 @@
         </form>
     </div>
 </div>
+
+<script>
+document.getElementById('softwaretype').addEventListener('change', function() {
+    var selectedValue = this.value;
+    var assetDropdown = document.getElementById('softwarecategory');
+    var optionData = @json($mstData);
+
+    assetDropdown.innerHTML = '<option value="">Select Category</option>';
+    // Filter and add options based on selected SOFTWARE Type and condition = 'SOFTWARE_CATEGORY'
+    optionData.forEach(function(option) {
+        if (option.condition === 'SOFTWARE_CATEGORY' && option.typegcm === selectedValue) {
+            var newOption = document.createElement('option');
+            newOption.value = option.description;   
+            newOption.text = option.description;
+            assetDropdown.appendChild(newOption);
+        }
+    });
+});
+
+document.getElementById('softwarecategory').addEventListener('change', function() {
+    var selectedValue = this.value;
+    var nameDropdown = document.getElementById('softwarename');
+    var optionData = @json($mstData);
+
+    nameDropdown.innerHTML = '<option value="">Select Name</option>';
+    // Filter and add options based on selected Category and condition = 'SOFTWARE_NAME'
+    optionData.forEach(function(option) {
+        if (option.condition === 'SOFTWARE_NAME' && option.category === selectedValue) {
+            var newOption = document.createElement('option');
+            newOption.value = option.description;   
+            newOption.text = option.description;
+            nameDropdown.appendChild(newOption);
+        }
+    });
+});
+
+document.getElementById('softwarename').addEventListener('change', function() {
+    var selectedValue = this.value;
+    var licenseDropdown = document.getElementById('softwarelicense');
+    var optionData = @json($mstData);
+
+    licenseDropdown.innerHTML = '<option value="">Select License</option>';
+    // Filter and add options based on selected Name and condition = 'SOFTWARE_LICENSE'
+    optionData.forEach(function(option) {
+        if (option.condition === 'SOFTWARE_LICENSE' && option.name === selectedValue) {
+            var newOption = document.createElement('option');
+            newOption.value = option.description;   
+            newOption.text = option.description;
+            licenseDropdown.appendChild(newOption);
+        }
+    });
+});
+
+</script>
 @endsection

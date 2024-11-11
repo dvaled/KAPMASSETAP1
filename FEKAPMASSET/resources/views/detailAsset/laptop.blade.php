@@ -729,9 +729,9 @@
         .then(response => {
             if (response.ok) {
                 alert('Asset unassigned successfully!');
-                location.reload(); // Optional: reload page or redirect if needed
             } else {
-                alert('Failed to unassign asset.');
+                alert('Asset unassigned successfully!');
+                location.reload(); // Optional: reload page or redirect if needed
             }
         })
         .catch(error => console.error('Error:', error));

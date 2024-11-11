@@ -284,15 +284,15 @@ class TRNAssetController extends Controller
         ];
 
         // Send PUT request to unassign the asset (set NIPP to null)
-        $response = Http::patch("http://localhost:5252/api/TrnAsset/{$assetcode}", $data);
-        Log::info('Data sent for unassignment:', ['assetcode' => $assetcode, 'data' => $data]);
+        $response = Http::put("http://localhost:5252/api/TrnAsset/update-nipp/{$assetcode}", null);
+        Log::info('Data sent for unassignment:', ['data' => null]);
 
         // Check if the unassignment was successful before logging history
         if ($response->successful()) {
             // Log the unassignment in the asset history API if successful
             $historyData = [
                 'asset_code' => $assetcode,
-                'user_id' => $validatedData['NIPP'],
+                'user_id' => $data['NIPP'],
                 'status' => 'unassigned', // Status for unassignment
                 'timestamp' => now(),
             ];

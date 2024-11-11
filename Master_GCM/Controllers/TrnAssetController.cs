@@ -78,7 +78,7 @@ public class TrnAssetController : ControllerBase
     }
 
     [HttpPut("update-nipp/{ASSETCODE}")]
-    public async Task<IActionResult> UpdateNipp(string ASSETCODE, [FromBody] int newNipp)
+    public async Task<IActionResult> UpdateNipp(string ASSETCODE, [FromBody] int?    newNipp)
     {
         var existingAsset = await _context.TRN_ASSET
             .FirstOrDefaultAsync(x => x.ASSETCODE == ASSETCODE);
