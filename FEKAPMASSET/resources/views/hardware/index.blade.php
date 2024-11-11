@@ -66,7 +66,7 @@
                     @foreach ($sidebarData as $asset)
                         <option value="{{ $asset['active'] }}">{{ $asset['active'] }}</option>
                     @endforeach
-                </select>
+                </select>   
             </div>
             <div class="mb-4">
                 <label for="Type" class="block text-sm font-semibold"> Type </label>

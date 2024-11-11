@@ -69,44 +69,55 @@
         </table>
 
         <nav aria-label="Page navigation example">
-          <ul class="inline-flex -space-x-px text-sm">
-              <li>
-                  <a href="#" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-700 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-800">
-                      Previous
-                  </a>
-              </li>
-              <li>
-                  <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-800">
-                      1
-                  </a>
-              </li>
-              <li>
-                  <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-800">
-                      2
-                  </a>
-              </li>
-              <li>
-                  <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 text-white border border-gray-300 bg-blue-600 hover:bg-blue-700 hover:text-white">
-                      3
-                  </a>
-              </li>
-              <li>
-                  <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-800">
-                      4
-                  </a>
-              </li>
-              <li>
-                  <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-800">
-                      5
-                  </a>
-              </li>
-              <li>
-                  <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-800">
-                      Next
-                  </a>
-              </li>
-          </ul>
-      </nav>    
+            <ul class="inline-flex -space-x-px text-sm">
+                <!-- Previous Page Link -->
+                @if ($masterData->onFirstPage())
+                    <li>
+                        <span class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-700 bg-gray-200 border border-gray-300 rounded-s-lg cursor-not-allowed">
+                            Previous
+                        </span>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ $masterData->previousPageUrl() }}" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-700 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-800">
+                            Previous
+                        </a>
+                    </li>
+                @endif
+        
+                <!-- Pagination Elements -->
+                @foreach ($masterData->links()->elements[0] as $page => $url)
+                    @if ($page == $masterData->currentPage())
+                        <li>
+                            <span class="flex items-center justify-center px-3 h-8 text-white border border-gray-300 bg-blue-600 hover:bg-blue-700 hover:text-white">
+                                {{ $page }}
+                            </span>
+                        </li>
+                    @else
+                        <li>
+                            <a href="{{ $url }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-800">
+                                {{ $page }}
+                            </a>
+                        </li>
+                    @endif
+                @endforeach
+        
+                <!-- Next Page Link -->
+                @if ($masterData->hasMorePages())
+                    <li>
+                        <a href="{{ $masterData->nextPageUrl() }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-800">
+                            Next
+                        </a>
+                    </li>
+                @else
+                    <li>
+                        <span class="flex items-center justify-center px-3 h-8 leading-tight text-gray-700 bg-gray-200 border border-gray-300 rounded-e-lg cursor-not-allowed">
+                            Next
+                        </span>
+                    </li>
+                @endif
+            </ul>
+        </nav>    
       
 
         <!-- Edit Modal -->

@@ -48,9 +48,21 @@ class MasterController extends Controller
         $contentMaster = $responseMaster->getBody()->getContents();
         $mastersData = json_decode($contentMaster, true);
 
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $perPage = 5;
+        $currentItems = array_slice($mastersData, ($currentPage-1)*$perPage, $perPage);
+
+        $paginatedData = new LengthAwarePaginator(
+            $currentItems,
+            count($mastersData), // Total items
+            $perPage, // Items per page
+            $currentPage, // Current page
+            ['path' => request()->url(), 'query' => request()->query()] // Maintain query parameters
+        );
+
         // Pass both assetData and assetSpecData to the view
         return view('master.show', [
-            'masterData' => $mastersData,
+            'masterData' => $paginatedData,
             'currentCondition' => $condition
         ]);
     }
