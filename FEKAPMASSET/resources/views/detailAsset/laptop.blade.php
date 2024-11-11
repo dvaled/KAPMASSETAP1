@@ -677,34 +677,45 @@
             <form id="imgForm" method="POST" enctype="multipart/form-data" action="{{ route('detailAsset.image.update', ['idassetpic' => $img['idassetpic'], 'assetcode' => $img['assetcode']]) }}">
                 @method('PUT')
                 @csrf
-                {{-- assetcode --}}
+                {{-- ID Picture --}}
                 <div class="mb-4">
                     <label for="idassetpic" class="block text-sm font-semibold">ID Picture</label>
-                    <input id="idassetpic" name="idassetpic" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{ $img['idassetpic'] }} ></input>
+                    <input id="idassetpic" name="idassetpic" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{ $img['idassetpic'] }}">
                 </div>
+                
+                {{-- Asset Code --}}
                 <div class="mb-4">
                     <label for="imgAssetCode" class="block text-sm font-semibold">Asset Code</label>
-                    <input id="imgAssetCode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{ $assetcode }}"></input>
+                    <input id="imgAssetCode" name="assetcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly value="{{ $assetcode }}">
                 </div>
+                
+                {{-- Current Image --}}
                 <div class="mb-4">
-                    <label for="assetpic" class="block text-sm font-semibold">Asset Image</label>
-                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="assetimage" id="assetpic" name="assetpic" type="file">
+                    <label class="block text-sm font-semibold">Current Asset Image</label>
+                    <img id="currentImage" src="{{ asset($img['assetpic']) }}" alt="Current Asset Image" class="w-full h-auto mb-2">
+                    <input type="hidden" name="assetpic" value="{{ $img['assetpic'] }}">
+                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" aria-describedby="assetimage" id="assetpic" name="assetpic" type="file">
                 </div>
+                
+                {{-- Active Status --}}
                 <div class="mb-4">
                     <label for="active" class="block text-sm font-semibold">Active</label>
                     <select id="active" name="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                        <option value="Y">Y</option>  <!-- Represents true -->
-                        <option value="N">N</option>  <!-- Represents false -->
+                        <option value="Y" {{ $img['active'] == 'Y' ? 'selected' : '' }}>Y</option>
+                        <option value="N" {{ $img['active'] == 'N' ? 'selected' : '' }}>N</option>
                     </select>
-                </div>    
+                </div>
+                
+                {{-- PIC --}}
                 <div class="mb-4">
                     <label for="picadded" class="block text-sm font-semibold">PIC</label>
                     <select id="picadded" name="picadded" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         @foreach ($userData as $user)
-                            <option value="{{ $user['name'] }}">{{ $user['name'] }}</option>
+                            <option value="{{ $user['name'] }}" {{ $user['name'] == $img['picadded'] ? 'selected' : '' }}>{{ $user['name'] }}</option>
                         @endforeach
                     </select>
                 </div>   
+                
                 <!-- Buttons -->
                 <div class="flex justify-end">
                     <button type="button" onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Back</button>

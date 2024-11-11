@@ -118,78 +118,75 @@ class TrnDtlPictureController extends Controller
     ]);
 
         $client = new Client();
-
-
     }
 
-    public function update(Request $request, $assetcode, $idassetpic){
-        Log::info('Update method called with assetcode: ' . $assetcode . ' and idassetpic: ' . $idassetpic);
+    public function update(Request $request, $assetcode){
         Log::info('Request Data:', $request->all());
+
         // Validate the input
         $validated = $request->validate([
             'idassetpic' => 'required',
             'assetcode' => 'required',
-            'ASSETPIC' => 'required|file|image|mimes:jpg,png,jpeg,gif,svg|max:2048', // Ensure it's a valid image file
+            'assetpic' => 'nullable|file|image|mimes:jpg,png,jpeg,gif,svg|max:2048', 
             'active' => 'required',
             'picadded' => 'required',
         ]);
 
         $client = new Client();
 
-        $assetcode = $validated['assetcode'];
-
         try {
-             // Store the image locally and get the storage path
-             if ($request->hasFile('ASSETPIC')) {
-                // No need to store the file locally, just get the file and send it in the POST request
+            // Prepare the multipart form data
+            $multipartData = [
+                [
+                    'name' => 'ASSETCODE',
+                    'contents' => $validated['assetcode'],
+                ],
+                [
+                    'name' => 'ACTIVE',
+                    'contents' => $validated['active'],
+                ],
+                [
+                    'name' => 'PICADDED',
+                    'contents' => $validated['picadded'],
+                ],
+            ];
+
+            // If a new file is uploaded, add it to the multipart data
+            if ($request->hasFile('ASSETPIC')) {
                 $file = $request->file('ASSETPIC');
+                $multipartData[] = [
+                    'name' => 'ASSETPIC',
+                    'contents' => fopen($file->getPathname(), 'r'),
+                    'filename' => $file->getClientOriginalName(),
+                ];
+            } else {
+                $existingImageUrl = $validated['ASSETPIC']; // Use the existing image URL from the request
+                $multipartData[] = [
+                    'name' => 'ASSETIMG', // Assuming this is the field the API expects
+                    'contents' => $existingImageUrl,
+                ];
             }
 
-            // Build the multipart form data including the image file
+            // Make the PUT request
             $response = $client->put("http://localhost:5252/api/TrnAssetDtlPicture/{$validated['idassetpic']}", [
-                'multipart' => [
-                    [
-                        'name' => 'ASSETCODE',
-                        'contents' => $validated['assetcode'],
-                    ],
-                    [
-                        'name' => 'ACTIVE',
-                        'contents' => $validated['active'],
-                    ],
-                    [
-                        'name' => 'PICADDED',
-                        'contents' => $validated['picadded'],
-                    ],
-                    [
-                        'name' => 'ASSETPIC',
-                        'contents' => fopen($file->getPathname(), 'r'),
-                        'filename' => $request->file('ASSETPIC')->getClientOriginalName(),
-                    ],
-                ]
+                'multipart' => $multipartData,
             ]);
 
-            $data = json_decode($response->getBody()->getContents(), true); // Decode the response
-            // Log success (ensure $data is an array or provide a message)
-            Log::info("Success", $data ? $data : []); // Pass empty array if $data is null  
+            $data = json_decode($response->getBody()->getContents(), true);
+            Log::info("Success", $data ? $data : []);
+
+            // Redirect to the detail page
             return redirect("/detailAsset/Laptop/$assetcode")
                 ->with("success", "Data has been added successfully");
-            } catch (RequestException $e) {
-                // Log the error message
-                Log::error('API Error: ' . $e->getMessage());
-            
-                // Check if a response is available
-                if ($e->hasResponse()) {
-                    // Log the full response body
-                    Log::error('API Response: ' . $e->getResponse()->getBody());
-                }        
-        }catch (\Throwable $th) {
-            // Log error and handle the exception
+        } catch (RequestException $e) {
+            Log::error('API Error: ' . $e->getMessage());
+            if ($e->hasResponse()) {
+                Log::error('API Response: ' . $e->getResponse()->getBody());
+            }
+            return back()->withErrors(['message' => 'Failed to update picture.']);
+        } catch (\Throwable $th) {
             Log::error('API Error: ' . $th->getMessage());
-            return back()->withErrors('Failed to upload data.');
+            return back()->withErrors(['message' => 'An unexpected error occurred.']);
         }
     }
-    
-    
-
-
 }

@@ -100,35 +100,101 @@ public class TrnAssetDtlPictureController : ControllerBase
         }
 
     [HttpPut("{IDASSETPIC}")]
-    public async Task<IActionResult> PutImg(int IDASSETPIC, TRNASSETPICTUREMODEL trnPicture)
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> PutImg(int IDASSETPIC, [FromForm] AssetViewModel model)
     {
-        if (IDASSETPIC != trnPicture.IDASSETPIC)
-        {
-            return BadRequest();
-        }
-
-        _context.Entry(trnPicture).State = EntityState.Modified;
-
         try
         {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!TrnPictureExists(IDASSETPIC))
+            // Fetch the existing record from the database
+            var existingRecord = await _context.TRN_DTL_PICTURE.FindAsync(IDASSETPIC);
+            
+            if (existingRecord == null)
             {
-                return Ok("Asset not Found");
+                return NotFound("Record not found.");
+            }
+
+            if (model.ASSETIMG != null && model.ASSETIMG.Count > 0)
+            {
+                foreach (var file in model.ASSETIMG)
+                {
+                    // Ensure the file is valid
+                    if (file.Length > 0)
+                    {
+                        // Define folder where images will be saved
+                        var folderName = Path.Combine("Assets", "Logo");
+                        var pathToSave = folderName;
+
+                        // Create directory if it doesn't exist
+                        if (!Directory.Exists(pathToSave))
+                            Directory.CreateDirectory(pathToSave);
+
+                        // Generate the full path to save the image
+                        var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                        var fullPath = Path.Combine(pathToSave, fileName);
+
+                        var relativePath = Path.Combine("Images", "Assets", fileName);
+
+                        // Save the image to the folder
+                        using (var stream = new FileStream(fullPath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+
+                        // Update the existing record with new values
+                        existingRecord.ASSETCODE = model.ASSETCODE;
+                        existingRecord.ACTIVE = model.ACTIVE;  
+                        existingRecord.ASSETPIC = relativePath;  
+                        existingRecord.PICADDED = model.PICADDED;  
+                        existingRecord.DATEADDED = DateOnly.FromDateTime(DateTime.Now); 
+                    }
+                    else
+                    {
+                        return BadRequest("Invalid file.");
+                    }
+                }
+
+                // Save the updated record to the database
+                await _context.SaveChangesAsync();
+
+                return Ok("File(s) uploaded and record updated successfully.");
             }
             else
             {
-                throw;
+                return BadRequest("No files uploaded.");
             }
         }
-
-        return NoContent();
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
     }
+
     private bool TrnPictureExists(int IDASSETPIC)
     {
         return _context.TRN_DTL_PICTURE.Any(e => e.IDASSETPIC == IDASSETPIC);
     }
 }
+        // if (IDASSETPIC != trnPicture.IDASSETPIC)
+        // {
+        //     return BadRequest();
+        // }
+
+        // _context.Entry(trnPicture).State = EntityState.Modified;
+
+        // try
+        // {
+        //     await _context.SaveChangesAsync();
+        // }
+        // catch (DbUpdateConcurrencyException)
+        // {
+        //     if (!TrnPictureExists(IDASSETPIC))
+        //     {
+        //         return Ok("Asset not Found");
+        //     }
+        //     else
+        //     {
+        //         throw;
+        //     }
+        // }
+
+        // return NoContent();
