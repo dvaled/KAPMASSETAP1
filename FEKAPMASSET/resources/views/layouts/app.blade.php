@@ -49,7 +49,7 @@
                                 </svg> --}}
                                 <h6 class="inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-400">/</h6>
                                 <a href="{{ $link }}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-black">
-                                    {{ ucwords(str_replace('-', ' ', $segment)) }}
+                                    {{ ucwords(str_replace('-', '', $segment)) }}
                                 </a>
                             </li>
                         @endforeach

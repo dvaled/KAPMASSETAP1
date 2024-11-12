@@ -94,11 +94,11 @@
                                                 // Assign the description value
                                                 $href = url('master/show/' . $innerMasters['description']);
                                             @endphp
-                                            <li class="p-0.5">
-                                                <div class="p-3 leading-normal text-base" style="background-color: rgba(0, 0, 0, 0.1);">
-                                                    <span class="text-base ml-2 text-white" style="opacity: 0.9;">
+                                            <li class="p-2 flex-wrap">
+                                                <div class="p-3 leading-normal text-base flex-wrap" style="background-color: rgba(0, 0, 0, 0.1);    word-wrap: normal">
+                                                    <text class="text-base ml-2 text-white flex-wrap " style="opacity: 0.9; word-wrap: break-word;">
                                                         <a href="{{$href}}">{{ $innerMasters['description'] }}</a>
-                                                    </span>
+                                                    </text>
                                                 </div>
                                             </li>
                                         @endif

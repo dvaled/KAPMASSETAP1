@@ -380,13 +380,17 @@
                     <!-- Dynamic Table-like Section with Headers as Rows -->
                         <div class="relative overflow-y-auto max-h-[400px]">
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-4 overflow-auto">
-                                @foreach ($imgData as $img)
-                                    <div>
+                                @if(!empty($imgData) && is_array($imgData)) <!-- Check if $imgData is not empty and is an array -->
+                                    @foreach ($imgData as $img)
+                                        <div>
                                             <button onclick="openImgModal({{ json_encode($img) }})">
                                                 <img class="h-auto max-w-full rounded-lg" src="{{ $img['assetpic'] }}" alt="Asset Image">
-                                            </button >
-                                    </div>
-                                @endforeach
+                                            </button>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <p class="font-semibold leading-tight text-xl border-gray-300 mb-2">No images available</p> <!-- Display Condition -->
+                                @endif
                             </div>
                         </div>
                     </div>

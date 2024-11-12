@@ -25,7 +25,8 @@ public class TrnAssetDtlPictureController : ControllerBase
                                         .Where(e => e.ASSETCODE == assetcode)
                                         .ToListAsync();
 
-        if(trnassetcode == null || !trnassetcode.Any()){
+        if(trnassetcode == null || trnassetcode.Count == 0)
+        {
             return Ok("Not Found");
         }                                
         return Ok(trnassetcode);

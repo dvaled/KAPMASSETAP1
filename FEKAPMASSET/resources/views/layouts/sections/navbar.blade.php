@@ -46,8 +46,7 @@
             <div class="d-flex align-items-center justify-content-between">
                 <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
                     <?php
-
-                    # tanggal sekarang dalam bahasa indo
+                    
                     $hariIni = \Carbon\Carbon::now()->locale('id');
                     $hariIniDetail = $hariIni->dayName . ", " . $hariIni->day . " " . $hariIni->monthName . " " . $hariIni->year;
 

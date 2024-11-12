@@ -127,8 +127,8 @@ class SoftwareController extends Controller
     }   
 
     public function update(Request $request, $assetcode, $idassetsoftware){
-        Log::info('Update method called with assetcode: ' . $assetcode . ' and idassetsoftware: ' . $idassetsoftware);
-        Log::info('Request Data:', $request->all());
+            Log::info('Update method called with assetcode: ' . $assetcode . ' and idassetsoftware: ' . $idassetsoftware);
+            Log::info('Request Data:', $request->all());
 
         $validated = $request -> validate([
             'idassetsoftware' => 'required',

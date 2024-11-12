@@ -132,6 +132,10 @@ class TRNAssetController extends Controller
         $responseImg = $client->request('GET', "http://localhost:5252/api/TrnAssetDtlPicture/{$assetcode}");
         $contentImg = $responseImg->getBody()->getContents();
         $imgData = json_decode($contentImg, true);  
+        // Ensure $imgData is an array
+        if (!is_array($imgData)) {
+            $imgData = []; // Set to empty array if not an array
+        }
 
         // Pass both assetData and assetSpecData to the view
         return view('detailAsset.Laptop', [
@@ -142,7 +146,7 @@ class TRNAssetController extends Controller
             'detailSoftwareData' => $detailSoftwareData,
             'userData' => $userData,
             'histData' => $histData,
-            'imgData' => $imgData
+            'imgData' => $imgData,
         ]);
     }
     public function index($assetcode) {
