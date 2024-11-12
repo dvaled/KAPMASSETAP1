@@ -98,7 +98,7 @@
                                                 <div class="p-3 leading-normal text-base flex-wrap" style="background-color: rgba(0, 0, 0, 0.1);    word-wrap: normal">
                                                     <text class="text-base ml-2 text-white flex-wrap " style="opacity: 0.9; word-wrap: break-word;">
                                                         <a href="{{$href}}">{{ $innerMasters['description'] }}</a>
-                                                    </text>
+                                                    </text> 
                                                 </div>
                                             </li>
                                         @endif

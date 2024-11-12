@@ -270,18 +270,7 @@ class TRNAssetController extends Controller
         }
     } 
 
-    public function unassignAsset(Request $request, $assetcode){
-        try {
-            // Enhanced validation for 'NIPP' field
-            $validatedData = $request->validate([
-                'NIPP' => 'nullable|integer',
-            ]);
-        } catch (ValidationException $e) {
-            // Log validation errors and return a JSON response
-            Log::error('Validation errors:', $e->errors());
-            return response()->json(['errors' => $e->errors()], 422);
-        }
-
+    public function unassignAsset($assetcode){
         // Prepare data to send to the API for unassignment (setting NIPP to null)
         $data = [
             'NIPP' => null, // Unassigning by setting NIPP to null
@@ -289,15 +278,16 @@ class TRNAssetController extends Controller
 
         // Send PUT request to unassign the asset (set NIPP to null)
         $response = Http::put("http://localhost:5252/api/TrnAsset/update-nipp/{$assetcode}", null);
-        Log::info('Data sent for unassignment:', ['data' => null]);
+        Log::info('Data sent for unassignment:', ['data' => $data['NIPP']]);
 
         // Check if the unassignment was successful before logging history
         if ($response->successful()) {
             // Log the unassignment in the asset history API if successful
             $historyData = [
-                'asset_code' => $assetcode,
-                'user_id' => $data['NIPP'],
-                'status' => 'unassigned', // Status for unassignment
+                'assetcode' => $assetcode, 
+                'name' => 'Asset name', 
+                'user_id' => 2107412040,
+                'picadded' => 'kevin',
                 'timestamp' => now(),
             ];
 
@@ -322,6 +312,5 @@ class TRNAssetController extends Controller
             return back()->withErrors(['message' => 'Failed to unassign asset. Please try again.'])->withInput();
         }
     }
-
 
 }
