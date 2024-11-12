@@ -36,11 +36,6 @@ public class AppDbContext : DbContext
             .WithMany()
             .HasForeignKey(h => h.NIPP) // Foreign key relationship
             .IsRequired(false);
-        modelBuilder.Entity<TRNASSETHISTORYMODEL>()
-            .HasOne(h => h.EMPLOYEE) // Navigation property
-            .WithMany()
-            .HasForeignKey(h => h.NIPP) // Foreign key relationship
-            .IsRequired(false);
         modelBuilder.Entity<LOGMODEL>()
             .HasOne(h => h.TRNASSET) // Navigation property
             .WithMany()

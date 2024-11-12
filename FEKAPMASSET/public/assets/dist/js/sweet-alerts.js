@@ -1,4 +1,3 @@
-
 var soft = {
     showSwal: function(type) {
     if (type == 'basic') {

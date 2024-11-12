@@ -9,10 +9,12 @@
 <script src="{{ asset('assets/dist/libs/sweetalert2/dist/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('assets/dist/js/forms/sweet-alert.init.js') }}"></script>
 <script src="{{ asset('assets/dist/js/izin_custom.js') }}"></script>
+<script src="{{ asset('assets/dist/js/sweet-alerts.js') }}"></script>
 <!--  core files -->
 <script src="{{ asset('assets/dist/js/app.min.js') }}"></script>
 <script src="{{ asset('assets/dist/js/app.init.js') }}"></script>
 <script src="{{ asset('assets/dist/js/app-style-switcher.js') }}"></script>
 <script src="{{ asset('assets/dist/js/sidebarmenu.js') }}"></script>
 <script src="{{ asset('assets/dist/js/custom.js') }}"></script>
+<script src="{{ asset('assets/dist/js/soft-ui-dashboard-pro-tailwind.js') }}"></script>
 @yield('scripts')

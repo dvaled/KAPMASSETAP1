@@ -6,10 +6,14 @@
     <title>My Laravel App</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="soft-ui-dashboard-tailwind.css" />
+    <script src="../path/to/sweetalert.min.js"></script>
+    <script src="../path/to/soft-ui-dashboard-tailwind.js"></script>
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     {{-- <!-- Icons -->
     <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
@@ -57,42 +61,8 @@
                 </nav>
                 @yield('content')
                 @include('layouts.sections.footer')
+                @include('layouts.sections.scripts')
             </div>
         </div>
     </div>
 </body>
-    
-    
-    
-    
-
-    {{-- <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script> --}}
-    <!-- Core -->
-    {{-- <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap.min.js"></script> --}}
-
-    <!-- Theme JS -->
-    {{-- <script src="../assets/js/soft-ui-dashboard.min.js"></script> --}}
-</body>
-</html>
-        {{-- <div class="ml-72 min-h-screen flex flex-col justify-between p-6">
-            <div class="flex-grow">
-                <div class="container p-6">
-                </div>
-            </div>
-            <!-- Footer -->
-            <footer class="bg-gray-200 p-4">
-            </footer>
-        </div> --}}
-    {{-- <div class="min-h-screen sm:flex-col md:flex-row lg:flex-row xl:flex-row">
-        <div class="w-1/3 flex-none p-2">
-            <div class="text-gray-700 text-center bg-gray-400 p-2">1</div>
-            @include('layouts.section.sidebar')
-        </div>
-        <div class="w-2/3 flex-none p-2">
-            <div class="text-gray-700 text-center bg-gray-400 p-2">2</div>
-            @yield('content')
-        </div>
-        
-    </div> --}}
