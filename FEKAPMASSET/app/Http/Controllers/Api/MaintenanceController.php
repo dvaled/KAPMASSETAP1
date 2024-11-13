@@ -102,9 +102,9 @@ class MaintenanceController extends Controller{
         $client = new Client();
 
         try {
+            $validatedData['dateadded'] = now()->format('Y-m-d H:i:s');
             $response = $client->post("http://localhost:5252/api/TrnHistMaintenance/{$assetcode}", [
                 'query' => $validatedData,
-                'dateadded' => now()
             ]);
 
             $data = json_decode($response->getBody()->getContents(), true);

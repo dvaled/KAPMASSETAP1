@@ -39,10 +39,13 @@ public class TrnHistMaintenanceController : ControllerBase{
 
         // Set the foreign key relationship
         maintenance.ASSETCODE = asset.ASSETCODE;
+        
+        // Set the DATEADDED to the current date
+        maintenance.DATEADDED = DateOnly.FromDateTime(DateTime.Now); // Use DateOnly if DATEADDED is of type DateOnly
 
         // Check if the maintenance ID already exists
         if (await _context.TRN_HIST_MAINTENANCE.AnyAsync(e => e.MAINTENANCEID == maintenance.MAINTENANCEID))
-        {
+        {   
             return Conflict("This Device is already in maintenance.");
         }   
 
