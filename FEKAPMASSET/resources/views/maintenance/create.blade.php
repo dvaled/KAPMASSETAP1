@@ -41,12 +41,7 @@
             <div class="mb-4">
                 <label for="notes" class="block text-sm font-semibold">Notes</label>
                 <input type="text" id="notes" name="notes" class="w-full p-2 border rounded" required>
-            </div>
-
-            <div class="mb-4">
-                <label for="dateadded" class="block text-sm font-semibold">Date</label>
-                <input type="date" id="dateadded" name="dateadded" class="w-full p-2 border rounded" required>
-            </div>    
+            </div>  
 
             <!-- Buttons -->
             <div class="flex justify-end">

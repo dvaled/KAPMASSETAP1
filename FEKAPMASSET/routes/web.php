@@ -1,8 +1,6 @@
 <?php
 
 use App\Http\Controllers\API\AssetController;
-use App\Http\Controllers\API\EmployeeController;
-use App\Http\Controllers\API\HistoryController;
 use App\Http\Controllers\API\LogController;
 use App\Http\Controllers\API\MaintenanceController;
 use App\Http\Controllers\API\SoftwareController;
@@ -13,6 +11,7 @@ use App\Http\Controllers\API\TrnAssetController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\TrnAssetSpecController;
 use App\Http\Controllers\API\TrnDtlPictureController;
+use App\Http\Controllers\PDFController;
 
 //Authentication
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login'); //view login page
@@ -78,6 +77,7 @@ Route::prefix('maintenance')->name('maintenance.')->group(function(){
     Route::get('/', [MaintenanceController::class, 'indexz'])->name('index');
     Route::get('/create/{assetcode}', [MaintenanceController::class, 'index'])->name('create');
     Route::post('/store/{assetcode}', [MaintenanceController::class, 'store'])->name('store');
+    Route::get('/preview', [MaintenanceController::class, 'print'])->name('print');
 });
 
 Route::prefix('software')->name('software.')->group(function(){

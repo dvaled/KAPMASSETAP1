@@ -4,10 +4,13 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Maintenance;
+use Barryvdh\DomPDF\Facade\Pdf;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
+
+use function Symfony\Component\Clock\now;
 
 class MaintenanceController extends Controller{
     // Get all maintenance records
@@ -94,7 +97,6 @@ class MaintenanceController extends Controller{
             "assetcode"=> 'required',
             "picadded"=> 'required',
             "notes"=> 'required',
-            "dateadded"=> 'required'
         ]);
 
         $client = new Client();
@@ -102,6 +104,7 @@ class MaintenanceController extends Controller{
         try {
             $response = $client->post("http://localhost:5252/api/TrnHistMaintenance/{$assetcode}", [
                 'query' => $validatedData,
+                'dateadded' => now()
             ]);
 
             $data = json_decode($response->getBody()->getContents(), true);
@@ -116,50 +119,36 @@ class MaintenanceController extends Controller{
         }
     }
 
-    // // Update an existing maintenance record
-    // public function update(Request $request, $id)
-    // {
-    //       // Validate the incoming request data
-    //       $validated = $request->validate([
-    //         'idmaster' => 'required|integer',
-    //         'condition' => 'required|string|max:255',
-    //         'nosr' => 'required|string|max:255',
-    //         'description' => 'required|string',
-    //         'valuegcm' => 'required|numeric',
-    //         'typegcm' => 'nullable|string|max:255', 
-    //         'active' => 'required|string', 
-    //     ]);
-        
-    //     $client = new Client();     
-        
-    //     try {
-    //         // Send the PUT request to the API to update the master data
-    //         $response = $client->PUT("http://localhost:5252/api/TrnHistMaintenance/{$id}", [
-    //             'json' => $validated // Send the validated data as JSON
-    //         ]);                                 
+    public function print() {
+        $client = new Client();
+        $response = $client->request('GET', 'http://localhost:5252/api/TrnHistMaintenance');
+        $body = $response->getBody();
+        $content = $body->getContents();
+        $mtcData = json_decode($content, true);
 
-    //         $data = json_decode($response->getBody()->getContents(), true);
-    //         Log::info('API Response:', $data);  // Log the API response for inspection
+        $assetResponse = $client->request('GET', 'http://localhost:5252/api/TrnAsset');
+        $assetBody = $assetResponse->getBody();
+        $assetContent = $assetBody->getContents();
+        $assetData = json_decode($assetContent, true);
+
+        $userResponse = $client->request('GET', 'http://localhost:5252/api/user');
+        $userBody = $userResponse->getBody();
+        $userContent = $userBody->getContents();
+        $userData = json_decode($userContent, true);
         
-    //         return redirect('/master')->with('success', 'Data submitted successfully!');
-    //     } catch (\GuzzleHttp\Exception\RequestException $e) {
-    //         $responseBody = $e->hasResponse() ? (string) $e->getResponse()->getBody() : null;
-    //         Log::error('API Error: ' . $e->getMessage() . ' - Response Body: ' . $responseBody);
+        $data = [
+            'userData' => $userData, // This key should match what you use in your view
+        ];
         
-    //         return redirect('/master/create')->withErrors(['error' => 'An error occurred while submitting the data.']);
-    //     }   
-    // }
+        
+        // Log::info($userData); // Log the data to check what is being passed
+        // return view('maintenance.preview', [
+        //     'assetData' => $assetData,
+        //     'userData' => $userData,  
+        //     'mtcData' => $mtcData
+        // ]); // Keep the view name consistent
 
-    // // Delete a maintenance record
-    // public function destroy($id)
-    // {
-    //     $maintenance = Maintenance::find($id);
-
-    //     if (!$maintenance) {
-    //         return response()->json(['message' => 'Maintenance record not found'], 404);
-    //     }
-
-    //     $maintenance->delete();
-    //     return response()->json(['message' => 'Maintenance record deleted successfully'], 200);
-    // }
+        $pdf = Pdf::loadView('maintenance.preview', $data);
+        return $pdf->download('users-lists.pdf');
+    }
 }
