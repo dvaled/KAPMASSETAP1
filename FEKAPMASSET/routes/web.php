@@ -34,16 +34,21 @@ Route::prefix('master')->name('master.')->group(function() {
 
 //Transaction
 Route::prefix('transaction')->name('transaction.')->group(function(){
-    // Route::get('/asset', [TrnAssetController::class, 'index'])->name('view'); //return view with all of the data.
-    Route::get('/detailAssetL/{assetcode}', [TrnAssetController::class, 'show'])-> name('detailAsset.laptop');
+    
+    Route::get('/detailAssetL/{assetcode}', [TrnAssetController::class, 'show'])-> name('detailAsset.laptop'); //Return detail asset page
     Route::get('/asset', [TrnAssetController::class, 'msttrnasset'])-> name('asset'); //View
 
     Route::get('/trnlaptop/{assetcategory}/{assetcode}', [TrnAssetSpecController::class, 'msttrnassetspec'])-> name('laptop'); //Retrieve transaction.create view along with all the data 
+    Route::get('/trnlaptop-update/{assetcategory}/{assetcode}/{idassetspec}', [TrnAssetSpecController::class, 'edit'])-> name('edit'); //Retrieve transaction.update view along with all the data 
 
-    Route::Post('/storespec/{assetcode}', [TrnAssetSpecController::class, 'store'])-> name('storespec');
+    //Transaction Hardware
+    Route::post('/storespec/{assetcode}', [TrnAssetSpecController::class, 'store'])-> name('storespec');
+    Route::put('/storespec-edit/{assetcode}/{idassetspec}', [TrnAssetSpecController::class, 'update'])-> name('update');
+
+    // Transaction Asset
     Route::Post('/store', [TrnAssetController::class, 'store'])-> name('store');
     Route::Put('/unassign/{assetcode}', [TrnAssetController::class, 'unassignAsset'])->name('unassign');
-    // Route::get('/asset/assign', [TrnAssetController::class, 'AssignView'])-> name('transaction.assign'); //Retrieve transaction.assing view along with all the data
+    // Route::get('/asset/assign', [TrnAssetCo  ntroller::class, 'AssignView'])-> name('transaction.assign'); //Retrieve transaction.assing view along with all the data
     // Route::Post('/asset/assign   /store', [TrnAssetController::class, 'assign'])-> name('assign');   
 });
 

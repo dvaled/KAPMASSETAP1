@@ -44,7 +44,7 @@
                     <div class="p-5">
                         <div class="flex justify-between items-center pb-4 mb-4">
                             <!-- Left Aligned Heading -->
-                            @if (empty($employeeNIPP) || $employeeNIPP === 'Null')
+                            @if (empty($employeeNIPP) || $employeeNIPP === 'N/A')
                             <a href="#">
                                 <h4 class="text-2xl font-bold tracking-tight text-gray-900">
                                     This asset is available and ready to be assigned
@@ -69,7 +69,7 @@
                             <div class="flex space-x-4">
                                 {{-- @auth --}}
                                 <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300"
-                                        onclick="unassignAsset('{{ route('transaction.unassign', ['assetcode' => $assetcode]) }}')">
+                                        onclick="confirmUnassignAsset('{{ route('transaction.unassign', ['assetcode' => $assetcode]) }}')">
                                     Unassign
                                 </button>
                                 <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
@@ -106,18 +106,10 @@
                                 <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                                     Print QR
                                 </button>
-                                <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" onclick="window.location.href='{{ route('transaction.laptop',[
-                                    'assetcategory' => $assetcategory, 
-                                    'assetcode' => $assetcode,
-                                    ])}}'">
-                                    Update Asset
-                                </button>
-                            </div>
-                            {{-- @endauth --}}
-                        </div>
-                        <div class="relative overflow-x-auto">
-                            @foreach ($assetSpecData as $assetspecs)
-                            @php
+
+                                @foreach ($assetSpecData as $assetspecs)
+                                @php
+                                $idassetspec = isset($assetspecs['idassetspec']) ? $assetspecs['idassetspec'] : 'N/A';
                                 $processorbrand = isset($assetspecs['processorbrand']) ? $assetspecs['processorbrand'] : 'N/A';
                                 $processormodel = isset($assetspecs['processormodel']) ? $assetspecs['processormodel'] : 'N/A';
                                 $processorseries = isset($assetspecs['processorseries']) ? $assetspecs['processorseries'] : 'N/A';
@@ -158,11 +150,27 @@
                                 $bluetooth = isset($assetspecs['bluetooth']) ? $assetspecs['bluetooth'] : 'N/A';
                             @endphp
                             @endforeach
+                                <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" onclick="window.location.href='{{ route('transaction.edit',[
+                                    'assetcategory' => $assetcategory, 
+                                    'assetcode' => $assetcode,
+                                    'idassetspec' => $idassetspec
+                                    ])}}'">
+                                    Update Asset
+                                </button>
+                            </div>
+                            {{-- @endauth --}}
+                        </div>
+                        <div class="relative overflow-x-auto">
+                           
 
                             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                 <tbody>
                                     <!-- Table Head in the First Column -->
 
+                                    <tr class="bg-white">
+                                        <th scope="row" class="px-6 py-4 font-medium text-b lack whitespace-nowrap ">Asset ID:</th>
+                                        <td class="px-6 py-4">: {{$idassetspec}}</td>
+                                    </tr>
                                     <tr class="bg-white">
                                         <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">Asset Type:</th>
                                         <td class="px-6 py-4">: {{$assettype}}</td>
@@ -731,78 +739,96 @@
 
 <script>
 
-    function unassignAsset(url) {
-        fetch(url, {
-            method: 'PUT',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('Asset unassigned successfully!');
-            } else {
-                alert('Asset unassigned successfully!');
-                location.reload(); // Optional: reload page or redirect if needed
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    }
-
-    function openSoftwareModal(software) {
-
-        //Passing data to the modal
-        document.getElementById('idassetsoftware').value = software.idassetsoftware;
-        document.getElementById('assetcode').value = software.assetcode;
-        document.getElementById('softwaretype').value = software.softwaretype;
-        document.getElementById('softwarecategory').value = software.softwarecategory;
-        document.getElementById('softwarename').value = software.softwarename;
-        document.getElementById('softwarelicense').value = software.softwarelicense;
-        document.getElementById('active').value = software.active;
-        document.getElementById('picadded').value = software.picadded;
-
-        // Set the form action dynamically
-        const assetcode = "{{ $assetcode }}"; // Get the assetcode from Blade
-        const idassetsoftware = software.idassetsoftware; // Get the idassetsoftware from the software object
-        document.getElementById('updateFormSoftware').action = `{{ route('detailAsset.software.update', ['assetcode' => ':assetcode', 'idassetsoftware' => ':idassetsoftware']) }}`.replace(':assetcode', assetcode).replace(':idassetsoftware', idassetsoftware);
-
-        // Opening the modal    
-        document.getElementById('softwareModal').classList.remove('hidden');
-
-        console.log(document.getElementById('updateFormSoftware').action); // Log the action URL
-
-        // Add event listener for form submission
-    const form = document.getElementById('updateFormSoftware');
-    form.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        const formData = new FormData(form); // Get the form data
-        const jsonData = Object.fromEntries(formData.entries()); // Convert FormData to a plain object
-
-        fetch(form.action, {
-            method: 'PUT',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Content-Type': 'application/json', // Set content type to JSON
-            },
-            body: JSON.stringify(jsonData) // Send the data as JSON
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('Failed to update software.');
-                location.reload();
-            } else {
-                return response.text().then(text => {
-                    console.error('Response:', text); // Log the response body for debugging
-                    alert('Software updated successfully!');
-                    location.reload();
-                });
-            }
-        })
-        .catch(error => console.error('Error:', error));
+function confirmUnassignAsset(url) {
+    // Show SweetAlert confirmation dialog
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, unassign it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // If confirmed, call the unassignAsset function
+            unassignAsset(url);
+        }
     });
-  }
+}
+
+function unassignAsset(url) {
+    fetch(url, {
+        method: 'PUT',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            location.reload(); // Optional: reload page or redirect if needed
+        } else {
+            location.reload(); // Optional: reload page or redirect if needed
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function openSoftwareModal(software) {
+
+    //Passing data to the modal
+    document.getElementById('idassetsoftware').value = software.idassetsoftware;
+    document.getElementById('assetcode').value = software.assetcode;
+    document.getElementById('softwaretype').value = software.softwaretype;
+    document.getElementById('softwarecategory').value = software.softwarecategory;
+    document.getElementById('softwarename').value = software.softwarename;
+    document.getElementById('softwarelicense').value = software.softwarelicense;
+    document.getElementById('active').value = software.active;
+    document.getElementById('picadded').value = software.picadded;
+
+    // Set the form action dynamically
+    const assetcode = "{{ $assetcode }}"; // Get the assetcode from Blade
+    const idassetsoftware = software.idassetsoftware; // Get the idassetsoftware from the software object
+    document.getElementById('updateFormSoftware').action = `{{ route('detailAsset.software.update', ['assetcode' => ':assetcode', 'idassetsoftware' => ':idassetsoftware']) }}`.replace(':assetcode', assetcode).replace(':idassetsoftware', idassetsoftware);
+
+    // Opening the modal    
+    document.getElementById('softwareModal').classList.remove('hidden');
+
+    console.log(document.getElementById('updateFormSoftware').action); // Log the action URL
+
+    // Add event listener for form submission
+const form = document.getElementById('updateFormSoftware');
+form.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const formData = new FormData(form); // Get the form data
+    const jsonData = Object.fromEntries(formData.entries()); // Convert FormData to a plain object
+
+    fetch(form.action, {
+        method: 'PUT',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Content-Type': 'application/json', // Set content type to JSON
+        },
+        body: JSON.stringify(jsonData) // Send the data as JSON
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Failed to update software.');
+            location.reload();
+        } else {
+            return response.text().then(text => {
+                console.error('Response:', text); // Log the response body for debugging
+                alert('Software updated successfully!');
+                location.reload();
+            });
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+}
 
   // Function to close modal
   function closeModal() {   

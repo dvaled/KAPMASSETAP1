@@ -11,12 +11,19 @@
     </div>
 @endif
 <div id="createAsset" class="inset-0 bg-white flex justify-center items-center p-4">
-    <div class="bg-white p-6 rounded-md w-96">
+    <div class="bg-white p-6 rounded-md w-96 col-2">
         <h2 class="text-xl font-bold mb-4">Add {{ $assetcode }} Specification Detail </h2>
-        <form id="editForm" action="{{ route('transaction.storespec', ['assetcode' => $assetcode]) }}" method="POST">
+        <form id="editForm" action="{{ route('transaction.update', [
+                                    'assetcategory' => $assetcategory, 
+                                    'assetcode' => $assetcode,
+                                    'idassetspec' => $idassetspec]) }}" method="POST">
             @csrf <!-- CSRF protection -->
-            
-            {{-- show assetcode --}}
+            @method('PUT')
+            <div class="mb-4">
+                <label for="idassetspec" class="block text-sm font-semibold">ID</label>
+                <input type="text" id="idassetspec" class="w-full p-2 border rounded opacity-60" name="idassetspec" value="{{ $idassetspec }}" readonly> <!-- Hidden input for the condition -->
+            </div>
+
             <div class="mb-4">
                 <label for="assetcodeModal" class="block text-sm font-semibold">Asset Code</label>
                 <input type="text" id="assetcodeModal" class="w-full p-2 border rounded opacity-60" name="assetcode" value="{{ $assetcode }}" readonly> <!-- Hidden input for the condition -->
